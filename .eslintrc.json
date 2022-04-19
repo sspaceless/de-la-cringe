@@ -1,0 +1,37 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended", 
+        "plugin:prettier/recommended",
+        "airbnb", 
+        "airbnb/hooks"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "babelOptions": {
+            "presets": ["@babel/preset-react"]
+         }
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "linebreak-style": ["error", "windows"],
+        "prettier/prettier": [
+            "error",
+            {
+              "endOfLine": "auto"
+            }
+          ]
+    },
+    "parser": "@babel/eslint-parser"    
+}
