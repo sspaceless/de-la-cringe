@@ -28,6 +28,7 @@
   "dependencies": {
     "@colyseus/arena": "^0.14.7",
     "@colyseus/monitor": "^0.14.0",
-    "colyseus": "^0.14.9"
+    "colyseus": "^0.14.9",
+    "mongodb": "^4.5.0"
   }
 }
