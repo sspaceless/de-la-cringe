@@ -6,7 +6,7 @@ function GameCard(props) {
   const { image, name, gameId, description } = props;
 
   return (
-    <Link to={`/games/${gameId}`}>
+    <Link to={`/game/${gameId}`}>
       <div>
         <img src={image} alt={name} />
         <h3>{name}</h3>

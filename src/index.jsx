@@ -8,6 +8,12 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
+
+      <Route path="game">
+        <Route path="тут gameId" />
+        <Route path="тут gameId2" />
+        <Route path="тут gameId3" />
+      </Route>
     </Routes>
   </BrowserRouter>
 );
