@@ -6,7 +6,6 @@
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended", 
-        "plugin:prettier/recommended",
         "airbnb", 
         "airbnb/hooks"
     ],
@@ -25,21 +24,9 @@
         "import"
     ],
     "rules": {
-        "linebreak-style": ["error", "windows"],
         "react/react-in-jsx-scope": "off",
-        "prettier/prettier": [
-            "error",
-            {
-              "endOfLine": "auto"
-            }
-          ],
-        "comma-dangle": ["error", {
-            "arrays": "always",
-            "objects": "never",
-            "imports": "never",
-            "exports": "never",
-            "functions": "never"
-        }],
+        "linebreak-style": ["error", "windows"],
+        "comma-dangle": 0,
         "object-curly-newline": ["error", {
             "ObjectExpression": "always",
             "ObjectPattern": { "multiline": true }
