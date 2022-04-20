@@ -4,7 +4,7 @@ import useInput from '../../../../hooks/use-input';
 import classes from './StartScreen.module.css';
 
 function StartScreen() {
-  const [roomState, setRoomState] = useState({});
+  const [roomState, setRoomState, ] = useState({});
 
   const {
     value: roomId,
@@ -12,7 +12,7 @@ function StartScreen() {
     hasError: roomIdHasError,
     valueChangeHandler: roomIdChangeHandler,
     inputBlurHandler: roomIdBlurHandler,
-    reset: roomIdReset,
+    reset: roomIdReset
   } = useInput((value) => value.trim().lenght === 4);
 
   const buttonClickHanler = () => {

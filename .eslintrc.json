@@ -33,7 +33,6 @@
               "endOfLine": "auto"
             }
           ],
-        "linebreak-style": ["error", "windows"],
         "comma-dangle": ["error", {
             "arrays": "always",
             "objects": "never",
