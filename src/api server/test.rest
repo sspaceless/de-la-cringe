@@ -1,7 +1,26 @@
+POST http://localhost:3002/api/users/createAccount
+Content-Type: application/json
+
+{
+  "username": "Dan",
+  "password": "12345qw$eQrty"
+}
+
+###
+
 POST http://localhost:3002/api/users/signInAccount
 Content-Type: application/json
 
 {
-  "name": "Dan",
-  "password": "12345qwerty"
+  "username": "Dan",
+  "password": "12345qw$eQrty"
+}
+
+###
+
+POST http://localhost:3002/api/users/getUserInfo
+Content-Type: application/json
+
+{
+  "userId": "fef4d0c7-3152-4183-b4e3-4036f7fda44f"
 }
