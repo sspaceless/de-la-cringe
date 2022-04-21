@@ -1,12 +1,12 @@
 import * as schema from "@colyseus/schema";
 
-export class MyRoomState extends schema.Schema {
+export class Game1RoomState extends schema.Schema {
   constructor() {
     super();
     this.mySynchronizedProperty = "Hello world";
   }
 }
 
-schema.defineTypes(MyRoomState, {
+schema.defineTypes(Game1RoomState, {
   mySynchronizedProperty: "string",
 });

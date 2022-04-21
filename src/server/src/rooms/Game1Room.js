@@ -1,15 +1,12 @@
 import { Room } from "@colyseus/core";
-import { MyRoomState } from "./schema/MyRoomState.js";
+import { Game1RoomState } from "./schema/Game1RoomState.js";
 
-export class MyRoom extends Room {
+export class Game1Room extends Room {
 
   onCreate (options) {
-    this.setState(new MyRoomState());
+    this.setState(new Game1RoomState());
 
     this.onMessage("type", (client, message) => {
-      //
-      // handle "type" message.
-      //
     });
 
   }
@@ -25,5 +22,4 @@ export class MyRoom extends Room {
   onDispose() {
     console.log("room", this.roomId, "disposing...");
   }
-
 }
