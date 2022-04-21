@@ -134,5 +134,6 @@ app.get('/api/users/logoutFromAccount', async (req, res) => {
 });
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`server started on localhost:${port}`);
 });

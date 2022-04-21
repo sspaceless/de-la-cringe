@@ -1,14 +1,22 @@
-import React, { useToggle } from 'react';
+import React, { useState, useToggle, useEffect } from 'react';
 import games from '../../games.json';
 import GameCard from '../GameCard/GameCard';
 import UserCard from '../UserCard/UserCard';
 import AuthWindow from '../AuthWindow/AuthWindow';
 import Input from '../Input/Input';
 
-async function Home() {
-  const response = await fetch('api/users/getUserInfo');
-  const json = await response.json();
-  const result = JSON.parse(json);
+function Home() {
+  const [userInfo, setUserInfo] = useState({});
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('api/users/getUserInfo');
+      const json = await response.json();
+      setUserInfo(JSON.parse(json));
+    }
+
+    fetchData();
+  });
 
   const [isAuthWinShown, toggleAuthWinShown] = useToggle();
 
@@ -16,12 +24,12 @@ async function Home() {
     <div>
       <div>
         {games.map((x) => (
-          <GameCard {...x} available={result.availableRooms.includes(x.gameId)} />
+          <GameCard {...x} available={userInfo.availableRooms.includes(x.gameId)} />
         ))}
       </div>
 
-      {result.success
-        ? <UserCard username={result.username} avatarUrl={result.avatarUrl} />
+      {userInfo.success
+        ? <UserCard username={userInfo.username} avatarUrl={userInfo.avatarUrl} />
         : <Input type="button" onClick={toggleAuthWinShown} />}
 
       {isAuthWinShown
