@@ -8,35 +8,56 @@ mongoClient.connect();
 const db = mongoClient.db('cringe');
 const users = db.collection('users');
 
-async function createAccount(name, password) {
-  const user = await users.findOne({ name });
-  if (!name || !password || user) {
+const defaultGames = ['game1', 'game2', 'game3'];
+const defaultAvatar = 'public/avatar.png';
+
+async function createAccount(username, password) {
+  const user = await users.findOne({ name: username });
+  if (!username || !password || user) {
     return { success: false };
   }
 
-  const hashedPass = await bcrypt.hash(password, 12);
+  const profile = {
+    username,
+    avatarUrl: defaultAvatar,
+    availableGames: defaultGames
+  };
 
+  const hashedPass = await bcrypt.hash(password, 10);
   const uid = uuidv4();
-  const record = await users.insertOne({ userId: uid, name, password: hashedPass });
+
+  const record = await users.insertOne({
+    userId: uid,
+    password: hashedPass,
+    ...profile
+  });
 
   if (record) {
-    return { success: true, user: { userId: uid, name } };
+    return { success: true, user: profile };
   }
 
   return { success: false };
 }
 
-async function signInAccount(name, password) {
-  if (!name || !password) {
+async function signInAccount(username, password) {
+  if (!username || !password) {
     return { success: false };
   }
 
-  const record = await users.findOne({ name });
+  const record = await users.findOne({ username });
   if (!record || !await bcrypt.compare(password, record.password)) {
     return { success: false };
   }
 
-  return { success: true, user: { userId: record.userId, name: record.name } };
+  return {
+    success: true,
+    userId: record.userId,
+    user: {
+      username: record.username,
+      avatarUrl: record.avatarUrl,
+      availableGames: record.availableGames
+    }
+  };
 }
 
 async function getUserInfo(userId) {
@@ -49,7 +70,14 @@ async function getUserInfo(userId) {
     return { success: false };
   }
 
-  return { success: true, user: { userId: record.userId, name: record.name } };
+  return {
+    success: true,
+    user: {
+      username: record.username,
+      avatarUrl: record.avatarUrl,
+      availableGames: record.availableGames
+    }
+  };
 }
 
 process.on('SIGINT', () => {

@@ -30,7 +30,8 @@
         "object-curly-newline": ["error", {
             "ObjectExpression": { "multiline": true },
             "ObjectPattern": { "multiline": true }
-        }]
+        }],
+        "react/jsx-props-no-spreading": "off"
     },
     "parser": "@babel/eslint-parser"    
 }
