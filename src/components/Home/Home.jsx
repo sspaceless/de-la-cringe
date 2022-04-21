@@ -3,6 +3,8 @@ import games from '../../games.json';
 import GameCard from '../GameCard/GameCard';
 
 function Home() {
+  let username = '';
+
   return (
     <div>
       <div>
