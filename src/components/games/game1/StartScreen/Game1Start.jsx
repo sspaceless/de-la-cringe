@@ -15,7 +15,7 @@ function Game1Screen() {
     hasError: inputRoomIdHasError,
     valueChangeHandler: inputChangeHandler,
     inputBlurHandler,
-    // reset: roomIdReset,
+    reset: resetRoomId,
   } = useInput((value) => value.trim().length === 9);
 
   const buttonClickHanler = () => {
@@ -31,6 +31,8 @@ function Game1Screen() {
       setIsJoined(true);
       setRoomId(enteredRoomId);
     });
+
+    resetRoomId();
   }
 
   let content = (
