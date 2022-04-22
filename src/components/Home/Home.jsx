@@ -36,7 +36,7 @@ function Home() {
         {games.map((x) => {
           const available = userInfo.availableGames
             ? userInfo.availableGames.includes(x.gameId)
-            : false;
+            : x.default;
 
           return (
             <Link key={x.gameId} to={`/game/${x.gameId}`}>
