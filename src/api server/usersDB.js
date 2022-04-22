@@ -1,8 +1,14 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
-const mongoClient = new MongoClient('mongodb://localhost:27017/');
+const pass = encodeURIComponent('idyMfHwxR:!642B');
+const uri = `mongodb+srv://adminOfCringe:${pass}@cringe.0wkju.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const mongoClient = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1
+});
 mongoClient.connect();
 
 const db = mongoClient.db('cringe');
