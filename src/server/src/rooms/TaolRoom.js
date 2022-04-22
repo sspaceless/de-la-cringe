@@ -1,8 +1,6 @@
-/* eslint-disable import/extensions */
-/* eslint-disable class-methods-use-this */
 import { Room } from 'colyseus';
-import Player from './schema/PlayerSchema.js';
-import TaolRoomState from './schema/TaolRoomState.js';
+import Player from './schema/taol-schemas/PlayerSchema.js';
+import TaolRoomState from './schema/taol-schemas/TaolRoomState.js';
 
 class TaolRoom extends Room {
   onCreate() {
@@ -12,11 +10,16 @@ class TaolRoom extends Room {
   }
 
   onJoin(client, options) {
-    this.state.players.add(new Player(client.sessionId, options.name));
+    const { userName: name, isVip } = options;
+    const player = new Player(client.sessionId, name, isVip);
+
+    this.state.players.push(player);
     console.log(client.sessionId, 'joined!');
   }
 
   onLeave(client) {
+    const playerFilter = (player) => player.id !== client.sessionId;
+    this.state.players = this.state.players.filter(playerFilter);
     console.log(client.sessionId, 'left!');
   }
 

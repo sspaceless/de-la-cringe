@@ -1,15 +1,15 @@
 import * as schema from '@colyseus/schema';
 import Player from './PlayerSchema.js';
 
-const { Schema, CollectionSchema } = schema;
+const { Schema, ArraySchema } = schema;
 
 class TaolRoomState extends Schema {
   constructor() {
     super();
-    this.players = new CollectionSchema();
+    this.players = new ArraySchema();
   }
 }
 
-schema.defineTypes(TaolRoomState, { players: { collection: Player } });
+schema.defineTypes(TaolRoomState, { players: { array: Player } });
 
 export default TaolRoomState;

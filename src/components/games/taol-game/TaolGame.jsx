@@ -19,14 +19,14 @@ function TaolGame() {
 
   const buttonClickHanler = () => {
     createRoom('taol', 'userName', setRoomId, (state) => {
-      setRoomState(state);
+      setRoomState({ players: Array.from(state.players) });
       setIsJoined(true);
     });
   };
 
   if (!inputRoomIdHasError && !isJoined) {
     joinRoom('taol', 'userName', enteredRoomId, (state) => {
-      setRoomState(state);
+      setRoomState({ players: Array.from(state.players) });
       setIsJoined(true);
       setRoomId(enteredRoomId);
     });
