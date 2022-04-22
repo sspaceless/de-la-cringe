@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
 
-function Input({ initialValue, onChange, validator, ...props }) {
-  const [value, setValue] = useState(props.initialValue);
+function Input({ initialValue = '', onChange = undefined, validator = undefined, ...props }) {
+  const [value, setValue] = useState(initialValue);
 
   const onInputChange = (event) => {
-    const { curValue } = event.target;
+    const { value: curValue } = event.target;
 
     if (validator && !validator(curValue)) {
       return;
     }
 
     setValue(curValue);
-    onChange(curValue);
+
+    if (onChange) {
+      onChange(curValue);
+    }
   };
 
   return <input value={value} onChange={onInputChange} {...props} />;

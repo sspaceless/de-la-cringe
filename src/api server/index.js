@@ -2,14 +2,23 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const validator = require('validator');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const usersDB = require('./usersDB');
 
 const port = 3002;
 
 const app = express();
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(express.static('public'));
 
 const validate = (username, password) => {
   const isUsernameValid = username
@@ -85,14 +94,8 @@ app.post('/api/users/signInAccount', async (req, res) => {
 });
 
 app.get('/api/users/getUserInfo', async (req, res) => {
-  if (!req.cookies) {
-    return res.status(401).json({
-      success: false,
-      message: 'Unauthorized'
-    });
-  }
-
   const { userId } = req.cookies;
+
   if (!userId || !validator.isUUID(userId)) {
     return res.status(400).json({
       success: false,
@@ -111,14 +114,16 @@ app.get('/api/users/getUserInfo', async (req, res) => {
   return res.json(result);
 });
 
-app.get('/api/users/logoutFromAccount', async (req, res) => {
-  if (!req.cookies) {
-    return res.status(401).json({
-      success: false,
-      message: 'Unauthorized'
-    });
-  }
+app.get('/api/users/isAuthorized', async (req, res) => {
+  const { userId } = req.cookies;
 
+  return res.status(200).json({
+    success: true,
+    isAuthorized: Boolean(userId && validator.isUUID(userId))
+  });
+});
+
+app.get('/api/users/logoutFromAccount', async (req, res) => {
   const { userId } = req.cookies;
   if (!userId || !validator.isUUID(userId)) {
     return res.status(400).json({

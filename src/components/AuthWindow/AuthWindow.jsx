@@ -1,48 +1,22 @@
 import React, { useState } from 'react';
-import validator from 'validator';
-import Input from '../Input/Input';
+import SignInView from './SignInView';
+import SignUpView from './SignUpView';
 
 function AuthWindow() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-
-  let usernameWarnings = '';
-  let isUsernameValid = true;
-  let passwordWarnings = '';
-  let isPasswordValid = true;
-
-  if (!username) isUsernameValid = false;
-  if (!validator.isLength(username, { min: 6, max: 20 })) {
-    isUsernameValid = false;
-    usernameWarnings += 'Длина имени пользователя должна быть в границах 6-20 символов<b>';
-  }
-  if (!validator.isAlphanumeric(username)) {
-    isUsernameValid = false;
-    usernameWarnings += 'Имя пользователя содержит запрещенные символы<b>';
-  }
-
-  if (!password) isPasswordValid = false;
-  if (!validator.isLength(password, { min: 8, max: 20 })) {
-    isPasswordValid = false;
-    passwordWarnings += 'Длина пароля должна быть в границах 8-20 символов<b>';
-  }
-  if (!validator.isStrongPassword(password)) {
-    isPasswordValid = false;
-    passwordWarnings += 'Пароль недостаточно сложный<b>';
-  }
+  const [isSignInShown, setSignInShown] = useState(true);
 
   return (
-    <form action="api/users/createAccount" method="POST">
-      <h4>Sign In</h4>
+    <div>
+      {isSignInShown
+        ? <SignInView />
+        : <SignUpView accountCreatedCallback={() => setSignInShown(true)} />}
 
-      <Input onClick={setUsername} type="text" name="username" />
-      <p>{usernameWarnings}</p>
-
-      <Input onClick={setPassword} type="password" name="password" />
-      <p>{passwordWarnings}</p>
-
-      <Input type="submit" disabled={!(isUsernameValid && isPasswordValid)} />
-    </form>
+      {isSignInShown
+        // eslint-disable-next-line
+        ? <p>Don{'\''}t have an account? <a href='#'onClick={() => setSignInShown(false)}>Create one!</a></p>
+        // eslint-disable-next-line
+        : <p>Already have an account? <a href='#'onClick={() => setSignInShown(true)}>Sign in!</a></p>}
+    </div>
   );
 }
 

@@ -9,10 +9,10 @@ const db = mongoClient.db('cringe');
 const users = db.collection('users');
 
 const defaultGames = ['game1', 'game2', 'game3'];
-const defaultAvatar = 'public/avatar.png';
+const defaultAvatar = 'avatars/avatar.png';
 
 async function createAccount(username, password) {
-  const user = await users.findOne({ name: username });
+  const user = await users.findOne({ username });
   if (!username || !password || user) {
     return { success: false };
   }
@@ -54,7 +54,7 @@ async function signInAccount(username, password) {
     userId: record.userId,
     user: {
       username: record.username,
-      avatarUrl: record.avatarUrl,
+      avatarUrl: `http://localhost:3002/${record.avatarUrl}`,
       availableGames: record.availableGames
     }
   };
@@ -74,7 +74,7 @@ async function getUserInfo(userId) {
     success: true,
     user: {
       username: record.username,
-      avatarUrl: record.avatarUrl,
+      avatarUrl: `http://localhost:3002/${record.avatarUrl}`,
       availableGames: record.availableGames
     }
   };
