@@ -39,7 +39,7 @@ function Home() {
             : x.default;
 
           return (
-            <Link key={x.gameId} to={`/game/${x.gameId}`}>
+            <Link key={x.gameId} to={available ? `/game/${x.gameId}` : '#'}>
               <GameCard
                 available={available}
                 {...x}

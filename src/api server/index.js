@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const validator = require('validator');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const gamesList = require('../games.json');
 const UsersDB = require('./usersDB').default;
 
 const port = 3002;
@@ -41,6 +42,12 @@ const initUsersDB = async () => {
 
   usersDB = new UsersDB(uri);
   await usersDB.connect();
+
+  const defaultGames = gamesList
+    .filter((game) => game.default)
+    .map((game) => game.gameId);
+
+  usersDB.defaultGames = defaultGames;
 
   process.on('SIGINT', () => usersDB.cleanup());
   process.on('SIGTERM', () => usersDB.cleanup());

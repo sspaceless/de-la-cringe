@@ -6,7 +6,7 @@ function GameCard(props) {
 
   return (
     // eslint-disable-next-line no-unneeded-ternary
-    <div available={available ? 'true' : undefined}>
+    <div style={{ border: '1px solid black', backgroundColor: available ? 'white' : 'grey' }} available={available ? 'true' : undefined}>
       <img src={image} alt={name} />
       <h3>{name}</h3>
       <p>{description}</p>
