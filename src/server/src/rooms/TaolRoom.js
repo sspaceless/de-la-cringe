@@ -1,15 +1,17 @@
 /* eslint-disable class-methods-use-this */
 import { Room } from 'colyseus';
-import { Game1RoomState } from './schema/Game1RoomState';
+import Player from './schema/PlayerSchema';
+import TaolRoomState from './schema/TaolRoomState';
 
 class Game1Room extends Room {
   onCreate() {
-    this.setState(new Game1RoomState());
+    this.setState(new TaolRoomState());
     this.onMessage('type', () => {
     });
   }
 
-  onJoin(client) {
+  onJoin(client, options) {
+    this.state.players.add(new Player(client.sessionId, options.name));
     console.log(client.sessionId, 'joined!');
   }
 
