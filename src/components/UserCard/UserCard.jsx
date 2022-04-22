@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { quickGet } from '../../quickfetch';
+import { quickGet } from '../../modules/quickfetch';
 
 function UserCard({ avatarUrl, username }) {
   const navigate = useNavigate();

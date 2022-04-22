@@ -5,7 +5,7 @@ import GameCard from '../GameCard/GameCard';
 import UserCard from '../UserCard/UserCard';
 import AuthWindow from '../AuthWindow/AuthWindow';
 import Input from '../Input/Input';
-import { quickGet } from '../../quickfetch';
+import { quickGet } from '../../modules/quickfetch';
 
 function Home() {
   const [userInfo, setUserInfo] = useState({});

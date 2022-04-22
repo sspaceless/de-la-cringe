@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { quickPost } from '../../quickfetch';
+import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
 
 function SignInView() {
