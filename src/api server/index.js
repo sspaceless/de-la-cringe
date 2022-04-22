@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const validator = require('validator');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const usersDB = require('./usersDB');
+const UsersDB = require('./usersDB').default;
 
 const port = 3002;
 
@@ -31,6 +31,20 @@ const validate = (username, password) => {
 
   return isUsernameValid && isPasswordValid;
 };
+
+let usersDB;
+
+const initUsersDB = async () => {
+  const uri = 'mongodb://localhost:27017';
+
+  usersDB = new UsersDB(uri);
+  await usersDB.connect();
+
+  process.on('SIGINT', () => usersDB.cleanup());
+  process.on('SIGTERM', () => usersDB.cleanup());
+};
+
+initUsersDB();
 
 app.post('/api/users/createAccount', async (req, res) => {
   if (!req.body) {
