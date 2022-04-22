@@ -8,7 +8,8 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -16,8 +17,8 @@
     "@babel/preset-react": "^7.16.7",
     "eslint": "^8.13.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.29.4"
   },
   "scripts": {
     "lint": "eslint ./src/ --ext jsx --ext js",

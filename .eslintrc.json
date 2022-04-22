@@ -28,9 +28,10 @@
         "linebreak-style": ["error", "windows"],
         "comma-dangle": 0,
         "object-curly-newline": ["error", {
-            "ObjectExpression": "always",
+            "ObjectExpression": { "multiline": true },
             "ObjectPattern": { "multiline": true }
-        }]
+        }],
+        "react/jsx-props-no-spreading": "off"
     },
     "parser": "@babel/eslint-parser"    
 }

@@ -8,8 +8,7 @@ function Game1Screen() {
   const [isJoined, setIsJoined] = useState(false);
   const [roomId, setRoomId] = useState('');
   // eslint-disable-next-line no-unused-vars
-  const [roomState, setRoomState] = useState({
-  });
+  const [roomState, setRoomState] = useState({});
 
   const {
     value: enteredRoomId,
