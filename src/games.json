@@ -1,32 +1,37 @@
 [
   {
     "name": "game1",
-    "image": "public/logo192.png",
+    "image": "favicon.ico",
     "description": "lolololollolololololololo",
-    "gameId": "game1"
+    "gameId": "game1",
+    "default": true
   },
   {
     "name": "game2",
-    "image": "public/logo192.png",
+    "image": "favicon.ico",
     "description": "lolololollolololololololo",
-    "gameId": "game2"
+    "gameId": "game2",
+    "default": true
   },
   {
     "name": "game3",
-    "image": "public/logo192.png",
+    "image": "favicon.ico",
     "description": "lolololollolololololololo",
-    "gameId": "game3"
+    "gameId": "game3",
+    "default": true
   },
   {
     "name": "game4",
-    "image": "public/logo192.png",
+    "image": "favicon.ico",
     "description": "lolololollolololololololo",
-    "gameId": "game4"
+    "gameId": "game4",
+    "default": false
   },
   {
     "name": "game5",
-    "image": "public/logo192.png",
+    "image": "favicon.ico",
     "description": "lolololollolololololololo",
-    "gameId": "game5"
+    "gameId": "game5",
+    "default": false
   }
 ]

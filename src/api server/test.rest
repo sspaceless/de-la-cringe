@@ -1,0 +1,15 @@
+POST http://localhost:3002/api/users/signInAccount
+Content-Type: application/json
+
+{
+  "username": "DanLuk",
+  "password": "12345qwertyQ/"
+}
+
+###
+
+GET http://localhost:3002/api/users/isAuthorized
+
+###
+
+GET http://localhost:3002/api/users/logoutFromAccount

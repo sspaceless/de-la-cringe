@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 function GameCard(props) {
-  const { image, name, gameId, description } = props;
+  const { image, name, description, available } = props;
 
   return (
-    <Link to={`/game/${gameId}`}>
-      <div>
-        <img src={image} alt={name} />
-        <h3>{name}</h3>
-        <p>{description}</p>
-      </div>
-    </Link>
+    // eslint-disable-next-line no-unneeded-ternary
+    <div available={available ? 'true' : undefined}>
+      <img src={image} alt={name} />
+      <h3>{name}</h3>
+      <p>{description}</p>
+    </div>
   );
 }
 
 GameCard.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  gameId: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
+  description: PropTypes.string.isRequired,
+  available: PropTypes.bool.isRequired
 };
 
 export default GameCard;
