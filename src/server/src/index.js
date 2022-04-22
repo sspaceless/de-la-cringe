@@ -7,8 +7,6 @@ const port = Number(process.env.port) || 3000;
 const app = express();
 app.use(express.json());
 
-const gameServer = new Server({
-  server: createServer(app)
-});
+const gameServer = new Server({ server: createServer(app) });
 
 gameServer.listen(port);
