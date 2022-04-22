@@ -1,5 +1,5 @@
 import * as schema from '@colyseus/schema';
-import Player from './PlayerSchema';
+import Player from './PlayerSchema.js';
 
 const { Schema, CollectionSchema } = schema;
 

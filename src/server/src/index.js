@@ -1,9 +1,10 @@
+/* eslint-disable import/extensions */
 import { Server } from 'colyseus';
 import { createServer } from 'http';
 import express from 'express';
-import TaolRoom from './rooms/TaolRoom';
+import TaolRoom from './rooms/TaolRoom.js';
 
-const port = Number(process.env.port) || 3000;
+const port = 2567;
 
 const app = express();
 app.use(express.json());
