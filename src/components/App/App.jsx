@@ -1,38 +1,13 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { quickGet } from './modules/quickfetch';
-import Game1Screen from './components/games/game1/StartScreen/Game1Start';
-import Home from './components/Home/Home';
-import userContext from './userContext';
-import gamesList from './games.json';
+import Game1Screen from '../games/game1/StartScreen/Game1Start';
+import Home from '../Home/Home';
+import userContext from '../userContext';
+import gamesList from '../../games.json';
+import useUserState from '../../hooks/use-user-state';
 
 function App() {
-  const [userState, setUserState] = useState({
-    isAuthorized: false,
-    user: {}
-  });
-
-  const reloadUserState = useCallback(async () => {
-    const authInfo = await quickGet('http://localhost:3002/api/users/isAuthorized');
-
-    if (authInfo.success && authInfo.isAuthorized) {
-      const info = await quickGet('http://localhost:3002/api/users/getUserInfo');
-
-      if (info.success) {
-        setUserState({
-          isAuthorized: true,
-          user: info.user
-        });
-
-        return;
-      }
-    }
-
-    setUserState({
-      isAuthorized: false,
-      user: {}
-    });
-  }, []);
+  const [userState, reloadUserState] = useUserState();
 
   useEffect(() => {
     reloadUserState();

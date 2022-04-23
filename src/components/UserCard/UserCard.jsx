@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
-import userContext from '../../userContext';
+import userContext from '../userContext';
 import { quickGet } from '../../modules/quickfetch';
 
 function UserCard({ avatarUrl, username }) {

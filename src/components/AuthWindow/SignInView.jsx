@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
-import userContext from '../../userContext';
+import userContext from '../userContext';
 
 function SignInView() {
   const { reloadUserState } = useContext(userContext);

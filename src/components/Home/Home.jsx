@@ -5,7 +5,7 @@ import GameCard from '../GameCard/GameCard';
 import UserCard from '../UserCard/UserCard';
 import AuthWindow from '../AuthWindow/AuthWindow';
 import Input from '../Input/Input';
-import userContext from '../../userContext';
+import userContext from '../userContext';
 
 function Home() {
   const { userState: userInfo } = useContext(userContext);
