@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import validator from 'validator';
 import propTypes from 'prop-types';
-import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
+import { quickPost } from '../../modules/quickfetch';
 
 const rules = {
   username: [
