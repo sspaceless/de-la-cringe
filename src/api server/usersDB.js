@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
 class UsersDB {
-  defaultGames = ['game1', 'game2', 'game3'];
+  defaultGames = [];
 
   defaultAvatar = 'avatars/avatar.png';
 

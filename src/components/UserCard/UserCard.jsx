@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import propTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import userContext from '../userContext';
 import { quickGet } from '../../modules/quickfetch';
 
 function UserCard({ avatarUrl, username }) {
-  const navigate = useNavigate();
+  const { reloadUserState } = useContext(userContext);
 
   const logout = async () => {
     const result = await quickGet('http://localhost:3002/api/users/logoutFromAccount');
 
     if (result.success) {
-      navigate(0);
+      await reloadUserState();
     }
   };
 

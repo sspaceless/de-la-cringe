@@ -5,9 +5,7 @@ const client = new Colyseus.Client('ws://localhost:2567');
 
 const createRoom = (game, userName, setRoomId, onStateChange,) => {
   client
-    .create(game, {
-      userName
-    })
+    .create(game, { userName })
     .then((room) => {
       room.onStateChange(onStateChange);
       setRoomId(room.id);
@@ -23,9 +21,7 @@ const joinRoom = (game, userName, roomId, onStateChange) => {
     console.log(roomId);
     if (roomsId.includes(roomId)) {
       client
-        .joinById(roomId, {
-          userName
-        })
+        .joinById(roomId, { userName })
         .then((room) => {
           room.onStateChange(onStateChange);
         })
