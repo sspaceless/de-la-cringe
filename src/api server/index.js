@@ -42,7 +42,6 @@ const initUsersDB = async () => {
 
   usersDB = new UsersDB(uri);
   await usersDB.connect();
-  usersDB.createAccount(`lul${Math.random() * 100}`, '12345qwertyQ/');
 
   const defaultGames = gamesList
     .filter((game) => game.default)
