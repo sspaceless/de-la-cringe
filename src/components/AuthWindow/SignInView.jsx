@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { quickPost } from '../../quickfetch';
+import React, { useState, useContext } from 'react';
+import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
+import userContext from '../userContext';
 
 function SignInView() {
-  const navigate = useNavigate();
+  const { reloadUserState } = useContext(userContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +17,7 @@ function SignInView() {
       const answer = await quickPost('http://localhost:3002/api/users/signInAccount', { username, password });
 
       if (answer.success) {
-        navigate(0);
+        await reloadUserState();
       } else {
         setLoginError(true);
       }

@@ -1,45 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import games from '../../games.json';
 import GameCard from '../GameCard/GameCard';
 import UserCard from '../UserCard/UserCard';
 import AuthWindow from '../AuthWindow/AuthWindow';
 import Input from '../Input/Input';
-import { quickGet } from '../../quickfetch';
+import userContext from '../userContext';
 
 function Home() {
-  const [userInfo, setUserInfo] = useState({});
-  const [isAuthorized, setIsAuthorized] = useState(false);
-
-  useEffect(() => {
-    async function fetchData() {
-      const authInfo = await quickGet('http://localhost:3002/api/users/isAuthorized');
-
-      if (authInfo.success && authInfo.isAuthorized) {
-        const info = await quickGet('http://localhost:3002/api/users/getUserInfo');
-
-        if (info.success) {
-          setUserInfo(info.user);
-          setIsAuthorized(true);
-        }
-      }
-    }
-
-    fetchData();
-  }, []);
+  const { userState: userInfo } = useContext(userContext);
 
   const [isAuthWinShown, setAuthWinShown] = useState(false);
+
+  if (userInfo.isAuthorized && isAuthWinShown) {
+    setAuthWinShown(false);
+  }
 
   return (
     <div>
       <div>
         {games.map((x) => {
-          const available = userInfo.availableGames
-            ? userInfo.availableGames.includes(x.gameId)
+          const available = userInfo.user.availableGames
+            ? userInfo.user.availableGames.includes(x.gameId)
             : x.default;
 
           return (
-            <Link key={x.gameId} to={`/game/${x.gameId}`}>
+            <Link key={x.gameId} to={available ? `/game/${x.gameId}` : '#'}>
               <GameCard
                 available={available}
                 {...x}
@@ -49,8 +35,8 @@ function Home() {
         })}
       </div>
 
-      {isAuthorized
-        ? <UserCard username={userInfo.username} avatarUrl={userInfo.avatarUrl} />
+      {userInfo.isAuthorized
+        ? <UserCard username={userInfo.user.username} avatarUrl={userInfo.user.avatarUrl} />
         : <Input type="button" onClick={() => setAuthWinShown(!isAuthWinShown)} value="Sign In" />}
 
       {isAuthWinShown
