@@ -7,9 +7,10 @@ class TaolRoomState extends Schema {
   constructor() {
     super();
     this.players = new ArraySchema();
+    this.stage = 'preparation'
   }
 }
 
-schema.defineTypes(TaolRoomState, { players: { array: Player } });
+schema.defineTypes(TaolRoomState, { players: { array: Player }, stage: 'string' });
 
 export default TaolRoomState;

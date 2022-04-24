@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 
 function TaolMain({ roomId, roomState }) {
-  const { players } = roomState;
+  const { players, clientId } = roomState;
 
   return (
     <div>
@@ -18,7 +18,10 @@ function TaolMain({ roomId, roomState }) {
 
 TaolMain.propTypes = {
   roomId: propTypes.string.isRequired,
-  roomState: propTypes.shape({ players: propTypes.instanceOf(Array).isRequired }).isRequired,
+  roomState: propTypes.shape({
+    players: propTypes.instanceOf(Array).isRequired,
+    clientId: propTypes.string.isRequired
+  }).isRequired,
 };
 
 export default TaolMain;

@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Game1Screen from '../games/game1/StartScreen/Game1Start';
 import Home from '../Home/Home';
 import userContext from '../userContext';
 import gamesList from '../../games.json';
 import useUserState from '../../hooks/use-user-state';
+import TaolGame from '../games/taol-game/TaolGame';
 
 function App() {
   const [userState, reloadUserState] = useUserState();
@@ -30,7 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="game">
-          <Route path="game1" element={renderGame('game1', <Game1Screen />)} />
+          <Route path="taol" element={renderGame('taol', <TaolGame />)} />
           <Route path="game2" />
           <Route path="game3" />
           <Route path="game4" />

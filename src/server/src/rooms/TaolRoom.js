@@ -5,7 +5,9 @@ import TaolRoomState from './schema/taol-schemas/TaolRoomState.js';
 class TaolRoom extends Room {
   onCreate() {
     this.setState(new TaolRoomState());
-    this.onMessage('type', () => {
+    this.maxClients = 8;
+    this.onMessage('lol', (client, message) => {
+
     });
   }
 
