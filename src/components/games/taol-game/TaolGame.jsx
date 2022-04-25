@@ -20,7 +20,11 @@ function TaolGame() {
 
   useEffect(() => {
     const setState = (clientId, state) => {
-      setRoomState({ clientId, players: Array.from(state.players), ...state });
+      setRoomState({
+        clientId,
+        ...state
+      });
+
       setIsJoined(true);
       setRoomId(enteredRoomId);
     };
@@ -35,7 +39,11 @@ function TaolGame() {
 
   const buttonClickHanler = () => {
     const setState = (clientId, state) => {
-      setRoomState({ clientId, players: Array.from(state.players), ...state });
+      setRoomState({
+        clientId,
+        ...state
+      });
+
       setIsJoined(true);
     };
 
@@ -45,25 +53,26 @@ function TaolGame() {
       });
   };
 
-  let content = (
+  const content = (
     <div>
-      <button type="button" onClick={buttonClickHanler}>
-        New game!
-      </button>
+      <button type="button" onClick={buttonClickHanler}> New game! </button>
       <label htmlFor="room-id">
         Room ID:
-        <input id="room-id" maxLength="9" value={enteredRoomId} onChange={inputChangeHandler} onBlur={inputBlurHandler} />
+        <input
+          id="room-id"
+          maxLength="9"
+          value={enteredRoomId}
+          onChange={inputChangeHandler}
+          onBlur={inputBlurHandler}
+        />
         {inputRoomIdHasError && <p className={classes['error-text']}>Invalid room ID!</p>}
         {error && <p>{error.message}</p>}
       </label>
     </div>
   );
 
-  if (isJoined === true) {
-    content = <TaolMain roomId={roomId} roomState={roomState} />;
-  }
-
-  return (content);
+  return !isJoined ? content
+    : <TaolMain roomId={roomId} roomState={roomState} />;
 }
 
 export default TaolGame;

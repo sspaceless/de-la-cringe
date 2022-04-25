@@ -6,8 +6,9 @@ class TaolRoom extends Room {
   onCreate() {
     this.setState(new TaolRoomState());
     this.maxClients = 8;
-    this.onMessage('lol', (client, message) => {
-
+    this.onMessage('stage', (client, message) => {
+      this.state.stage = message.stage;
+      console.log(message.stage);
     });
   }
 
@@ -20,8 +21,13 @@ class TaolRoom extends Room {
   }
 
   onLeave(client) {
-    const playerFilter = (player) => player.id !== client.sessionId;
-    this.state.players = this.state.players.filter(playerFilter);
+    const leavingPlayer = this.state.players.find((player) => player.id === client.sessionId);
+    this.state.players.splice(this.state.players.indexOf(leavingPlayer), 1);
+
+    if (leavingPlayer.isVip) {
+      this.state.players[0].isVip = true;
+    }
+
     console.log(client.sessionId, 'left!');
   }
 
