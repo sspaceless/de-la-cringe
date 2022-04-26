@@ -1,7 +1,8 @@
 import * as schema from '@colyseus/schema';
 
 const { Schema } = schema;
-class Player extends Schema {
+
+class PlayerState extends Schema {
   constructor(id, name, isVip) {
     super();
 
@@ -11,10 +12,11 @@ class Player extends Schema {
   }
 }
 
-schema.defineTypes(Player, {
+schema.defineTypes(PlayerState, {
   id: 'string',
   name: 'string',
   isVip: 'boolean',
+  questionId: 'number',
 });
 
-export default Player;
+export default PlayerState;
