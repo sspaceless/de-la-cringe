@@ -8,7 +8,9 @@ async function quickGet(url, handleError) {
     // eslint-disable-next-line no-console
     console.log(`GET to ${url}: ${err}`);
 
-    handleError(err);
+    if (handleError) {
+      handleError(err);
+    }
     return undefined;
   }
 }
@@ -28,7 +30,9 @@ async function quickPost(url, body, handleError) {
     // eslint-disable-next-line no-console
     console.log(`GET to ${url}: ${err}`);
 
-    handleError(err);
+    if (handleError) {
+      handleError(err);
+    }
     return undefined;
   }
 }

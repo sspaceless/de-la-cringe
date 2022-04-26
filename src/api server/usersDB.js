@@ -68,7 +68,7 @@ class UsersDB {
       user: {
         username: record.username,
         avatarUrl: `http://localhost:3002/${record.avatarUrl}`,
-        availableGames: record.availableGames
+        availableGames: record.availableGames,
       }
     };
   }
@@ -88,8 +88,38 @@ class UsersDB {
       user: {
         username: record.username,
         avatarUrl: `http://localhost:3002/${record.avatarUrl}`,
-        availableGames: record.availableGames
+        availableGames: record.availableGames,
       }
+    };
+  }
+
+  async grantFreeTrial(userId, gameId) {
+    if (!userId || !gameId
+        || !await this.users.findOne({ userId })
+        || await this.users.findOne({ userId, 'availableGames.gameId': gameId })) {
+      return { success: false };
+    }
+
+    const ms = new Date().getTime() + 60000;
+    const untilDate = new Date(ms);
+
+    const record = {
+      gameId,
+      type: 'trial',
+      untilDate
+    };
+
+    const insertResult = await this.users.updateOne(
+      { userId },
+      { $push: { availableGames: record } }
+    );
+    if (!insertResult) {
+      return { success: false };
+    }
+
+    return {
+      success: true,
+      record
     };
   }
 

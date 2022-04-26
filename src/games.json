@@ -4,34 +4,34 @@
     "image": "favicon.ico",
     "description": "lolololollolololololololo",
     "gameId": "game1",
-    "default": true
+    "type": "free"
   },
   {
     "name": "game2",
     "image": "favicon.ico",
     "description": "lolololollolololololololo",
     "gameId": "game2",
-    "default": true
+    "type": "free"
   },
   {
     "name": "game3",
     "image": "favicon.ico",
     "description": "lolololollolololololololo",
     "gameId": "game3",
-    "default": true
+    "type": "free"
   },
   {
     "name": "game4",
     "image": "favicon.ico",
     "description": "lolololollolololololololo",
     "gameId": "game4",
-    "default": false
+    "type": "payable"
   },
   {
     "name": "game5",
     "image": "favicon.ico",
     "description": "lolololollolololololololo",
     "gameId": "game5",
-    "default": false
+    "type": "payable"
   }
 ]

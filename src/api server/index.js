@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const validator = require('validator');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const gamesList = require('../games.json');
 const UsersDB = require('./usersDB').default;
 
 const port = 3002;
@@ -42,12 +41,6 @@ const initUsersDB = async () => {
 
   usersDB = new UsersDB(uri);
   await usersDB.connect();
-
-  const defaultGames = gamesList
-    .filter((game) => game.default)
-    .map((game) => game.gameId);
-
-  usersDB.defaultGames = defaultGames;
 
   process.on('SIGINT', () => usersDB.cleanup());
   process.on('SIGTERM', () => usersDB.cleanup());
@@ -159,6 +152,34 @@ app.get('/api/users/logoutFromAccount', async (req, res) => {
 
   res.clearCookie('userId', options);
   return res.status(200).json({ success: true });
+});
+
+app.get('/api/games/grantFreeTrial', async (req, res) => {
+  const { userId } = req.cookies;
+  if (!userId || !validator.isUUID(userId)) {
+    return res.status(400).json({
+      success: false,
+      message: 'userId is invalid'
+    });
+  }
+
+  const { gameId } = req.query;
+  if (!gameId) {
+    return res.status(400).json({
+      success: false,
+      message: 'userId is invalid'
+    });
+  }
+
+  const result = await usersDB.grantFreeTrial(userId, gameId);
+
+  if (result.success) {
+    res.status(200);
+  } else {
+    res.status(409);
+  }
+
+  return res.json(result);
 });
 
 app.listen(port, () => {
