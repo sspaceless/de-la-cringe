@@ -100,7 +100,7 @@ class UsersDB {
       return { success: false };
     }
 
-    const ms = new Date().getTime() + 60000;
+    const ms = new Date().getTime() + 1800000;
     const untilDate = new Date(ms);
 
     const record = {
