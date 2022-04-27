@@ -6,8 +6,8 @@ import Timer from '../Timer/Timer';
 import userContext from '../userContext';
 
 function GameCard(props) {
-  const { gameInfo } = props;
-  const { image, name, description, type, gameId, isAuthorized, untilDate = undefined } = gameInfo;
+  const { gameInfo, isAuthorized } = props;
+  const { image, name, description, type, gameId, untilDate = undefined } = gameInfo;
 
   const { reloadUserState } = useContext(userContext);
 
@@ -27,6 +27,7 @@ function GameCard(props) {
     await reloadUserState();
   };
   const errorMessage = () => {
+    // eslint-disable-next-line no-alert
     alert('Please Sign In');
   };
 
@@ -36,7 +37,7 @@ function GameCard(props) {
       <h3>{name}</h3>
       <p>{description}</p>
       {(type === 'trial')
-        && <Timer untilDate={untilDate} onAlarm={reloadUserState} />}
+        && <Timer untilDate={untilDate} onAlarm={reloadUserState} format="hh:mm:ss" />}
       {(type === 'payable' && !untilDate)
         && <button type="button" onClick={isAuthorized ? getFreeTrial : errorMessage}>FREE TRIAL</button>}
       <LinkButton to={url}>{buttonText}</LinkButton>
@@ -51,9 +52,9 @@ GameCard.propTypes = {
     description: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     gameId: PropTypes.string.isRequired,
-    isAuthorized: PropTypes.bool.isRequired,
     untilDate: PropTypes.instanceOf(Date)
-  }).isRequired
+  }).isRequired,
+  isAuthorized: PropTypes.bool.isRequired
 };
 
 export default GameCard;
