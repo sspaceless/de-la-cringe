@@ -1,14 +1,16 @@
 import propTypes from 'prop-types';
-import FirstStage from '../FirstStage/FirstStage';
 import { sendMessage } from '../../../../modules/room-connect';
+import Question from '../Question/Question';
 
 function TaolMain({ roomId, roomState }) {
   const { players, clientId, stage } = roomState;
   const isVip = players.find((player) => player.id === clientId).isVip === true;
   const isButtonActive = isVip && players.length >= 3;
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 60);
 
   const buttonClickHandler = () => {
-    sendMessage('STAGE', { stage: 'FIRST' });
+    sendMessage('STAGE', { stage: 'PERSONAL-QUESTION' });
   };
 
   let content = (
@@ -25,10 +27,34 @@ function TaolMain({ roomId, roomState }) {
     </div>
   );
 
-  if (stage === 'FIRST') {
-    content = <FirstStage roomState={roomState} roomId={roomId} />;
+  if (stage === 'PERSONAL-QUESTION') {
+    const { personalQuestion } = players.find((player) => player.id === clientId).question;
+
+    content = (
+      <Question
+        roomId={roomId}
+        question={personalQuestion}
+        players={players}
+        clientId={clientId}
+        time={time}
+        type="PERSONAL"
+      />
+    );
   }
 
+  if (stage === 'PUBLIC-QUESTION') {
+    const { publicQuestion } = players[0].question;
+    content = (
+      <Question
+        roomId={roomId}
+        question={publicQuestion}
+        players={players}
+        clientId={clientId}
+        time={time}
+        type="PUBLIC"
+      />
+    );
+  }
   return (content);
 }
 

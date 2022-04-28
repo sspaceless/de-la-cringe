@@ -1,17 +1,9 @@
 import React, { useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-<<<<<<< HEAD:src/components/App/App.jsx
-import Home from '../Home/Home';
-import userContext from '../userContext';
-import gamesList from '../../games.json';
-import useUserState from '../../hooks/use-user-state';
-import TaolGame from '../games/taol-game/TaolGame';
-=======
-import Game1Screen from './components/games/game1/StartScreen/Game1Start';
+import TaolGame from './components/games/taol-game/TaolGame';
 import Home from './components/Home/Home';
 import userContext from './components/userContext';
 import useUserState from './hooks/use-user-state';
->>>>>>> main:src/App.jsx
 
 function App() {
   const [userState, reloadUserState] = useUserState();

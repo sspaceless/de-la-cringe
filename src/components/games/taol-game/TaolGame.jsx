@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createRoom, joinRoom } from '../../../modules/room-connect';
 import useInput from '../../../hooks/use-input';
 import classes from './TaolGame.module.css';
-import TaolMain from './MainScreen/TaolMain';
+import TaolMain from './TaolMain/TaolMain';
 
 function TaolGame() {
   const [isJoined, setIsJoined] = useState(false);

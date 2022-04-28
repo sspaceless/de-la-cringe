@@ -8,7 +8,6 @@ class TaolRoomState extends Schema {
   constructor() {
     super();
     this.players = new ArraySchema();
-    this.questions = new ArraySchema();
     this.stage = 'preparation';
   }
 }
