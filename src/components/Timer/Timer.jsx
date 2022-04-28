@@ -1,15 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
+import moment from 'moment';
+import momentDurationFormatSetup from 'moment-duration-format';
 import PropTypes from 'prop-types';
 
 function Timer(props) {
-  const { untilDate, onAlarm } = props;
+  momentDurationFormatSetup(moment);
 
-  const [curTime, setCurTime] = useState(new Date());
+  const { untilDate, onAlarm, format, trim } = props;
+
+  const momentD = moment(untilDate);
+
+  const [curTime, setCurTime] = useState(moment());
   const interval = useRef();
 
   useEffect(() => {
     interval.current = setInterval(() => {
-      setCurTime(new Date());
+      setCurTime(moment());
     }, 1000);
 
     return () => clearInterval(interval.current);
@@ -25,30 +31,30 @@ function Timer(props) {
     }
   }, [untilDate, curTime, onAlarm]);
 
-  const normalize = (number) => String(number).padStart(2, '00');
-
-  const time = Math.max((untilDate.getTime() - curTime.getTime()) / 1000, 0);
-
-  const hours = Math.floor(time / 3600);
-  const minutes = Math.floor((time - hours * 3600) / 60);
-  const scs = Math.floor(time - minutes * 60);
+  const time = moment.duration(momentD.diff(curTime)).format(format, { trim });
 
   return (
     <p>
-      {normalize(hours)}
-      :
-      {normalize(minutes)}
-      :
-      {normalize(scs)}
+      {time}
     </p>
   );
 }
 
 Timer.propTypes = {
-  untilDate: PropTypes.instanceOf(Date).isRequired,
-  onAlarm: PropTypes.func
+  untilDate: PropTypes.oneOfType([
+    PropTypes.instanceOf(moment),
+    PropTypes.instanceOf(Date),
+    PropTypes.string,
+  ]).isRequired,
+  onAlarm: PropTypes.func,
+  format: PropTypes.string,
+  trim: PropTypes.bool
 };
 
-Timer.defaultProps = { onAlarm: undefined };
+Timer.defaultProps = {
+  onAlarm: undefined,
+  format: 'HH:mm:ss',
+  trim: false
+};
 
 export default Timer;
