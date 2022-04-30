@@ -32,7 +32,10 @@
             "ObjectPattern": { "multiline": true }
         }],
         "react/jsx-props-no-spreading": "off",
-        "valid-typeof": ["error", { "requireStringLiterals": false }]
+        "valid-typeof": ["error", { "requireStringLiterals": false }],
+        "react/function-component-definition": ["off"],
+        "jsx-a11y/label-has-associated-control": ["off"],
+        "jsx-a11y/no-static-element-interactions": ["off"]
     },
     "parser": "@babel/eslint-parser"    
 }

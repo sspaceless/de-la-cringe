@@ -1,23 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import SignInView from './SignInView';
 import SignUpView from './SignUpView';
+import styles from './AuthWindow.module.css';
 
-function AuthWindow() {
+function AuthWindow({ hideFunction }) {
   const [isSignInShown, setSignInShown] = useState(true);
+  const [isRotating, setIsRotating] = useState(false);
+  const curWin = useRef();
+
+  const toggleAuthWin = () => {
+    if (isRotating) return;
+
+    curWin.current.classList.add(styles.rotating);
+    setIsRotating(true);
+
+    curWin.current.onanimationend = () => {
+      setSignInShown(!isSignInShown);
+
+      curWin.current.onanimationend = () => {
+        curWin.current.classList.remove(styles.rotating);
+        setIsRotating(false);
+      };
+    };
+  };
 
   return (
-    <div>
-      {isSignInShown
-        ? <SignInView />
-        : <SignUpView accountCreatedCallback={() => setSignInShown(true)} />}
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div
+      className={styles.wrapper}
+      onClick={(event) => {
+        if (event.target.classList.contains(styles.wrapper)) hideFunction();
+      }}
+    >
+      <div ref={curWin} className={[styles.authWin, styles.transBackground].join(' ')}>
+        {isSignInShown
+          ? <SignInView />
+          : <SignUpView />}
 
-      {isSignInShown
-        // eslint-disable-next-line
-        ? <p>Don{'\''}t have an account? <a href='#'onClick={() => setSignInShown(false)}>Create one!</a></p>
-        // eslint-disable-next-line
-        : <p>Already have an account? <a href='#'onClick={() => setSignInShown(true)}>Sign in!</a></p>}
+        <hr />
+
+        {isSignInShown
+          // eslint-disable-next-line
+          ? <p className={styles.bottomText}>Don{'\''}t have an account? <a href='#' onClick={toggleAuthWin}>Create one!</a></p>
+          // eslint-disable-next-line
+          : <p className={styles.bottomText}>Already have an account? <a href='#' onClick={toggleAuthWin}>Sign in!</a></p>}
+      </div>
     </div>
   );
 }
+
+AuthWindow.propTypes = { hideFunction: PropTypes.func.isRequired };
 
 export default AuthWindow;

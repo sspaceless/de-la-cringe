@@ -3,6 +3,7 @@ import validator from 'validator';
 import propTypes from 'prop-types';
 import Input from '../Input/Input';
 import { quickPost } from '../../modules/quickfetch';
+import styles from './AuthWindow.module.css';
 
 const rules = {
   username: [
@@ -44,33 +45,16 @@ function SignUpView({ accountCreatedCallback = undefined }) {
   const [password, setPassword] = useState('');
   const [isCreateError, setCreateError] = useState(false);
 
-  let isValid = !isCreateError;
-
-  const usernameRules = rules.username.map((rule, i) => {
-    let color;
-    if (rule.test(username)) {
-      color = 'green';
-    } else {
-      color = 'red';
-      isValid = false;
-    }
+  const checkRules = (testRules, element) => testRules.map((rule, i) => {
+    const stl = rule.test(element) ? styles.green : styles.red;
 
     // eslint-disable-next-line react/no-array-index-key
-    return <p key={i} style={{ color }}>{rule.message}</p>;
+    return <p key={i} className={[styles.testMsg, stl].join(' ')}>{rule.message}</p>;
   });
 
-  const passwordRules = rules.password.map((rule, i) => {
-    let color;
-    if (rule.test(password)) {
-      color = 'green';
-    } else {
-      color = 'red';
-      isValid = false;
-    }
+  const usernameRules = checkRules(rules.username, username);
 
-    // eslint-disable-next-line react/no-array-index-key
-    return <p key={i} style={{ color }}>{rule.message}</p>;
-  });
+  const passwordRules = checkRules(rules.password, password);
 
   const formSubmit = async (event) => {
     event.preventDefault();
@@ -96,15 +80,27 @@ function SignUpView({ accountCreatedCallback = undefined }) {
 
   return (
     <form action="http://localhost:3002/api/users/createAccount" method="POST" onSubmit={formSubmit}>
-      <h4>Sign Up</h4>
+      <h1 className={styles.topText}>Create Account</h1>
 
-      <Input onChange={onUsernameChange} type="text" name="username" />
-      {usernameRules}
+      <label htmlFor="username">Username</label>
+      <div className={styles.inputBlock}>
+        <Input autoComplete="username" onChange={onUsernameChange} id="username" type="text" name="username" />
 
-      <Input onChange={setPassword} type="password" name="password" />
-      {passwordRules}
+        <div className={[styles.testMessages, styles.rightMsg, styles.transBackground].join(' ')}>
+          {usernameRules}
+        </div>
+      </div>
 
-      <Input type="submit" disabled={!isValid} value="Sign Up" />
+      <label htmlFor="password">Password</label>
+      <div className={styles.inputBlock}>
+        <Input autoComplete="new-password" onChange={setPassword} type="password" name="password" />
+
+        <div className={[styles.testMessages, styles.leftMsg, styles.transBackground].join(' ')}>
+          {passwordRules}
+        </div>
+      </div>
+
+      <input className={styles.submitBtn} type="image" src="buttons/SignUpButton.svg" alt="Sign Up" disabled={!isCreateError} />
       {isCreateError
         && <p style={{ color: 'red' }}>This username is already in use</p>}
     </form>
