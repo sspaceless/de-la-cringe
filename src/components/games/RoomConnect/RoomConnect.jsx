@@ -15,7 +15,7 @@ function RoomConnect(props) {
     isValid: isInputRoomIdValid,
     value: enteredRoomId,
     inputBlurHandler,
-  } = useInput((value) => value.trim().length === 9);
+  } = useInput((value) => value.trim().length === 4);
 
   useEffect(() => {
     const setState = (clientId, state) => {

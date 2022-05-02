@@ -1,17 +1,19 @@
-import { Room } from 'colyseus';
+import CringeRoom from '../CringeRoom.js';
 import PlayerState from './schema/taol-schemas/PlayerState.js';
 import TaolRoomState from './schema/taol-schemas/TaolRoomState.js';
 import { toalQuestions } from './schema/taol-schemas/taol-questions.js';
 import QuestionState from './schema/taol-schemas/QuestionState.js';
 import AnswerState from './schema/taol-schemas/AnswerState.js';
 
-class TaolRoom extends Room {
+class TaolRoom extends CringeRoom {
   constructor() {
     super();
     this.questions = [...toalQuestions];
   }
 
-  onCreate() {
+  async onCreate() {
+    await super.onCreate();
+
     this.maxClients = 8;
     this.setState(new TaolRoomState());
 
@@ -118,7 +120,8 @@ class TaolRoom extends Room {
     console.log(client.sessionId, 'left!');
   }
 
-  onDispose() {
+  async onDispose() {
+    await super.onDispose();
     console.log('room', this.roomId, 'disposing...');
   }
 }
