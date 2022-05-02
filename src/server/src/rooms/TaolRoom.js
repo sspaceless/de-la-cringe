@@ -5,6 +5,19 @@ import { toalQuestions } from './schema/taol-schemas/taol-questions.js';
 import QuestionState from './schema/taol-schemas/QuestionState.js';
 import AnswerState from './schema/taol-schemas/AnswerState.js';
 
+const STAGE_MESSAGE_TYPE = 'STAGE';
+const ANSWER_MESSAGE_TYPE = 'ANSWER';
+const VOTE_MESSAGE_TYPE = 'VOTE';
+const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
+const PERSONAL_MESSAGE_TYPE = 'PERSONAL';
+
+const PUBLIC_QUESTION_STAGE = 'PUBLIC-QUESTION';
+const PERSONAL_QUESTION_STAGE = 'PERSONAL-QUESTION';
+const VOTING_STAGE = 'VOTING';
+const RESULTS_STAGE = 'RESULTS';
+
+const POINTS_FOR_TRUTH = 50;
+const POINTS_FOR_LYING = 50;
 class TaolRoom extends CringeRoom {
   constructor() {
     super();
@@ -17,10 +30,10 @@ class TaolRoom extends CringeRoom {
     this.maxClients = 8;
     this.setState(new TaolRoomState());
 
-    this.onMessage('STAGE', (client, message) => {
+    this.onMessage(STAGE_MESSAGE_TYPE, (client, message) => {
       this.state.stage = message.stage;
 
-      if (message.stage === 'PERSONAL-QUESTION') {
+      if (message.stage === PERSONAL_QUESTION_STAGE) {
         this.state.players.forEach((player) => {
           const unusedQuestions = this.questions.filter((item) => !item.isUsed);
           const randomIndex = Math.round(Math.random() * (unusedQuestions.length - 1));
@@ -31,10 +44,10 @@ class TaolRoom extends CringeRoom {
       }
     });
 
-    this.onMessage('ANSWER', (client, message) => {
+    this.onMessage(ANSWER_MESSAGE_TYPE, (client, message) => {
       const { players } = this.state;
 
-      if (message.type === 'PERSONAL') {
+      if (message.type === PERSONAL_MESSAGE_TYPE) {
         const { answer } = message;
         const player = players.find((item) => item.id === client.sessionId);
 
@@ -47,7 +60,7 @@ class TaolRoom extends CringeRoom {
         }).length;
 
         if (answersCount === players.length) {
-          this.state.stage = 'PUBLIC-QUESTION';
+          this.state.stage = PUBLIC_QUESTION_STAGE;
 
           players.forEach((item) => {
             // eslint-disable-next-line no-param-reassign
@@ -56,7 +69,7 @@ class TaolRoom extends CringeRoom {
         }
       }
 
-      if (message.type === 'PUBLIC') {
+      if (message.type === PUBLIC_MESSAGE_TYPE) {
         const { answer, questionFor } = message;
         const questionForPlayer = players.find((item) => item.id === questionFor);
         const answeredPlayer = players.find((item) => item.id === client.sessionId);
@@ -69,7 +82,7 @@ class TaolRoom extends CringeRoom {
 
         const answersCount = questionForPlayer.question.answers.size;
         if (answersCount === players.length) {
-          this.state.stage = 'VOTING';
+          this.state.stage = VOTING_STAGE;
 
           players.forEach((item) => {
             // eslint-disable-next-line no-param-reassign
@@ -79,18 +92,27 @@ class TaolRoom extends CringeRoom {
       }
     });
 
-    this.onMessage('VOTE', (client, message) => {
+    this.onMessage(VOTE_MESSAGE_TYPE, (client, message) => {
       const { players, questionNumber } = this.state;
       const { answerId } = message;
+
       const votedPlayer = players.find((item) => item.id === client.sessionId);
+      const answeredPlayer = players.find((item) => item.id === answerId);
       const answer = players[questionNumber].question.answers.get(answerId);
 
       answer.votes.push(client.sessionId);
+
+      if (answer.isTruth) {
+        votedPlayer.roundPoints += POINTS_FOR_TRUTH;
+      } else {
+        answeredPlayer.roundPoints += POINTS_FOR_LYING;
+      }
+
       votedPlayer.isAnswered = true;
 
       const votesCount = players.filter((item) => item.isAnswered === true).length;
       if (votesCount === players.length - 1) {
-        this.state.stage = 'RESULTS';
+        this.state.stage = RESULTS_STAGE;
 
         players.forEach((item) => {
           // eslint-disable-next-line no-param-reassign
@@ -105,12 +127,14 @@ class TaolRoom extends CringeRoom {
     const player = new PlayerState(client.sessionId, name, isVip);
 
     this.state.players.push(player);
+
     console.log(client.sessionId, 'joined!');
   }
 
   onLeave(client) {
     const leavingPlayer = this.state.players.find((item) => item.id === client.sessionId);
     const isLeavingPlayerVip = leavingPlayer.isVip;
+
     this.state.players.splice(this.state.players.indexOf(leavingPlayer), 1);
 
     if (isLeavingPlayerVip && this.state.players.length >= 1) {

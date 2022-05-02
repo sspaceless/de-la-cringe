@@ -2,6 +2,7 @@ import propTypes from 'prop-types';
 import arrayShuffle from '../../../../modules/array-shuffle';
 import { sendMessage } from '../../../../modules/room-connect';
 
+const VOTE_MESSAGE_TYPE = 'VOTE';
 function Voting(props) {
   const { roomState } = props;
   const { players, questionNumber, clientId } = roomState;
@@ -12,7 +13,7 @@ function Voting(props) {
   const shuffledAnswers = arrayShuffle(Array.from(player.question.answers.entries()));
 
   const voteClickHandler = (answerId) => {
-    sendMessage('VOTE', { answerId });
+    sendMessage(VOTE_MESSAGE_TYPE, { answerId });
   };
 
   let content = (

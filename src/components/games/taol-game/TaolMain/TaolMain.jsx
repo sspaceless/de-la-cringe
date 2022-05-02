@@ -1,18 +1,29 @@
 import propTypes from 'prop-types';
 import { sendMessage } from '../../../../modules/room-connect';
 import Question from '../Question/Question';
+import Results from '../Results/Results';
 import Voting from '../Voting/Voting';
 
-function TaolMain({ roomId, roomState }) {
-  const { players, clientId, stage, questionNumber } = roomState;
+const STAGE_MESSAGE_TYPE = 'STAGE';
+const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
+const PERSONAL_MESSAGE_TYPE = 'PERSONAL';
+
+const PUBLIC_QUESTION_STAGE = 'PUBLIC-QUESTION';
+const PERSONAL_QUESTION_STAGE = 'PERSONAL-QUESTION';
+const VOTING_STAGE = 'VOTING';
+const RESULTS_STAGE = 'RESULTS';
+
+function TaolMain(props) {
+  const { roomId, roomState } = props;
+  const { players, clientId, stage } = roomState;
   const isVip = players.find((player) => player.id === clientId).isVip === true;
   const isButtonActive = isVip && players.length >= 3;
 
   const buttonClickHandler = () => {
-    sendMessage('STAGE', { stage: 'PERSONAL-QUESTION' });
+    sendMessage(STAGE_MESSAGE_TYPE, { stage: PERSONAL_QUESTION_STAGE });
   };
 
-  let content = (
+  const content = (
     <div>
       <h2>{`Room ID: ${roomId}`}</h2>
       <ul>
@@ -26,44 +37,36 @@ function TaolMain({ roomId, roomState }) {
     </div>
   );
 
-  if (stage === 'PERSONAL-QUESTION') {
-    const player = players.find((item) => item.id === clientId);
-    const { personalQuestion } = player.question;
+  switch (stage) {
+    case PERSONAL_QUESTION_STAGE:
+      return (
+        <Question
+          roomState={roomState}
+          messageType={PERSONAL_MESSAGE_TYPE}
+        />
+      );
 
-    content = (
-      <Question
-        roomId={roomId}
-        question={personalQuestion}
-        questionFor={player.id}
-        roomState={roomState}
-        type="PERSONAL"
-      />
-    );
+    case PUBLIC_QUESTION_STAGE:
+      return (
+        <Question
+          roomState={roomState}
+          messageType={PUBLIC_MESSAGE_TYPE}
+        />
+      );
+
+    case VOTING_STAGE:
+      return (
+        <Voting
+          roomState={roomState}
+        />
+      );
+
+    case RESULTS_STAGE:
+      return (<Results roomState={roomState} />);
+
+    default:
+      return (content);
   }
-
-  if (stage === 'PUBLIC-QUESTION') {
-    const player = players[questionNumber];
-    const publicQuestion = player.question.publicQuestion.replace('<PLAYER>', player.name);
-    content = (
-      <Question
-        roomId={roomId}
-        question={publicQuestion}
-        questionFor={player.id}
-        roomState={roomState}
-        type="PUBLIC"
-      />
-    );
-  }
-
-  if (stage === 'VOTING') {
-    content = (
-      <Voting
-        roomState={roomState}
-      />
-    );
-  }
-
-  return (content);
 }
 
 TaolMain.propTypes = {
@@ -72,7 +75,6 @@ TaolMain.propTypes = {
     players: propTypes.instanceOf(Array).isRequired,
     clientId: propTypes.string.isRequired,
     stage: propTypes.string.isRequired,
-    questionNumber: propTypes.number.isRequired,
   }).isRequired,
 };
 

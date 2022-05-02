@@ -1,12 +1,18 @@
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import useInput from '../../../../hooks/use-input';
 import { sendMessage } from '../../../../modules/room-connect';
 
+const ANSWER_MESSAGE_TYPE = 'ANSWER';
+const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
+
+const PLAYER_MASK = '<PLAYER>';
+
 function Question(props) {
-  // eslint-disable-next-line no-unused-vars
-  const { roomId, question, questionFor, type, roomState } = props;
-  const { players, clientId } = roomState;
+  const { type, roomState } = props;
+  const { players, clientId, questionNumber } = roomState;
   const { isAnswered } = players.find((item) => item.id === clientId);
+  const questionFor = players[questionNumber];
+  const question = questionFor.question.publicQuestion.replace(PLAYER_MASK, questionFor.name);
 
   const {
     value: answer,
@@ -16,7 +22,7 @@ function Question(props) {
   } = useInput((value) => value.trim().length > 0);
 
   const sendAnswer = () => {
-    sendMessage('ANSWER', { type, answer, questionFor });
+    sendMessage(ANSWER_MESSAGE_TYPE, { type, answer, questionFor });
   };
 
   const formSubmitHandler = (event) => {
@@ -24,11 +30,11 @@ function Question(props) {
     sendAnswer();
   };
 
-  const playerList = players.map((player) => {
-    const isReady = player.isAnswered;
+  const playerList = players.map((item) => {
+    const isReady = item.isAnswered;
     return (
-      <li key={player.id}>
-        {`${player.name} ${isReady ? 'ready' : ''}`}
+      <li key={item.id}>
+        {`${item.name} ${isReady ? 'ready' : ''}`}
       </li>
     );
   });
@@ -55,7 +61,7 @@ function Question(props) {
     );
   }
 
-  if (questionFor === clientId && type === 'PUBLIC') {
+  if (questionFor === clientId && type === PUBLIC_MESSAGE_TYPE) {
     content = (
       <div>
         <p> Waiting for other players... </p>
@@ -75,14 +81,12 @@ function Question(props) {
 }
 
 Question.propTypes = {
-  question: propTypes.string.isRequired,
-  questionFor: propTypes.string.isRequired,
-  roomId: propTypes.string.isRequired,
-  type: propTypes.string.isRequired,
-  roomState: propTypes.shape({
-    players: propTypes.instanceOf(Array).isRequired,
-    clientId: propTypes.string.isRequired,
-    stage: propTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  roomState: PropTypes.shape({
+    questionNumber: PropTypes.number.isRequired,
+    players: PropTypes.instanceOf(Array).isRequired,
+    clientId: PropTypes.string.isRequired,
+    stage: PropTypes.string.isRequired,
   }).isRequired,
 };
 
