@@ -1,13 +1,12 @@
 import propTypes from 'prop-types';
 import { sendMessage } from '../../../../modules/room-connect';
 import Question from '../Question/Question';
+import Voting from '../Voting/Voting';
 
 function TaolMain({ roomId, roomState }) {
-  const { players, clientId, stage } = roomState;
+  const { players, clientId, stage, questionNumber } = roomState;
   const isVip = players.find((player) => player.id === clientId).isVip === true;
   const isButtonActive = isVip && players.length >= 3;
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 60);
 
   const buttonClickHandler = () => {
     sendMessage('STAGE', { stage: 'PERSONAL-QUESTION' });
@@ -28,33 +27,42 @@ function TaolMain({ roomId, roomState }) {
   );
 
   if (stage === 'PERSONAL-QUESTION') {
-    const { personalQuestion } = players.find((player) => player.id === clientId).question;
+    const player = players.find((item) => item.id === clientId);
+    const { personalQuestion } = player.question;
 
     content = (
       <Question
         roomId={roomId}
         question={personalQuestion}
-        players={players}
-        clientId={clientId}
-        time={time}
+        questionFor={player.id}
+        roomState={roomState}
         type="PERSONAL"
       />
     );
   }
 
   if (stage === 'PUBLIC-QUESTION') {
-    const { publicQuestion } = players[0].question;
+    const player = players[questionNumber];
+    const publicQuestion = player.question.publicQuestion.replace('<PLAYER>', player.name);
     content = (
       <Question
         roomId={roomId}
         question={publicQuestion}
-        players={players}
-        clientId={clientId}
-        time={time}
+        questionFor={player.id}
+        roomState={roomState}
         type="PUBLIC"
       />
     );
   }
+
+  if (stage === 'VOTING') {
+    content = (
+      <Voting
+        roomState={roomState}
+      />
+    );
+  }
+
   return (content);
 }
 
@@ -64,6 +72,7 @@ TaolMain.propTypes = {
     players: propTypes.instanceOf(Array).isRequired,
     clientId: propTypes.string.isRequired,
     stage: propTypes.string.isRequired,
+    questionNumber: propTypes.number.isRequired,
   }).isRequired,
 };
 

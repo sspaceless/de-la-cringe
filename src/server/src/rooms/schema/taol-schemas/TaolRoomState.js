@@ -1,6 +1,5 @@
 import * as schema from '@colyseus/schema';
 import PlayerState from './PlayerState.js';
-import QuestionState from './QuestionState.js';
 
 const { Schema, ArraySchema } = schema;
 
@@ -9,13 +8,14 @@ class TaolRoomState extends Schema {
     super();
     this.players = new ArraySchema();
     this.stage = 'preparation';
+    this.questionNumber = 0;
   }
 }
 
 schema.defineTypes(TaolRoomState, {
   stage: 'string',
   players: { array: PlayerState },
-  questions: { array: QuestionState }
+  questionNumber: 'number',
 });
 
 export default TaolRoomState;

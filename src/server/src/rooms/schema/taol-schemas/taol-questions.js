@@ -1,7 +1,7 @@
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable prefer-const */
 // eslint-disable-next-line import/prefer-default-export
-export let questions = [
+export let toalQuestions = [
   {
     id: 1,
     personalQuestion: 'Якби у тебе буде можливість безкарно вдарити по обличчю одну людину, то це буде ...',
@@ -41,8 +41,8 @@ export let questions = [
   },
   {
     id: 7,
-    personalQuestion: 'Ти точно не будеш їсти ...',
-    publicQuestion: '<PLAYER> безперечно не буде їсти ...',
+    personalQuestion: 'Ти точно ніколи не запхнеш до рота ...',
+    publicQuestion: '<PLAYER> ніколи в житті не буде куштувати ...',
     isUsed: false
   },
   {

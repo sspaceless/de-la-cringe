@@ -1,37 +1,26 @@
-import { useEffect } from 'react';
-import { useTimer } from 'react-timer-hook';
 import propTypes from 'prop-types';
 import useInput from '../../../../hooks/use-input';
 import { sendMessage } from '../../../../modules/room-connect';
 
-// eslint-disable-next-line no-unused-vars
-function Question({ roomId, question, players, clientId, type, time }) {
+function Question(props) {
+  // eslint-disable-next-line no-unused-vars
+  const { roomId, question, questionFor, type, roomState } = props;
+  const { players, clientId } = roomState;
   const { isAnswered } = players.find((item) => item.id === clientId);
 
   const {
     value: answer,
     valueChangeHandler: inputChangeHandler,
     inputBlurHandler,
-    reset: inputReset,
+    // reset: inputReset,
   } = useInput((value) => value.trim().length > 0);
 
   const sendAnswer = () => {
-    sendMessage('ANSWER', { type, answer });
-    inputReset();
+    sendMessage('ANSWER', { type, answer, questionFor });
   };
-
-  const { start, restart, seconds } = useTimer({
-    expiryTimestamp: time,
-    onExpire: sendAnswer
-  });
-
-  useEffect(() => {
-    start();
-  }, [start]);
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    restart(new Date(), false);
     sendAnswer();
   };
 
@@ -46,8 +35,6 @@ function Question({ roomId, question, players, clientId, type, time }) {
 
   let content = (
     <div>
-      <h2>{question}</h2>
-      <p>{`${seconds} sec left...`}</p>
       <form onSubmit={formSubmitHandler}>
         <input
           maxLength="100"
@@ -68,8 +55,17 @@ function Question({ roomId, question, players, clientId, type, time }) {
     );
   }
 
+  if (questionFor === clientId && type === 'PUBLIC') {
+    content = (
+      <div>
+        <p> Waiting for other players... </p>
+      </div>
+    );
+  }
+
   return (
     <div>
+      <h2>{question}</h2>
       {content}
       <ul>
         {playerList}
@@ -79,12 +75,15 @@ function Question({ roomId, question, players, clientId, type, time }) {
 }
 
 Question.propTypes = {
-  clientId: propTypes.string.isRequired,
   question: propTypes.string.isRequired,
-  players: propTypes.instanceOf(Array).isRequired,
+  questionFor: propTypes.string.isRequired,
   roomId: propTypes.string.isRequired,
   type: propTypes.string.isRequired,
-  time: propTypes.instanceOf(Date).isRequired
+  roomState: propTypes.shape({
+    players: propTypes.instanceOf(Array).isRequired,
+    clientId: propTypes.string.isRequired,
+    stage: propTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Question;
