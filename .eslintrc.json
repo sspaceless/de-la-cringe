@@ -37,5 +37,13 @@
         "jsx-a11y/label-has-associated-control": ["off"],
         "jsx-a11y/no-static-element-interactions": ["off"]
     },
+    "overrides": [
+        {
+            "files": "src/server/**",
+            "rules": {
+                "import/extensions": ["error", "always"]
+            }
+        }
+    ],
     "parser": "@babel/eslint-parser"    
 }

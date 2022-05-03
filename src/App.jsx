@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Routes } from 'react-router-dom';
-import Game1Screen from './components/games/game1/StartScreen/Game1Start';
+import TaolGame from './components/games/taol-game/TaolGame';
 import Home from './components/Home/Home';
 import userContext from './components/userContext';
 import useUserState from './hooks/use-user-state';
@@ -39,7 +39,7 @@ function App() {
         <Route path="/" element={renderHome()} />
 
         <Route path="games">
-          <Route path="game1" element={renderGame('game1', <Game1Screen />)} />
+          <Route path="taol" element={renderGame('taol', <TaolGame />)} />
           <Route path="game2" />
           <Route path="game3" />
           <Route path="game4" />
