@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as Colyseus from 'colyseus.js';
 
 const client = new Colyseus.Client('ws://localhost:2567');
@@ -25,7 +24,6 @@ const joinRoom = async (game, userName, roomId, onStateChange) => {
     try {
       connectedRoom = await client.joinById(roomId, options);
       connectedRoom.onStateChange(onStateChange.bind(null, connectedRoom.sessionId));
-      console.log(connectedRoom.state);
     } catch (e) {
       console.log(e);
     }

@@ -8,11 +8,14 @@ const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
 const PLAYER_MASK = '<PLAYER>';
 
 function Question(props) {
-  const { type, roomState } = props;
+  const { messageType, roomState } = props;
   const { players, clientId, questionNumber } = roomState;
-  const { isAnswered } = players.find((item) => item.id === clientId);
+  const player = players.find((item) => item.id === clientId);
+  const { isAnswered, question: clientQuestion } = player;
   const questionFor = players[questionNumber];
-  const question = questionFor.question.publicQuestion.replace(PLAYER_MASK, questionFor.name);
+  const question = messageType === PUBLIC_MESSAGE_TYPE
+    ? questionFor.question.publicQuestion.replace(PLAYER_MASK, questionFor.name)
+    : clientQuestion.personalQuestion;
 
   const {
     value: answer,
@@ -22,7 +25,7 @@ function Question(props) {
   } = useInput((value) => value.trim().length > 0);
 
   const sendAnswer = () => {
-    sendMessage(ANSWER_MESSAGE_TYPE, { type, answer, questionFor });
+    sendMessage(ANSWER_MESSAGE_TYPE, { type: messageType, answer, questionFor: questionFor.id });
   };
 
   const formSubmitHandler = (event) => {
@@ -54,14 +57,10 @@ function Question(props) {
   );
 
   if (isAnswered) {
-    content = (
-      <div>
-        <p> God job:) Waiting for other players... </p>
-      </div>
-    );
+    content = <p> God job:) Waiting for other players... </p>;
   }
 
-  if (questionFor === clientId && type === PUBLIC_MESSAGE_TYPE) {
+  if (questionFor.id === clientId && messageType === PUBLIC_MESSAGE_TYPE) {
     content = (
       <div>
         <p> Waiting for other players... </p>
@@ -81,7 +80,7 @@ function Question(props) {
 }
 
 Question.propTypes = {
-  type: PropTypes.string.isRequired,
+  messageType: PropTypes.string.isRequired,
   roomState: PropTypes.shape({
     questionNumber: PropTypes.number.isRequired,
     players: PropTypes.instanceOf(Array).isRequired,

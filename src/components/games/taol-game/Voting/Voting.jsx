@@ -1,4 +1,4 @@
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import arrayShuffle from '../../../../modules/array-shuffle';
 import { sendMessage } from '../../../../modules/room-connect';
 
@@ -10,7 +10,8 @@ function Voting(props) {
   const player = players[questionNumber];
   const question = player.question.publicQuestion.replace('<PLAYER>', player.name);
 
-  const shuffledAnswers = arrayShuffle(Array.from(player.question.answers.entries()));
+  const answers = Array.from(player.question.answers.entries());
+  const shuffledAnswers = arrayShuffle(answers.filter((item) => item[0] !== clientId));
 
   const voteClickHandler = (answerId) => {
     sendMessage(VOTE_MESSAGE_TYPE, { answerId });
@@ -19,7 +20,7 @@ function Voting(props) {
   let content = (
     <div>
       {shuffledAnswers.map((item) => (
-        <button type="button" onClick={voteClickHandler.bind(null, item[0])}>
+        <button key={item[0]} type="button" onClick={voteClickHandler.bind(null, item[0])}>
           { item['1'].answer }
         </button>
       ))}
@@ -41,10 +42,9 @@ function Voting(props) {
 export default Voting;
 
 Voting.propTypes = {
-  roomState: propTypes.shape({
-    players: propTypes.instanceOf(Array).isRequired,
-    clientId: propTypes.string.isRequired,
-    stage: propTypes.string.isRequired,
-    questionNumber: propTypes.number.isRequired,
+  roomState: PropTypes.shape({
+    players: PropTypes.instanceOf(Array).isRequired,
+    clientId: PropTypes.string.isRequired,
+    questionNumber: PropTypes.number.isRequired,
   }).isRequired,
 };

@@ -16,8 +16,8 @@ const RESULTS_STAGE = 'RESULTS';
 function TaolMain(props) {
   const { roomId, roomState } = props;
   const { players, clientId, stage } = roomState;
-  const isVip = players.find((player) => player.id === clientId).isVip === true;
-  const isButtonActive = isVip && players.length >= 3;
+  const isPlayerVip = players.find((player) => player.id === clientId).isVip === true;
+  const isButtonActive = isPlayerVip && players.length >= 4;
 
   const buttonClickHandler = () => {
     sendMessage(STAGE_MESSAGE_TYPE, { stage: PERSONAL_QUESTION_STAGE });
@@ -33,7 +33,7 @@ function TaolMain(props) {
           </li>
         ))}
       </ul>
-      {isVip && <button type="button" disabled={!isButtonActive} onClick={buttonClickHandler}>Start!</button>}
+      {isPlayerVip && <button type="button" disabled={!isButtonActive} onClick={buttonClickHandler}>Start!</button>}
     </div>
   );
 
