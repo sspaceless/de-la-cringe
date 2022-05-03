@@ -1,39 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import GameCard from '../GameCard/GameCard';
-import UserCard from '../UserCard/UserCard';
-import AuthWindow from '../AuthWindow/AuthWindow';
-import Input from '../Input/Input';
+import Header from '../Header/Header';
 import userContext from '../userContext';
+import styles from './Home.module.css';
 
 function Home() {
   const { userState } = useContext(userContext);
   const { availableGames: games } = userState.user;
 
-  const [isAuthWinShown, setAuthWinShown] = useState(false);
-
-  if (userState.isAuthorized && isAuthWinShown) {
-    setAuthWinShown(false);
-  }
-
   return (
-    <div>
-      <div>
-        {games.map((game) => (
-          <GameCard
-            key={game.gameId}
-            gameInfo={game}
-            isAuthorized={userState.isAuthorized}
-          />
-        ))}
+    <>
+      <Header />
+
+      <div className={styles.content}>
+        <div className={styles.games}>
+          {games.map((game) => (
+            <GameCard
+              key={game.gameId}
+              gameInfo={game}
+              isAuthorized={userState.isAuthorized}
+            />
+          ))}
+        </div>
+        <p className={styles.info}>
+          Hello
+        </p>
       </div>
-
-      {userState.isAuthorized
-        ? <UserCard username={userState.user.username} avatarUrl={userState.user.avatarUrl} />
-        : <Input type="button" onClick={() => setAuthWinShown(!isAuthWinShown)} value="Sign In" />}
-
-      {isAuthWinShown
-        && <AuthWindow />}
-    </div>
+    </>
   );
 }
 

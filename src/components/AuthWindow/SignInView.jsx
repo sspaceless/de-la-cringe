@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
 import userContext from '../userContext';
+import styles from './AuthWindow.module.css';
 
 function SignInView() {
   const { reloadUserState } = useContext(userContext);
@@ -34,14 +35,18 @@ function SignInView() {
 
   return (
     <form action="http://localhost:3002/api/users/signInAccount" method="POST" onSubmit={formSubmit}>
-      <h4>Sign In</h4>
+      <h1 className={styles.topText}>Login</h1>
 
-      <Input onChange={onUsernameChange} type="text" name="username" />
-      <Input onChange={setPassword} type="password" name="password" />
+      <label htmlFor="username">Username</label>
+      <Input autoComplete="username" onChange={onUsernameChange} id="username" type="text" name="username" />
 
-      <Input type="submit" value="Sign In" />
+      <label htmlFor="password">Password</label>
+      <Input autoComplete="current-password" onChange={setPassword} id="password" type="password" name="password" />
+
+      <input className={styles.submitBtn} type="image" src="buttons/LogInButton.svg" alt="Log In" disabled={isLoginError} />
+
       {isLoginError
-        && <p style={{ color: 'red' }}>The username or password is incorrect</p>}
+        && <p className={[styles.center, styles.red].join(' ')}>The username or password is incorrect</p>}
     </form>
   );
 }

@@ -1,0 +1,34 @@
+.avatarWrapper {
+  position: relative;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.avatarWrapper::after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background-image: linear-gradient(to top, yellow, yellow 50%, blue 50%, blue);
+  opacity: 0.8;
+}
+
+.profileElement {
+  display: inline-block;
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  width: 80px;
+  padding: 15px;
+  padding-top: 0;
+}

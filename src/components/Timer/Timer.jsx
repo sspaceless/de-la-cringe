@@ -31,7 +31,7 @@ function Timer(props) {
     }
   }, [untilDate, curTime, onAlarm]);
 
-  const time = moment.duration(momentD.diff(curTime)).format(format, { trim });
+  const time = moment.duration(Math.max(momentD.diff(curTime), 0)).format(format, { trim });
 
   return (
     <p>

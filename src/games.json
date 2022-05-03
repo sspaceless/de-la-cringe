@@ -2,34 +2,36 @@
   {
     "name": "The Art of Lies",
     "image": "favicon.ico",
+    "name": "game1",
+    "image": "logo.svg",
     "description": "lolololollolololololololo",
     "gameId": "taol",
     "type": "free"
   },
   {
     "name": "game2",
-    "image": "favicon.ico",
+    "image": "logo.svg",
     "description": "lolololollolololololololo",
     "gameId": "game2",
     "type": "free"
   },
   {
     "name": "game3",
-    "image": "favicon.ico",
+    "image": "logo.svg",
     "description": "lolololollolololololololo",
     "gameId": "game3",
     "type": "free"
   },
   {
     "name": "game4",
-    "image": "favicon.ico",
+    "image": "logo.svg",
     "description": "lolololollolololololololo",
     "gameId": "game4",
     "type": "payable"
   },
   {
     "name": "game5",
-    "image": "favicon.ico",
+    "image": "logo.svg",
     "description": "lolololollolololololololo",
     "gameId": "game5",
     "type": "payable"

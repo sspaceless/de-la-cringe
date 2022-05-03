@@ -1,0 +1,77 @@
+.content {
+  display: flex;
+  align-items: stretch;
+  position: absolute;
+  top: 125px;
+  bottom: 0px;
+  width: 100%;
+}
+
+.games {
+  mask-image: linear-gradient(to bottom, transparent, black 15px, black calc(100% - 15px), transparent 100%);
+  display: flex;
+  flex-direction: column;
+  flex: 2 1 66%;
+  overflow: overlay;
+  box-sizing: border-box;
+  padding-right: 54px;
+  padding-top: 15px;
+}
+
+.games::-webkit-scrollbar {
+  width: 24px;
+  overflow: hidden;
+}
+
+.games::-webkit-scrollbar-thumb {
+  background-color: #ff931e;
+  box-shadow: 0 10px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.games::-webkit-scrollbar-track {
+  background-image: linear-gradient(to top, #8e3dbc7d, #7f319e91 85%, #7f388eaa 100%);
+  margin: 15px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: -5px 10px 5px rgba(0, 0, 0, .1);
+}
+
+.info {
+  position: relative;
+  box-sizing: border-box;
+  padding: 15px;
+  margin: 15px;
+  margin-left: 30px;
+  flex: 1 2 33%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: -5px 10px 5px rgba(0, 0, 0, .1);
+  border-radius: 22.5px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+
+.info::before {
+  z-index: -1;
+  content: '';
+  background-image: linear-gradient(-135deg, #8334c7, #bc77f1 25%, #8464a8 75%, #6b5183);
+  border-radius: 22.5px;
+  opacity: 0.3;
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+}
+
+h1 {
+  color: #fb9331;
+  font-size: 3rem;
+  margin: 0;
+}
+
+p {
+  font-size: 1.4rem;
+  margin-top: 10px;
+  color: #fae9b0;
+}

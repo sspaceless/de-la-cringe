@@ -1,0 +1,17 @@
+.loadingIcon {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 150px;
+  animation: 2s linear 0s infinite normal loader;
+}
+
+@keyframes loader {
+  from {
+    transform: rotateZ(0);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
