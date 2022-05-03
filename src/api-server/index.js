@@ -18,7 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static('public', { maxAge: 31557600 }));
 
 const validate = (username, password) => {
   const isUsernameValid = username

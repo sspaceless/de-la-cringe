@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import ReactDOM from 'react-dom';
 import userContext from '../userContext';
 import { LogOutButton } from '../Buttons/Buttons';
 import AuthWindow from '../AuthWindow/AuthWindow';
 import styles from './AccountControl.module.css';
+import config from '../../config.json';
 
 function AccountControl() {
   const { userState } = useContext(userContext);
-  const avatarUrl = userState.isAuthorized ? userState.user.avatarUrl : 'avatar.png';
+  const avatarUrl = userState.isAuthorized ? userState.user.avatarUrl : `${config.apiUrl}/files/avatars/avatar.png`;
 
   const [isShowButton, setIsShowButton] = useState(false);
   const [isAvatarClicked, setIsAvatarClicked] = useState(false);
@@ -36,7 +36,7 @@ function AccountControl() {
         && <LogOutButton />}
 
       {(!userState.isAuthorized && isAvatarClicked)
-        && ReactDOM.createPortal(<AuthWindow hideFunction={hideAuthWin} />, document.getElementById('root'))}
+        && <AuthWindow hideFunction={hideAuthWin} />}
     </div>
   );
 }

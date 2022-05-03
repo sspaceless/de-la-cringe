@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { quickGet } from '../modules/quickfetch';
 import { completeGamesList } from '../modules/utils';
+import config from '../config.json';
 
 function useUserState() {
   const [userState, setUserState] = useState({
@@ -16,10 +17,10 @@ function useUserState() {
   }, [userState.isFetched]);
 
   const reloadUserState = useCallback(async () => {
-    const authInfo = await quickGet('http://localhost:3002/api/users/isAuthorized');
+    const authInfo = await quickGet(new URL('/api/users/isAuthorized', config.apiUrl));
 
     if (authInfo.success && authInfo.isAuthorized) {
-      const info = await quickGet('http://localhost:3002/api/users/getUserInfo');
+      const info = await quickGet(new URL('/api/users/getUserInfo', config.apiUrl));
 
       if (info.success) {
         info.user.availableGames = completeGamesList(info.user.availableGames);

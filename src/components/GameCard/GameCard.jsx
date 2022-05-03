@@ -4,6 +4,7 @@ import Timer from '../Timer/Timer';
 import userContext from '../userContext';
 import { TrialButton, BuyButton, PlayButton } from '../Buttons/Buttons';
 import styles from './GameCard.module.css';
+import config from '../../config.json';
 
 function GameCard(props) {
   const { gameInfo } = props;
@@ -13,7 +14,7 @@ function GameCard(props) {
 
   return (
     <div className={styles.card}>
-      <img className={styles.icon} src={image} alt={name} />
+      <img className={styles.icon} src={`${config.apiUrl}/files/${image}`} alt={name} />
       <h1>{name}</h1>
       <p>{description}</p>
 

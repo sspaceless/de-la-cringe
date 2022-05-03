@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
 import userContext from '../userContext';
 import styles from './AuthWindow.module.css';
+import config from '../../config.json';
 
-function SignInView() {
+function SignInView({ hideFunction }) {
   const { reloadUserState } = useContext(userContext);
 
   const [username, setUsername] = useState('');
@@ -19,6 +21,7 @@ function SignInView() {
 
       if (answer.success) {
         await reloadUserState();
+        hideFunction();
       } else {
         setLoginError(true);
       }
@@ -43,12 +46,14 @@ function SignInView() {
       <label htmlFor="password">Password</label>
       <Input autoComplete="current-password" onChange={setPassword} id="password" type="password" name="password" />
 
-      <input className={styles.submitBtn} type="image" src="buttons/LogInButton.svg" alt="Log In" disabled={isLoginError} />
+      <input className={styles.submitBtn} type="image" src={`${config.apiUrl}/files/buttons/LogInButton.svg`} alt="Log In" disabled={isLoginError} />
 
       {isLoginError
         && <p className={[styles.center, styles.red].join(' ')}>The username or password is incorrect</p>}
     </form>
   );
 }
+
+SignInView.propTypes = { hideFunction: PropTypes.func.isRequired };
 
 export default SignInView;
