@@ -1,5 +1,5 @@
-# De la Cringe
-De la Cringe is an online platform that allows you to have fun with a large group of friends by playing multiplayer mini-games.
+# De La Cringe
+De La Cringe is an online platform that allows you to have fun with a large group of friends by playing multiplayer mini-games.
 
 ## Technologies we are using:
 ![image](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
