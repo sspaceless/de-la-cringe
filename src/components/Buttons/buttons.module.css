@@ -28,9 +28,13 @@
   border: none;
   font-family: 'Nunito', sans-serif;
   color: #fae9b0;
-  font-size: 20px;
+  font-size: 1em;
   font-weight: 900;
   text-decoration: underline;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.greyText {
+  color: grey;
 }

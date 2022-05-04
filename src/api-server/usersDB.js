@@ -67,7 +67,7 @@ class UsersDB {
       userId: record.userId,
       user: {
         username: record.username,
-        avatarUrl: `http://localhost:3002/${record.avatarUrl}`,
+        avatarUrl: `http://localhost:3002/files/${record.avatarUrl}`,
         availableGames: record.availableGames,
       }
     };
@@ -87,7 +87,7 @@ class UsersDB {
       success: true,
       user: {
         username: record.username,
-        avatarUrl: `http://localhost:3002/${record.avatarUrl}`,
+        avatarUrl: `http://localhost:3002/files/${record.avatarUrl}`,
         availableGames: record.availableGames,
       }
     };

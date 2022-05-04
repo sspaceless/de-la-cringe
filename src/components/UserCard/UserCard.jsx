@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import userContext from '../userContext';
 import { quickGet } from '../../modules/quickfetch';
+import config from '../../config.json';
 
 function UserCard({ avatarUrl, username }) {
   const { reloadUserState } = useContext(userContext);
 
   const logout = async () => {
-    const result = await quickGet('http://localhost:3002/api/users/logoutFromAccount');
+    const result = await quickGet(new URL('/api/users/logoutFromAccount', config.apiUrl));
 
     if (result.success) {
       await reloadUserState();

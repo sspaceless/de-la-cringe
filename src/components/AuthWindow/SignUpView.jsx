@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import validator from 'validator';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Input from '../Input/Input';
 import { quickPost } from '../../modules/quickfetch';
 import styles from './AuthWindow.module.css';
+import config from '../../config.json';
 
 const rules = {
   username: [
@@ -45,8 +46,13 @@ function SignUpView({ accountCreatedCallback = undefined }) {
   const [password, setPassword] = useState('');
   const [isCreateError, setCreateError] = useState(false);
 
+  let isError = false;
+
   const checkRules = (testRules, element) => testRules.map((rule, i) => {
-    const stl = rule.test(element) ? styles.green : styles.red;
+    const checkRes = rule.test(element);
+    const stl = checkRes ? styles.green : styles.red;
+
+    if (!checkRes) isError = true;
 
     // eslint-disable-next-line react/no-array-index-key
     return <p key={i} className={[styles.testMsg, stl].join(' ')}>{rule.message}</p>;
@@ -86,7 +92,7 @@ function SignUpView({ accountCreatedCallback = undefined }) {
       <div className={styles.inputBlock}>
         <Input autoComplete="username" onChange={onUsernameChange} id="username" type="text" name="username" />
 
-        <div className={[styles.testMessages, styles.rightMsg, styles.transBackground].join(' ')}>
+        <div className={[styles.testMessages, styles.rightMsg, 'blurBack'].join(' ')}>
           {usernameRules}
         </div>
       </div>
@@ -95,19 +101,19 @@ function SignUpView({ accountCreatedCallback = undefined }) {
       <div className={styles.inputBlock}>
         <Input autoComplete="new-password" onChange={setPassword} type="password" name="password" />
 
-        <div className={[styles.testMessages, styles.leftMsg, styles.transBackground].join(' ')}>
+        <div className={[styles.testMessages, styles.leftMsg, 'blurBack'].join(' ')}>
           {passwordRules}
         </div>
       </div>
 
-      <input className={styles.submitBtn} type="image" src="buttons/SignUpButton.svg" alt="Sign Up" disabled={!isCreateError} />
+      <input className={styles.submitBtn} type="image" src={`${config.apiUrl}/files/buttons/SignUpButton.svg`} alt="Sign Up" disabled={isCreateError || isError} />
       {isCreateError
-        && <p style={{ color: 'red' }}>This username is already in use</p>}
+        && <p className={[styles.red, styles.center].join(' ')}>This username is already in use</p>}
     </form>
   );
 }
 
-SignUpView.propTypes = { accountCreatedCallback: propTypes.func };
+SignUpView.propTypes = { accountCreatedCallback: PropTypes.func };
 
 SignUpView.defaultProps = { accountCreatedCallback: undefined };
 

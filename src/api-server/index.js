@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const validator = require('validator');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const rateLimiter = require('express-rate-limit');
 const UsersDB = require('./usersDB').default;
 
 const port = 3002;
@@ -15,10 +16,17 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+const createLimiter = (period, amount) => rateLimiter({
+  windowMs: period,
+  max: amount,
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static('public', { maxAge: 31557600 }));
 
 const validate = (username, password) => {
   const isUsernameValid = username
@@ -48,6 +56,7 @@ const initUsersDB = async () => {
 
 initUsersDB();
 
+app.use('/api/users/createAccount', createLimiter(5 * 60 * 1000, 1));
 app.post('/api/users/createAccount', async (req, res) => {
   if (!req.body) {
     return res.status(400).json({
@@ -74,6 +83,7 @@ app.post('/api/users/createAccount', async (req, res) => {
   return res.json(result);
 });
 
+app.use('/api/users/signInAccount', createLimiter(3 * 1000, 1));
 app.post('/api/users/signInAccount', async (req, res) => {
   if (!req.body) {
     return res.status(400).json({
@@ -109,6 +119,7 @@ app.post('/api/users/signInAccount', async (req, res) => {
   return res.json(result);
 });
 
+app.use('/api/users/getUserInfo', createLimiter(1 * 1000, 1));
 app.get('/api/users/getUserInfo', async (req, res) => {
   const { userId } = req.cookies;
 
@@ -130,6 +141,7 @@ app.get('/api/users/getUserInfo', async (req, res) => {
   return res.json(result);
 });
 
+app.use('/api/users/isAuthorized', createLimiter(1 * 1000, 1));
 app.get('/api/users/isAuthorized', async (req, res) => {
   const { userId } = req.cookies;
 
@@ -139,6 +151,7 @@ app.get('/api/users/isAuthorized', async (req, res) => {
   });
 });
 
+app.use('/api/users/logoutFromAccount', createLimiter(3 * 1000, 1));
 app.get('/api/users/logoutFromAccount', async (req, res) => {
   const { userId } = req.cookies;
   if (!userId || !validator.isUUID(userId)) {
@@ -154,6 +167,7 @@ app.get('/api/users/logoutFromAccount', async (req, res) => {
   return res.status(200).json({ success: true });
 });
 
+app.use('/api/games/grantFreeTrial', createLimiter(2 * 1000, 1));
 app.get('/api/games/grantFreeTrial', async (req, res) => {
   const { userId } = req.cookies;
   if (!userId || !validator.isUUID(userId)) {

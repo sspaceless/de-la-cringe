@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "express-rate-limit": "^6.4.0",
     "mongodb": "^4.5.0",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"

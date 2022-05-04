@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import SignInView from './SignInView';
 import SignUpView from './SignUpView';
+import BlurWrapper from '../BlurWrapper/BlurWrapper';
 import styles from './AuthWindow.module.css';
 
 function AuthWindow({ hideFunction }) {
@@ -27,16 +28,11 @@ function AuthWindow({ hideFunction }) {
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div
-      className={styles.wrapper}
-      onClick={(event) => {
-        if (event.target.classList.contains(styles.wrapper)) hideFunction();
-      }}
-    >
-      <div ref={curWin} className={[styles.authWin, styles.transBackground].join(' ')}>
+    <BlurWrapper onClose={hideFunction}>
+      <div ref={curWin} className={[styles.authWin, 'blurBack'].join(' ')}>
         {isSignInShown
-          ? <SignInView />
-          : <SignUpView />}
+          ? <SignInView hideFunction={hideFunction} />
+          : <SignUpView accountCreatedCallback={() => setSignInShown(true)} />}
 
         <hr />
 
@@ -46,7 +42,7 @@ function AuthWindow({ hideFunction }) {
           // eslint-disable-next-line
           : <p className={styles.bottomText}>Already have an account? <a href='#' onClick={toggleAuthWin}>Sign in!</a></p>}
       </div>
-    </div>
+    </BlurWrapper>
   );
 }
 
