@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BlurWrapper from '../BlurWrapper/BlurWrapper';
-import styles from './Message.module.css';
+import styles from './MessageWindow.module.css';
 
-function MsgWindow({ children, timeout = 0, onClose }) {
+function MessageWindow({ children, timeout = 0, onClose }) {
   const timeoutId = setTimeout(onClose, timeout);
 
   const onUserClose = () => {
@@ -18,12 +18,12 @@ function MsgWindow({ children, timeout = 0, onClose }) {
   );
 }
 
-MsgWindow.propTypes = {
+MessageWindow.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   timeout: PropTypes.number
 };
 
-MsgWindow.defaultProps = { timeout: 0 };
+MessageWindow.defaultProps = { timeout: 0 };
 
-export default MsgWindow;
+export default MessageWindow;

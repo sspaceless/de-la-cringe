@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { quickGet } from '../../modules/quickfetch';
 import userContext from '../userContext';
-import styles from './button.module.css';
+import styles from './buttons.module.css';
 import config from '../../config.json';
-import MsgWindow from '../Message/Message';
+import MessageWindow from '../MessageWindow/MessageWindow';
 import ConfirmWindow from '../ConfirmWindow/ConfirmWindow';
 
 const PlayButton = (props) => {
@@ -81,11 +81,11 @@ const TrialButton = (props) => {
 
       {isMsgShown
         && (
-          <MsgWindow timeout={30000} onClose={onCloseMsg}>
+          <MessageWindow timeout={30000} onClose={onCloseMsg}>
             Free Trial is not available for unauthorized users <br /><br />
             Please <span className={styles.greyText}>Login</span> or
             <span className={styles.greyText}> Create a new account</span>
-          </MsgWindow>
+          </MessageWindow>
         )}
     </>
   );
