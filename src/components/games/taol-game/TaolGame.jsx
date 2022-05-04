@@ -1,8 +1,7 @@
 import { useState } from 'react';
+import { TAOL_ID } from './config';
 import TaolMain from './TaolMain/TaolMain';
 import RoomConnect from '../RoomConnect/RoomConnect';
-
-const TAOL_ID = 'taol';
 
 function TaolGame() {
   const [roomState, setRoomState] = useState({});

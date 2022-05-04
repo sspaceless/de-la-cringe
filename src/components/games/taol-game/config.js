@@ -1,0 +1,16 @@
+export const NEXT_QUESTION_MESSAGE_TYPE = 'NEXT_QUESTION';
+export const PERSONAL_MESSAGE_TYPE = 'PERSONAL';
+export const ANSWER_MESSAGE_TYPE = 'ANSWER';
+export const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
+export const STAGE_MESSAGE_TYPE = 'STAGE';
+export const VOTE_MESSAGE_TYPE = 'VOTE';
+
+export const PERSONAL_QUESTION_STAGE = 'PERSONAL-QUESTION';
+export const PUBLIC_QUESTION_STAGE = 'PUBLIC-QUESTION';
+export const GAME_OVER_STAGE = 'GAME_OVER';
+export const RESULTS_STAGE = 'RESULTS';
+export const VOTING_STAGE = 'VOTING';
+
+export const PLAYER_MASK = '<PLAYER>';
+
+export const TAOL_ID = 'taol';

@@ -4,16 +4,7 @@ import { sendMessage } from '../../../../modules/room-connect';
 import Question from '../Question/Question';
 import Results from '../Results/Results';
 import Voting from '../Voting/Voting';
-
-const STAGE_MESSAGE_TYPE = 'STAGE';
-const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
-const PERSONAL_MESSAGE_TYPE = 'PERSONAL';
-
-const PUBLIC_QUESTION_STAGE = 'PUBLIC-QUESTION';
-const PERSONAL_QUESTION_STAGE = 'PERSONAL-QUESTION';
-const VOTING_STAGE = 'VOTING';
-const RESULTS_STAGE = 'RESULTS';
-const GAME_OVER_STAGE = 'GAME_OVER';
+import * as constants from '../config';
 
 function TaolMain(props) {
   const { roomId, roomState } = props;
@@ -24,7 +15,7 @@ function TaolMain(props) {
   const navigate = useNavigate();
 
   const buttonClickHandler = () => {
-    sendMessage(STAGE_MESSAGE_TYPE, { stage: PERSONAL_QUESTION_STAGE });
+    sendMessage(constants.STAGE_MESSAGE_TYPE, { stage: constants.PERSONAL_QUESTION_STAGE });
   };
 
   const content = (
@@ -42,33 +33,33 @@ function TaolMain(props) {
   );
 
   switch (stage) {
-    case PERSONAL_QUESTION_STAGE:
+    case constants.PERSONAL_QUESTION_STAGE:
       return (
         <Question
           roomState={roomState}
-          messageType={PERSONAL_MESSAGE_TYPE}
+          messageType={constants.PERSONAL_MESSAGE_TYPE}
         />
       );
 
-    case PUBLIC_QUESTION_STAGE:
+    case constants.PUBLIC_QUESTION_STAGE:
       return (
         <Question
           roomState={roomState}
-          messageType={PUBLIC_MESSAGE_TYPE}
+          messageType={constants.PUBLIC_MESSAGE_TYPE}
         />
       );
 
-    case VOTING_STAGE:
+    case constants.VOTING_STAGE:
       return (
         <Voting
           roomState={roomState}
         />
       );
 
-    case RESULTS_STAGE:
+    case constants.RESULTS_STAGE:
       return (<Results roomState={roomState} />);
 
-    case GAME_OVER_STAGE:
+    case constants.GAME_OVER_STAGE:
       navigate('/');
       break;
 

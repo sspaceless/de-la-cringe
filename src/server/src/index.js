@@ -2,7 +2,7 @@
 import { Server } from 'colyseus';
 import { createServer } from 'http';
 import express from 'express';
-import TaolRoom from './rooms/TaolRoom.js';
+import TaolRoom from './rooms/taol-game/TaolRoom.js';
 
 const port = 2567;
 

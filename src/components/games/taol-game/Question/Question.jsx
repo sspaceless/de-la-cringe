@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import useInput from '../../../../hooks/use-input';
 import { sendMessage } from '../../../../modules/room-connect';
-
-const ANSWER_MESSAGE_TYPE = 'ANSWER';
-const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
-
-const PLAYER_MASK = '<PLAYER>';
+import * as constants from '../config';
 
 function Question(props) {
   const { messageType, roomState } = props;
@@ -13,8 +9,8 @@ function Question(props) {
   const player = players.find((item) => item.id === clientId);
   const { isAnswered, question: clientQuestion } = player;
   const questionFor = players[questionNumber];
-  const question = messageType === PUBLIC_MESSAGE_TYPE
-    ? questionFor.question.publicQuestion.replace(PLAYER_MASK, questionFor.name)
+  const question = messageType === constants.PUBLIC_MESSAGE_TYPE
+    ? questionFor.question.publicQuestion.replace(constants.PLAYER_MASK, questionFor.name)
     : clientQuestion.personalQuestion;
 
   const {
@@ -25,7 +21,11 @@ function Question(props) {
   } = useInput((value) => value.trim().length > 0);
 
   const sendAnswer = () => {
-    sendMessage(ANSWER_MESSAGE_TYPE, { type: messageType, answer, questionFor: questionFor.id });
+    sendMessage(constants.ANSWER_MESSAGE_TYPE, {
+      type: messageType,
+      answer,
+      questionFor: questionFor.id
+    });
   };
 
   const formSubmitHandler = (event) => {
@@ -60,7 +60,7 @@ function Question(props) {
     content = <p> God job:) Waiting for other players... </p>;
   }
 
-  if (questionFor.id === clientId && messageType === PUBLIC_MESSAGE_TYPE) {
+  if (questionFor.id === clientId && messageType === constants.PUBLIC_MESSAGE_TYPE) {
     content = (
       <div>
         <p> Waiting for other players... </p>

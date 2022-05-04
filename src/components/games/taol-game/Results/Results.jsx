@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import { sendMessage } from '../../../../modules/room-connect';
 import Answer from '../Answer/Answer';
+import * as constants from '../config';
 
-const NEXT_QUESTION_MESSAGE_TYPE = 'NEXT_QUESTION';
-const STAGE_MESSAGE_TYPE = 'STAGE';
-
-const GAME_OVER_STAGE = 'GAME_OVER';
 function Results(props) {
   const { roomState } = props;
   const { players, questionNumber, clientId } = roomState;
@@ -18,11 +15,11 @@ function Results(props) {
   const isEndOfGame = isPlayerVip && questionNumber === players.length - 1;
 
   const nextQuestionButtonClickHandler = () => {
-    sendMessage(NEXT_QUESTION_MESSAGE_TYPE);
+    sendMessage(constants.NEXT_QUESTION_MESSAGE_TYPE);
   };
 
   const endGameButtonClickHandler = () => {
-    sendMessage(STAGE_MESSAGE_TYPE, { stage: GAME_OVER_STAGE });
+    sendMessage(constants.STAGE_MESSAGE_TYPE, { stage: constants.GAME_OVER_STAGE });
   };
 
   const button = isEndOfGame

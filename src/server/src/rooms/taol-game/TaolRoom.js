@@ -1,24 +1,11 @@
-import CringeRoom from '../CringeRoom.js';
-import PlayerState from './schema/taol-schemas/PlayerState.js';
-import TaolRoomState from './schema/taol-schemas/TaolRoomState.js';
-import { toalQuestions } from './schema/taol-schemas/taol-questions.js';
-import QuestionState from './schema/taol-schemas/QuestionState.js';
-import AnswerState from './schema/taol-schemas/AnswerState.js';
+import CringeRoom from '../../CringeRoom.js';
+import AnswerState from './schema/AnswerState.js';
+import PlayerState from './schema/PlayerState.js';
+import QuestionState from './schema/QuestionState.js';
+import TaolRoomState from './schema/TaolRoomState.js';
+import { toalQuestions } from './taol-questions.js';
+import * as constants from './config.js';
 
-const STAGE_MESSAGE_TYPE = 'STAGE';
-const ANSWER_MESSAGE_TYPE = 'ANSWER';
-const VOTE_MESSAGE_TYPE = 'VOTE';
-const PUBLIC_MESSAGE_TYPE = 'PUBLIC';
-const PERSONAL_MESSAGE_TYPE = 'PERSONAL';
-const NEXT_QUESTION_MESSAGE_TYPE = 'NEXT_QUESTION';
-
-const PUBLIC_QUESTION_STAGE = 'PUBLIC-QUESTION';
-const PERSONAL_QUESTION_STAGE = 'PERSONAL-QUESTION';
-const VOTING_STAGE = 'VOTING';
-const RESULTS_STAGE = 'RESULTS';
-
-const POINTS_FOR_TRUTH = 50;
-const POINTS_FOR_LYING = 50;
 class TaolRoom extends CringeRoom {
   constructor() {
     super();
@@ -31,10 +18,10 @@ class TaolRoom extends CringeRoom {
     this.maxClients = 8;
     this.setState(new TaolRoomState());
 
-    this.onMessage(STAGE_MESSAGE_TYPE, (client, message) => {
+    this.onMessage(constants.STAGE_MESSAGE_TYPE, (client, message) => {
       this.state.stage = message.stage;
 
-      if (message.stage === PERSONAL_QUESTION_STAGE) {
+      if (message.stage === constants.PERSONAL_QUESTION_STAGE) {
         this.state.players.forEach((player) => {
           const unusedQuestions = this.questions.filter((item) => !item.isUsed);
           const randomIndex = Math.round(Math.random() * (unusedQuestions.length - 1));
@@ -45,10 +32,10 @@ class TaolRoom extends CringeRoom {
       }
     });
 
-    this.onMessage(ANSWER_MESSAGE_TYPE, (client, message) => {
+    this.onMessage(constants.ANSWER_MESSAGE_TYPE, (client, message) => {
       const { players } = this.state;
 
-      if (message.type === PERSONAL_MESSAGE_TYPE) {
+      if (message.type === constants.PERSONAL_MESSAGE_TYPE) {
         const { answer } = message;
         const player = players.find((item) => item.id === client.sessionId);
 
@@ -64,7 +51,7 @@ class TaolRoom extends CringeRoom {
         }).length;
 
         if (answersCount === players.length) {
-          this.state.stage = PUBLIC_QUESTION_STAGE;
+          this.state.stage = constants.PUBLIC_QUESTION_STAGE;
 
           players.forEach((item) => {
             // eslint-disable-next-line no-param-reassign
@@ -73,7 +60,7 @@ class TaolRoom extends CringeRoom {
         }
       }
 
-      if (message.type === PUBLIC_MESSAGE_TYPE) {
+      if (message.type === constants.PUBLIC_MESSAGE_TYPE) {
         const { answer, questionFor } = message;
         const questionForPlayer = players.find((item) => item.id === questionFor);
         const answeredPlayer = players.find((item) => item.id === client.sessionId);
@@ -86,7 +73,7 @@ class TaolRoom extends CringeRoom {
 
         const answersCount = questionForPlayer.question.answers.size;
         if (answersCount === players.length) {
-          this.state.stage = VOTING_STAGE;
+          this.state.stage = constants.VOTING_STAGE;
 
           players.forEach((item) => {
             // eslint-disable-next-line no-param-reassign
@@ -96,7 +83,7 @@ class TaolRoom extends CringeRoom {
       }
     });
 
-    this.onMessage(VOTE_MESSAGE_TYPE, (client, message) => {
+    this.onMessage(constants.VOTE_MESSAGE_TYPE, (client, message) => {
       const { players, questionNumber } = this.state;
       const { answerId } = message;
 
@@ -107,17 +94,17 @@ class TaolRoom extends CringeRoom {
       answer.votes.push(client.sessionId);
 
       if (answer.isTruth) {
-        votedPlayer.points += POINTS_FOR_TRUTH;
-        players[questionNumber].points += POINTS_FOR_TRUTH;
+        votedPlayer.points += constants.POINTS_FOR_TRUTH;
+        players[questionNumber].points += constants.POINTS_FOR_TRUTH;
       } else {
-        answeredPlayer.points += POINTS_FOR_LYING;
+        answeredPlayer.points += constants.POINTS_FOR_LYING;
       }
 
       votedPlayer.isAnswered = true;
 
       const votesCount = players.filter((item) => item.isAnswered === true).length;
       if (votesCount === players.length - 1) {
-        this.state.stage = RESULTS_STAGE;
+        this.state.stage = constants.RESULTS_STAGE;
 
         players.forEach((item) => {
           // eslint-disable-next-line no-param-reassign
@@ -126,8 +113,8 @@ class TaolRoom extends CringeRoom {
       }
     });
 
-    this.onMessage(NEXT_QUESTION_MESSAGE_TYPE, () => {
-      this.state.stage = PUBLIC_QUESTION_STAGE;
+    this.onMessage(constants.NEXT_QUESTION_MESSAGE_TYPE, () => {
+      this.state.stage = constants.PUBLIC_QUESTION_STAGE;
       this.state.questionNumber += 1;
     });
   }
