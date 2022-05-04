@@ -1,0 +1,33 @@
+.confirm {
+  position: relative;
+  padding: 15px;
+  font-size: 1.5em;
+  border-radius: 22.5px 22.5px 0 0;
+}
+
+.btn {
+  background: none;
+  border: none;
+  position: absolute;
+  height: 50px;
+  width: calc((100% - 15px) / 2);
+  bottom: -65px;
+  color: grey;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: 0.5s color;
+}
+
+.btn:hover {
+  color: #a6a6a6;
+}
+
+.okBtn {
+  left: 0;
+  border-bottom-left-radius: 22.5px;
+}
+
+.cancelBtn {
+  right: 0;
+  border-bottom-right-radius: 22.5px;
+}

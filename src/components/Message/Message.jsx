@@ -1,14 +1,26 @@
 import React from 'react';
-import BlurWrapper from '../BlurWrapper/BlurWrapper';
 import PropTypes from 'prop-types';
+import BlurWrapper from '../BlurWrapper/BlurWrapper';
+import styles from './Message.module.css';
 
-function MsgWindow({ message, timeout = 0, onClose }) {
+function MsgWindow({ children, timeout = 0, onClose }) {
+  const timeoutId = setTimeout(onClose, timeout);
 
+  const onUserClose = () => {
+    clearTimeout(timeoutId);
+    onClose();
+  };
+
+  return (
+    <BlurWrapper onClose={onUserClose}>
+      <div className={[styles.message, 'blurBack'].join(' ')}>{children}</div>
+    </BlurWrapper>
+  );
 }
 
 MsgWindow.propTypes = {
-  message: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
   timeout: PropTypes.number
 };
 

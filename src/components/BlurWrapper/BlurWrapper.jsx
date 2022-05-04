@@ -20,7 +20,7 @@ function BlurWrapper({ children, onClose }) {
 
   return ReactDOM.createPortal(
     (// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <div ref={wrapper} className={styles.wrapper} onClick={onClick}>
+      <div ref={wrapper} className={styles.wrapper} onMouseDown={onClick}>
         {children}
       </div>
     ),
