@@ -1,4 +1,5 @@
 import propTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { sendMessage } from '../../../../modules/room-connect';
 import Question from '../Question/Question';
 import Results from '../Results/Results';
@@ -12,12 +13,15 @@ const PUBLIC_QUESTION_STAGE = 'PUBLIC-QUESTION';
 const PERSONAL_QUESTION_STAGE = 'PERSONAL-QUESTION';
 const VOTING_STAGE = 'VOTING';
 const RESULTS_STAGE = 'RESULTS';
+const GAME_OVER_STAGE = 'GAME_OVER';
 
 function TaolMain(props) {
   const { roomId, roomState } = props;
   const { players, clientId, stage } = roomState;
   const isPlayerVip = players.find((player) => player.id === clientId).isVip === true;
   const isButtonActive = isPlayerVip && players.length >= 4;
+
+  const navigate = useNavigate();
 
   const buttonClickHandler = () => {
     sendMessage(STAGE_MESSAGE_TYPE, { stage: PERSONAL_QUESTION_STAGE });
@@ -63,6 +67,10 @@ function TaolMain(props) {
 
     case RESULTS_STAGE:
       return (<Results roomState={roomState} />);
+
+    case GAME_OVER_STAGE:
+      navigate('/');
+      break;
 
     default:
       return (content);
