@@ -25,7 +25,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: de-la-cringe    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: './build'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'                # set this to the node version to use
 
 jobs:
@@ -49,25 +49,6 @@ jobs:
     - name: add process.json
       run: |
         echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
-
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v3
-      with:
-        name: de-la-cringe
-        path: ./build
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Development'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: de-la-cringe
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp 
