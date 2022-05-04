@@ -27,7 +27,7 @@ function SignInView({ hideFunction }) {
       }
     } catch {
       // eslint-disable-next-line no-console
-      console.log(' POST to signInAccount failed');
+      console.log('POST to signInAccount failed');
     }
   };
 

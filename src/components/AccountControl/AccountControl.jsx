@@ -21,6 +21,7 @@ function AccountControl() {
 
   const avatarClick = () => {
     setIsAvatarClicked(true);
+    setIsShowButton(false);
   };
   const hideAuthWin = () => {
     setIsAvatarClicked(false);
