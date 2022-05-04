@@ -1,24 +1,17 @@
 import * as schema from '@colyseus/schema';
+import CringePlayer from '../../schema/CringePlayer.js';
 import QuestionState from './QuestionState.js';
 
-const { Schema } = schema;
-
-class PlayerState extends Schema {
+class PlayerState extends CringePlayer {
   constructor(id, name, isVip) {
-    super();
+    super(id, name, isVip);
 
-    this.id = id;
-    this.name = name;
-    this.isVip = isVip;
     this.points = 0;
     this.isAnswered = false;
   }
 }
 
 schema.defineTypes(PlayerState, {
-  id: 'string',
-  name: 'string',
-  isVip: 'boolean',
   points: 'number',
   isAnswered: 'boolean',
   question: QuestionState,

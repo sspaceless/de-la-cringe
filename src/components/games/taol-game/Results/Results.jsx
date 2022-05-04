@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import { sendMessage } from '../../../../modules/room-connect';
-import Answer from './Answer/Answer';
+import Answer from '../Answer/Answer';
+import * as constants from '../config';
 
-const NEXT_QUESTION_MESSAGE_TYPE = 'NEXT_QUESTION';
 function Results(props) {
   const { roomState } = props;
   const { players, questionNumber, clientId } = roomState;
@@ -15,19 +14,17 @@ function Results(props) {
   const isPlayerVip = players.find((item) => item.id === clientId).isVip === true;
   const isEndOfGame = isPlayerVip && questionNumber === players.length - 1;
 
-  const navigate = useNavigate();
-
   const nextQuestionButtonClickHandler = () => {
-    sendMessage(NEXT_QUESTION_MESSAGE_TYPE);
+    sendMessage(constants.NEXT_QUESTION_MESSAGE_TYPE);
   };
 
   const endGameButtonClickHandler = () => {
-    navigate('/');
+    sendMessage(constants.STAGE_MESSAGE_TYPE, { stage: constants.GAME_OVER_STAGE });
   };
 
   const button = isEndOfGame
-    ? <button type="button" onClick={endGameButtonClickHandler}>End game</button>
-    : <button type="button" onClick={nextQuestionButtonClickHandler}>Next Question!</button>;
+    ? { text: 'Home', onClick: endGameButtonClickHandler }
+    : { text: 'Next Question!', onClick: nextQuestionButtonClickHandler };
 
   return (
     <>
@@ -44,7 +41,7 @@ function Results(props) {
       <div>
         {players.map((item) => (<p>{`${item.name} - ${item.points}`}</p>))}
       </div>
-      {isPlayerVip && button}
+      {isPlayerVip && <button type="button" onClick={button.onClick}>{button.text}</button>}
     </>
   );
 }

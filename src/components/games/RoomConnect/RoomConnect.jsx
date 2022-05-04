@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useState, useEffect, useContext } from 'react';
 import { createRoom, joinRoom } from '../../../modules/room-connect';
 import useInput from '../../../hooks/use-input';
 import classes from './RoomConnect.module.css';
+import userContext from '../../userContext';
 
 function RoomConnect(props) {
-  const { setRoomState, setRoomId, children } = props;
+  const { setRoomState, setRoomId, children, gameId } = props;
+
   const [isJoined, setIsJoined] = useState(false);
   const [error, setError] = useState(null);
+
+  const { userState } = useContext(userContext);
+  const { username } = userState.user;
 
   const {
     valueChangeHandler: inputChangeHandler,
@@ -29,12 +34,12 @@ function RoomConnect(props) {
     };
 
     if (isInputRoomIdValid && !isJoined) {
-      joinRoom('taol', 'userName', enteredRoomId, setState)
+      joinRoom(gameId, username, enteredRoomId, setState)
         .catch((e) => {
           setError(e);
         });
     }
-  }, [isInputRoomIdValid, isJoined, enteredRoomId, setRoomId, setRoomState]);
+  }, [username, gameId, isInputRoomIdValid, isJoined, enteredRoomId, setRoomId, setRoomState]);
 
   const buttonClickHanler = () => {
     const setState = (clientId, state) => {
@@ -46,7 +51,7 @@ function RoomConnect(props) {
       setIsJoined(true);
     };
 
-    createRoom('taol', 'userName', setRoomId, setState)
+    createRoom(gameId, username, setRoomId, setState)
       .catch((e) => {
         console.log(e);
       });
@@ -76,7 +81,8 @@ function RoomConnect(props) {
 RoomConnect.propTypes = {
   setRoomState: PropTypes.func.isRequired,
   setRoomId: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  gameId: PropTypes.string.isRequired,
 };
 
 export default RoomConnect;
