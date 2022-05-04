@@ -1,9 +1,12 @@
 import React from 'react';
+import BlurWrapper from '../BlurWrapper/BlurWrapper';
 import styles from './LoadingWindow.module.css';
 
 function LoadingWindow() {
   return (
-    <img className={styles.loadingIcon} src="loadingIcon.svg" alt="Loading..." />
+    <BlurWrapper>
+      <img className={styles.loadingIcon} src="loadingIcon.svg" alt="Loading..." />
+    </BlurWrapper>
   );
 }
 

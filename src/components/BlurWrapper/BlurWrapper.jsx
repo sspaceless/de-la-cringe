@@ -3,8 +3,15 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './BlurWrapper.module.css';
 
-function BlurWrapper({ children, onClose }) {
+function BlurWrapper({ children, onClose = undefined }) {
   const wrapper = useRef();
+
+  if (!onClose) {
+    return ReactDOM.createPortal(
+      <div className={styles.wrapper}>{children}</div>,
+      document.getElementById('root')
+    );
+  }
 
   const onClick = (event) => {
     if (event.target === wrapper.current) onClose();
@@ -30,7 +37,9 @@ function BlurWrapper({ children, onClose }) {
 
 BlurWrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func
 };
+
+BlurWrapper.defaultProps = { onClose: undefined };
 
 export default BlurWrapper;
