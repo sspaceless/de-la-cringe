@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TAOL_ID } from './config';
 import TaolMain from './TaolMain/TaolMain';
 import RoomConnect from '../RoomConnect/RoomConnect';
 
@@ -7,7 +8,7 @@ function TaolGame() {
   const [roomId, setRoomId] = useState('');
 
   return (
-    <RoomConnect setRoomId={setRoomId} setRoomState={setRoomState}>
+    <RoomConnect gameId={TAOL_ID} setRoomId={setRoomId} setRoomState={setRoomState}>
       <TaolMain roomId={roomId} roomState={roomState} />
     </RoomConnect>
   );

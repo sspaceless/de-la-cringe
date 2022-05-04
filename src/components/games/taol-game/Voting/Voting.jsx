@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import arrayShuffle from '../../../../modules/array-shuffle';
 import { sendMessage } from '../../../../modules/room-connect';
+import { VOTE_MESSAGE_TYPE } from '../config';
 
-const VOTE_MESSAGE_TYPE = 'VOTE';
 function Voting(props) {
   const { roomState } = props;
   const { players, questionNumber, clientId } = roomState;
