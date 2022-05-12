@@ -26,6 +26,7 @@
   "dependencies": {
     "@colyseus/schema": "^1.0.34",
     "colyseus": "^0.14.9",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security"
   }
 }

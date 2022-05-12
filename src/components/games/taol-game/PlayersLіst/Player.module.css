@@ -1,0 +1,20 @@
+.player {
+  display: flex;
+  align-items: center;
+}
+
+.player img {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 0.5rem;
+}
+
+.player p {
+  padding-left: 0.5rem;
+}
+
+.not-ready {
+  opacity: 0.5;
+}

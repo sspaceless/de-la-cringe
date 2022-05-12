@@ -1,0 +1,24 @@
+.voting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem;
+}
+
+.question {
+    display: flex;
+    border: solid 1px;
+    border-radius: 20px;
+    margin: 0.5rem;
+    padding: 1rem;
+}
+
+.question p {
+    margin: 1rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

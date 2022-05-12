@@ -1,0 +1,8 @@
+.players-list {
+    display: flex;
+    flex-direction: column;
+    border: solid 1px;
+    border-radius: 20px;
+    padding: 1rem;
+    margin: 0.5rem;
+}

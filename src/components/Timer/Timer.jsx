@@ -22,14 +22,14 @@ function Timer(props) {
   }, []);
 
   useEffect(() => {
-    if (curTime >= untilDate) {
+    if (curTime >= momentD) {
       clearInterval(interval.current);
 
       if (onAlarm) {
         onAlarm();
       }
     }
-  }, [untilDate, curTime, onAlarm]);
+  }, [momentD, curTime, onAlarm]);
 
   const time = moment.duration(Math.max(momentD.diff(curTime), 0)).format(format, { trim });
 

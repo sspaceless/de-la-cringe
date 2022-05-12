@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import styles from './AnswerResult.module.css';
+import VotedPlayers from './VotedPlayers';
 
 function Answer(props) {
   const { answeredPlayerId, answer, players } = props;
@@ -8,18 +10,18 @@ function Answer(props) {
   const answeredPlayer = players.find((item) => item.id === answeredPlayerId);
 
   const resultText = isTruth
-    ? 'Truth!'
-    : `${answeredPlayer.name} lies!`;
+    ? 'Щира правда :)'
+    : `${answeredPlayer.name} бреше!`;
 
   return (
-    <>
+    <div className={styles.results}>
       <p>{answerText}</p>
-      <p>{resultText}</p>
-      <div>
-        Voted players:
-        {votedPlayers.map((item) => item.name)}
+      <p>Гравці, що обрали цю відповідь:</p>
+      <div className={styles['voted-players']}>
+        <VotedPlayers className={styles['voted-players']} players={votedPlayers} />
       </div>
-    </>
+      <p>{resultText}</p>
+    </div>
   );
 }
 

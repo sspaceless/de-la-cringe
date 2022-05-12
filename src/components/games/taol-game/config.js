@@ -11,6 +11,4 @@ export const GAME_OVER_STAGE = 'GAME_OVER';
 export const RESULTS_STAGE = 'RESULTS';
 export const VOTING_STAGE = 'VOTING';
 
-export const PLAYER_MASK = '<PLAYER>';
-
 export const TAOL_ID = 'taol';

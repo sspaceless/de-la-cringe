@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { useState, useEffect, useContext } from 'react';
 import { createRoom, joinRoom } from '../../../modules/room-connect';
 import useInput from '../../../hooks/use-input';
-import classes from './RoomConnect.module.css';
 import userContext from '../../userContext';
+import styles from './RoomConnect.module.css';
 
 function RoomConnect(props) {
   const { setRoomState, setRoomId, children, gameId } = props;
@@ -12,7 +12,7 @@ function RoomConnect(props) {
   const [error, setError] = useState(null);
 
   const { userState } = useContext(userContext);
-  const { username } = userState.user;
+  const { username, avatarUrl } = userState.user;
 
   const {
     valueChangeHandler: inputChangeHandler,
@@ -34,12 +34,21 @@ function RoomConnect(props) {
     };
 
     if (isInputRoomIdValid && !isJoined) {
-      joinRoom(gameId, username, enteredRoomId, setState)
+      joinRoom(gameId, username, avatarUrl, enteredRoomId, setState)
         .catch((e) => {
           setError(e);
         });
     }
-  }, [username, gameId, isInputRoomIdValid, isJoined, enteredRoomId, setRoomId, setRoomState]);
+  }, [
+    username,
+    avatarUrl,
+    gameId,
+    isInputRoomIdValid,
+    isJoined,
+    enteredRoomId,
+    setRoomId,
+    setRoomState
+  ]);
 
   const buttonClickHanler = () => {
     const setState = (clientId, state) => {
@@ -51,28 +60,27 @@ function RoomConnect(props) {
       setIsJoined(true);
     };
 
-    createRoom(gameId, username, setRoomId, setState)
+    createRoom(gameId, username, avatarUrl, setRoomId, setState)
       .catch((e) => {
         console.log(e);
       });
   };
 
   const content = (
-    <div>
-      <button type="button" onClick={buttonClickHanler}> New game! </button>
-      <label htmlFor="room-id">
-        Room ID:
-        <input
-          id="room-id"
-          maxLength="9"
-          value={enteredRoomId}
-          onChange={inputChangeHandler}
-          onBlur={inputBlurHandler}
-        />
-        {inputRoomIdHasError && <p className={classes['error-text']}>Invalid room ID!</p>}
-        {error && <p>{error.message}</p>}
-      </label>
-    </div>
+    <>
+      <p>{'Введіть ID кімнати, до якої бажаєте під\'єднатися:'} </p>
+      <input
+        id="room-id"
+        className={inputRoomIdHasError || error ? styles.error : ''}
+        maxLength="4"
+        value={enteredRoomId}
+        onChange={inputChangeHandler}
+        onBlur={inputBlurHandler}
+      />
+      {inputRoomIdHasError && <p className={styles['error-text']}>Не вірний ID кімнати!</p>}
+      {!inputRoomIdHasError && error && <p className={styles['error-text']}>{error.message}</p>}
+      <button type="button" onClick={buttonClickHanler}> Нова гра </button>
+    </>
   );
 
   return isJoined ? children : content;
