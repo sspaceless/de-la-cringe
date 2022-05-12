@@ -2,39 +2,53 @@ import PropTypes from 'prop-types';
 import arrayShuffle from '../../../../modules/array-shuffle';
 import { sendMessage } from '../../../../modules/room-connect';
 import { VOTE_MESSAGE_TYPE } from '../config';
+import Timer from '../../../Timer/Timer';
+import PlayerList from '../PlayersLIst/PlayersList';
+import styles from './Voting.module.css';
+import OptionsList from './OptionsList';
 
 function Voting(props) {
   const { roomState } = props;
-  const { players, questionNumber, clientId } = roomState;
+  const { players, questionNumber, clientId, timer: untilDate } = roomState;
   const { isAnswered } = players.find((item) => item.id === clientId);
   const player = players[questionNumber];
-  const question = player.question.publicQuestion.replace('<PLAYER>', player.name);
+  const question = player.question.publicQuestion;
 
-  const answers = Array.from(player.question.answers.entries());
-  const shuffledAnswers = arrayShuffle(answers.filter((item) => item[0] !== clientId));
+  const options = Array.from(player.question.answers.entries());
+  const shuffledOptions = arrayShuffle(options.filter((item) => item[0] !== clientId));
 
-  const voteClickHandler = (answerId) => {
+  const voteButtonClickHandler = (answerId) => {
     sendMessage(VOTE_MESSAGE_TYPE, { answerId });
   };
 
   let content = (
-    <div>
-      {shuffledAnswers.map((item) => (
-        <button key={item[0]} type="button" onClick={voteClickHandler.bind(null, item[0])}>
-          { item['1'].answer }
-        </button>
-      ))}
-    </div>
+    <>
+      <Timer
+        untilDate={untilDate}
+        onAlarm={voteButtonClickHandler}
+        format="ss"
+      />
+      <div className={styles.options}>
+        <OptionsList
+          options={shuffledOptions}
+          onClick={voteButtonClickHandler}
+        />
+      </div>
+    </>
   );
 
   if (clientId === player.id || isAnswered) {
-    content = <p> Waiting for other players... </p>;
+    content = <p> Чекаємо поки інші гравці проголосують... </p>;
   }
 
   return (
-    <div>
-      <h2>{question}</h2>
+    <div className={styles.voting}>
+      <p>Оберіть правду:</p>
+      <div className={styles.question}>
+        <p>{question}</p>
+      </div>
       {content}
+      <PlayerList players={players} />
     </div>
   );
 }
@@ -46,5 +60,6 @@ Voting.propTypes = {
     players: PropTypes.instanceOf(Array).isRequired,
     clientId: PropTypes.string.isRequired,
     questionNumber: PropTypes.number.isRequired,
+    timer: PropTypes.string.isRequired,
   }).isRequired,
 };

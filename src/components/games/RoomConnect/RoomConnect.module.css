@@ -1,0 +1,23 @@
+.error-text {
+  color: #D7263A !important;
+}
+
+.error {
+  animation: shake 0.1s ease-in-out 0s 3;
+  box-shadow: 0 0 0.5rem #D7263A;
+}
+
+@keyframes shake {
+  0% {
+    margin-left: 0rem;
+ }
+  25% {
+    margin-left: 0.5rem;
+ }
+  75% {
+    margin-left: -0.5rem;
+ }
+  100% {
+    margin-left: 0rem;
+ }
+}

@@ -3,7 +3,7 @@ import * as schema from '@colyseus/schema';
 const { Schema } = schema;
 
 class CringePlayer extends Schema {
-  constructor(id, name, isVip, avatarUrl) {
+  constructor(id, name, avatarUrl, isVip) {
     super();
 
     this.id = id;

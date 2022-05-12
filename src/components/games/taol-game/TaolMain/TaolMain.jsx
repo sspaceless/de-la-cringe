@@ -5,6 +5,7 @@ import Question from '../Question/Question';
 import Results from '../Results/Results';
 import Voting from '../Voting/Voting';
 import * as constants from '../config';
+import PlayerList from '../PlayersLIst/PlayersList';
 
 function TaolMain(props) {
   const { roomId, roomState } = props;
@@ -20,14 +21,8 @@ function TaolMain(props) {
 
   const content = (
     <div>
-      <h2>{`Room ID: ${roomId}`}</h2>
-      <ul>
-        {players.map((player) => (
-          <li key={player.id}>
-            {`${player.isVip ? 'VIP:' : ''} ${player.name}`}
-          </li>
-        ))}
-      </ul>
+      <h2>{`ID кімнати: ${roomId}`}</h2>
+      <PlayerList players={players} />
       {isPlayerVip && <button type="button" disabled={!isButtonActive} onClick={buttonClickHandler}>Start!</button>}
     </div>
   );
@@ -71,9 +66,9 @@ function TaolMain(props) {
 TaolMain.propTypes = {
   roomId: propTypes.string.isRequired,
   roomState: propTypes.shape({
-    players: propTypes.instanceOf(Array).isRequired,
-    clientId: propTypes.string.isRequired,
-    stage: propTypes.string.isRequired,
+    players: propTypes.instanceOf(Array),
+    clientId: propTypes.string,
+    stage: propTypes.string,
   }).isRequired,
 };
 

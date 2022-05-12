@@ -4,8 +4,8 @@ import * as Colyseus from 'colyseus.js';
 const client = new Colyseus.Client('ws://localhost:2567');
 let connectedRoom;
 
-const createRoom = async (game, userName, setRoomId, onStateChange,) => {
-  const options = { userName, isVip: true };
+const createRoom = async (game, userName, avatarUrl, setRoomId, onStateChange) => {
+  const options = { userName, avatarUrl, isVip: true };
   try {
     connectedRoom = await client.create(game, options);
     connectedRoom.onStateChange(onStateChange.bind(null, connectedRoom.sessionId));
@@ -15,11 +15,11 @@ const createRoom = async (game, userName, setRoomId, onStateChange,) => {
   }
 };
 
-const joinRoom = async (game, userName, roomId, onStateChange) => {
+const joinRoom = async (game, userName, avatarUrl, roomId, onStateChange) => {
   const roomArray = await client.getAvailableRooms(game);
 
   const isRoomExist = roomArray.map((room) => room.roomId).includes(roomId);
-  const options = { userName, isVip: false };
+  const options = { userName, avatarUrl, isVip: false };
 
   if (isRoomExist) {
     try {

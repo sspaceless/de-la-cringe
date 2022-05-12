@@ -1,10 +1,15 @@
+/* eslint-disable no-param-reassign */
+import fs from 'fs';
 import CringeRoom from '../../CringeRoom.js';
 import AnswerState from './schema/AnswerState.js';
 import PlayerState from './schema/PlayerState.js';
 import QuestionState from './schema/QuestionState.js';
 import TaolRoomState from './schema/TaolRoomState.js';
-import { toalQuestions } from './taol-questions.js';
 import * as constants from './config.js';
+
+const toalQuestionsPath = './src/rooms/taol-game/taol-questions.json';
+const toalQuestionsJSON = fs.readFileSync(toalQuestionsPath, 'utf8');
+const toalQuestions = JSON.parse(toalQuestionsJSON);
 
 class TaolRoom extends CringeRoom {
   constructor() {
@@ -22,11 +27,22 @@ class TaolRoom extends CringeRoom {
       this.state.stage = message.stage;
 
       if (message.stage === constants.PERSONAL_QUESTION_STAGE) {
+        this.state.resetTimer();
+
         this.state.players.forEach((player) => {
           const unusedQuestions = this.questions.filter((item) => !item.isUsed);
-          const randomIndex = Math.round(Math.random() * (unusedQuestions.length - 1));
-          // eslint-disable-next-line no-param-reassign
-          player.question = new QuestionState(unusedQuestions[randomIndex]);
+          const randomIndex = Math.round(Math.random() * unusedQuestions.length);
+
+          const question = unusedQuestions[randomIndex];
+          question.publicQuestion = question.publicQuestion
+            .replace(
+              constants.PLAYER_MASK,
+              player.name
+            );
+
+          player.question = new QuestionState(question);
+          player.isAnswered = false;
+
           this.questions.find((item) => item.id === player.question.id).isUsed = true;
         });
       }
@@ -52,9 +68,9 @@ class TaolRoom extends CringeRoom {
 
         if (answersCount === players.length) {
           this.state.stage = constants.PUBLIC_QUESTION_STAGE;
+          this.state.resetTimer();
 
           players.forEach((item) => {
-            // eslint-disable-next-line no-param-reassign
             item.isAnswered = false;
           });
         }
@@ -74,9 +90,9 @@ class TaolRoom extends CringeRoom {
         const answersCount = questionForPlayer.question.answers.size;
         if (answersCount === players.length) {
           this.state.stage = constants.VOTING_STAGE;
+          this.state.resetTimer();
 
           players.forEach((item) => {
-            // eslint-disable-next-line no-param-reassign
             item.isAnswered = false;
           });
         }
@@ -86,18 +102,20 @@ class TaolRoom extends CringeRoom {
     this.onMessage(constants.VOTE_MESSAGE_TYPE, (client, message) => {
       const { players, questionNumber } = this.state;
       const { answerId } = message;
-
       const votedPlayer = players.find((item) => item.id === client.sessionId);
-      const answeredPlayer = players.find((item) => item.id === answerId);
-      const answer = players[questionNumber].question.answers.get(answerId);
 
-      answer.votes.push(client.sessionId);
+      if (answerId !== undefined) {
+        const answeredPlayer = players.find((item) => item.id === answerId);
+        const answer = players[questionNumber].question.answers.get(answerId);
 
-      if (answer.isTruth) {
-        votedPlayer.points += constants.POINTS_FOR_TRUTH;
-        players[questionNumber].points += constants.POINTS_FOR_TRUTH;
-      } else {
-        answeredPlayer.points += constants.POINTS_FOR_LYING;
+        answer.votes.push(client.sessionId);
+
+        if (answer.isTruth) {
+          votedPlayer.points += constants.POINTS_FOR_TRUTH;
+          players[questionNumber].points += constants.POINTS_FOR_TRUTH;
+        } else {
+          answeredPlayer.points += constants.POINTS_FOR_LYING;
+        }
       }
 
       votedPlayer.isAnswered = true;
@@ -105,9 +123,7 @@ class TaolRoom extends CringeRoom {
       const votesCount = players.filter((item) => item.isAnswered === true).length;
       if (votesCount === players.length - 1) {
         this.state.stage = constants.RESULTS_STAGE;
-
         players.forEach((item) => {
-          // eslint-disable-next-line no-param-reassign
           item.isAnswered = false;
         });
       }
@@ -116,12 +132,13 @@ class TaolRoom extends CringeRoom {
     this.onMessage(constants.NEXT_QUESTION_MESSAGE_TYPE, () => {
       this.state.stage = constants.PUBLIC_QUESTION_STAGE;
       this.state.questionNumber += 1;
+      this.state.resetTimer();
     });
   }
 
   onJoin(client, options) {
-    const { userName: name, isVip } = options;
-    const player = new PlayerState(client.sessionId, name, isVip);
+    const { userName: name, avatarUrl, isVip } = options;
+    const player = new PlayerState(client.sessionId, name, avatarUrl, isVip);
 
     this.state.players.push(player);
 

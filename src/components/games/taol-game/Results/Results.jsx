@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 import { sendMessage } from '../../../../modules/room-connect';
-import Answer from '../Answer/Answer';
+import AnswerResult from './AnswerResult';
 import * as constants from '../config';
+import styles from './Results.module.css';
 
 function Results(props) {
   const { roomState } = props;
   const { players, questionNumber, clientId } = roomState;
   const player = players[questionNumber];
 
-  const answers = Array.from(player.question.answers.entries()).reverse();
-  const votedAnswers = answers.filter((item) => item['1'].votes.length > 0);
+  const options = Array.from(player.question.answers.entries()).reverse();
+  const votedOptions = options.filter((item) => item['1'].votes.length > 0);
 
   const isPlayerVip = players.find((item) => item.id === clientId).isVip === true;
   const isEndOfGame = isPlayerVip && questionNumber === players.length - 1;
@@ -23,14 +24,14 @@ function Results(props) {
   };
 
   const button = isEndOfGame
-    ? { text: 'Home', onClick: endGameButtonClickHandler }
-    : { text: 'Next Question!', onClick: nextQuestionButtonClickHandler };
+    ? { text: 'Додому', onClick: endGameButtonClickHandler }
+    : { text: 'Наступне питання', onClick: nextQuestionButtonClickHandler };
 
   return (
     <>
-      <div>
-        {votedAnswers.map((item) => (
-          <Answer
+      <div className={styles.result}>
+        {votedOptions.map((item) => (
+          <AnswerResult
             key={item[0]}
             answeredPlayerId={item[0]}
             answer={item[1]}
@@ -38,8 +39,13 @@ function Results(props) {
           />
         ))}
       </div>
-      <div>
-        {players.map((item) => (<p>{`${item.name} - ${item.points}`}</p>))}
+      <div className={styles['players-list']}>
+        {players.map((item) => (
+          <div key={item.id} className={styles.player}>
+            <img alt="avatar" src={item.avatarUrl} />
+            <p>{`${item.name} - ${item.points}`}</p>
+          </div>
+        ))}
       </div>
       {isPlayerVip && <button type="button" onClick={button.onClick}>{button.text}</button>}
     </>

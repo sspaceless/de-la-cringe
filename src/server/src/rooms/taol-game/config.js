@@ -12,3 +12,5 @@ export const RESULTS_STAGE = 'RESULTS';
 
 export const POINTS_FOR_TRUTH = 50;
 export const POINTS_FOR_LYING = 50;
+
+export const PLAYER_MASK = '<&>';

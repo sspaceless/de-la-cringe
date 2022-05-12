@@ -1,13 +1,12 @@
 import * as schema from '@colyseus/schema';
-import CringePlayer from '../../schema/CringePlayer.js';
+import CringePlayer from '../../../CringePlayer.js';
 import QuestionState from './QuestionState.js';
 
 class PlayerState extends CringePlayer {
-  constructor(id, name, isVip) {
-    super(id, name, isVip);
+  constructor(id, name, avatarUrl, isVip,) {
+    super(id, name, avatarUrl, isVip);
 
     this.points = 0;
-    this.isAnswered = false;
   }
 }
 
