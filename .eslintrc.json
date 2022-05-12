@@ -36,7 +36,9 @@
         "react/function-component-definition": ["off"],
         "jsx-a11y/label-has-associated-control": ["off"],
         "jsx-a11y/no-static-element-interactions": ["off"],
-        "react/jsx-one-expression-per-line": ["off"]
+        "react/jsx-one-expression-per-line": ["off"],
+        "no-underscore-dangle": ["off"],
+        "no-plusplus": ["off"]
     },
     "overrides": [
         {

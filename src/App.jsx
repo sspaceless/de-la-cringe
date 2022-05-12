@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import userContext from './components/userContext';
 import useUserState from './hooks/use-user-state';
 import LoadingWindow from './components/LoadingWindow/LoadingWindow';
+import MyGameMenu from './components/games/my-game/MyGameMenu';
 
 function App() {
   const [userState, reloadUserState] = useUserState();
@@ -40,7 +41,7 @@ function App() {
 
         <Route path="games">
           <Route path="taol" element={renderGame('taol', <TaolGame />)} />
-          <Route path="game2" />
+          <Route path="my-game" element={renderGame('my-game', <MyGameMenu />)} />
           <Route path="game3" />
           <Route path="game4" />
           <Route path="game5" />
