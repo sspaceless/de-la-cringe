@@ -22,7 +22,6 @@ class MGState extends schema.Schema {
 schema.defineTypes(MGState, {
   themes: { array: 'string' },
   availableThemes: { array: 'string' },
-  questionTimerDate: 'number',
   players: { map: MGPlayer },
   host: MGPlayer,
   stage: 'string',
@@ -30,8 +29,10 @@ schema.defineTypes(MGState, {
   round: MGRound,
   questionWaitUntil: 'number',
   answerWaitUntil: 'number',
+  startingUntil: 'number',
   lastAnsweredUserId: 'string',
   isExtra: 'boolean',
+  curAnswer: 'string',
 });
 
 export default MGState;

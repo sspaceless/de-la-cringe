@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function PlayerMiniature({ avatarUrl, username, isVip = false }) {
   return (
     <div>
-      <img src={avatarUrl} alt="Player's avatar" />
+      <img width="100" src={avatarUrl} alt="Player's avatar" />
       <h1>{username}</h1>
       {isVip
         && <h1>⭐</h1>}

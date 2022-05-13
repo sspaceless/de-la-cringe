@@ -1,10 +1,11 @@
 import * as schema from '@colyseus/schema';
+import { Settings } from '../MGConfig.js';
 
 class MGPrices extends schema.Schema {
   constructor() {
     super();
 
-    this.available = new schema.ArraySchema(100, 200, 300, 500, 800);
+    this.available = new schema.ArraySchema(...Settings.PRICES);
   }
 }
 

@@ -4,6 +4,7 @@ import MGPlayer from './schema/MGPlayer.js';
 import { Settings, Themes, MessageTypes, States } from './MGConfig.js';
 import MGRound from './schema/MGRound.js';
 import Questions from './MGQuestions.js';
+import MGQuestion from './schema/MGQuestion.js';
 
 class MyGame extends CringeRoom {
   async onCreate({ themes }) {
@@ -20,12 +21,13 @@ class MyGame extends CringeRoom {
       if (this.timerState) return;
 
       this.updateState(States.STARTING);
-      this.nextRound(5000);
+      this.nextRound(Settings.TIME_FOR_START);
     });
 
     this.onMessage(MessageTypes.QUESTION_SELECT, (client, { theme, price }) => {
       if (this.state.stage !== States.QUESTION_SELECTION) return;
-      if (this.state.lastAnsweredUserId !== client.sessionId) return;
+      if (this.state.lastAnsweredUserId !== client.sessionId
+       && this.state.host.id !== client.sessionId) return;
       if (!this.state.round.themes[theme].available.includes(price)) return;
       if (this.timerState?.active) return;
 
@@ -41,10 +43,8 @@ class MyGame extends CringeRoom {
       if (player.lastAnswerTime <= Date.now() - Settings.ANSWER_RELOAD) {
         player.lastAnswerTime = Date.now();
 
-        if (this.state.stage === States.QUESTION_SHOW) {
-          this.state.answeringClientId = client.sessionId;
-          this.updateState(States.ANSWER_WAITING);
-        }
+        this.state.answeringClientId = client.sessionId;
+        this.updateState(States.ANSWER_WAITING);
       }
     });
 
@@ -55,21 +55,24 @@ class MyGame extends CringeRoom {
 
       if (this.timerA?.active) this.timerA.clear();
 
+      this.state.answerWaitUntil = undefined;
+
       this.broadcast(MessageTypes.ANSWER_DECISION, { accepted });
 
       const player = this.state.players.get(this.state.answeringClientId);
-      const pointsChange = this.state.curQuestion.price * accepted ? 1 : -1;
+      const pointsChange = this.state.round.curQuestion.price * accepted ? 1 : -1;
       player.points += pointsChange;
 
       if (accepted) {
         this.state.lastAnsweredUserId = player.id;
         this.state.round.curQuestion.answeredUserId = player.id;
 
-        this.updateState(States.ANSWER_SHOWING, 2000);
+        this.state.curAnswer = this.answer;
+        this.updateState(States.ANSWER_SHOWING, Settings.TIME_FOR_ANSWER_DECISION);
       } else {
         this.state.questionWaitUntil += this.timeLeft;
 
-        this.updateState(States.QUESTION_SHOWING, 2000);
+        this.updateState(States.QUESTION_SHOWING, Settings.TIME_FOR_ANSWER_DECISION);
       }
     });
   }
@@ -102,28 +105,34 @@ class MyGame extends CringeRoom {
   }
 
   _updateState(stage) {
+    this.timerState?.clear();
+
     this.state.stage = stage;
 
     switch (this.state.stage) {
+      case States.STARTING:
+        this.state.startingUntil = Date.now() + Settings.TIME_FOR_START;
+        break;
+
       case States.ANSWER_SHOWING:
         if (this.timerQ?.active) this.timerQ.clear();
 
         if (!this.state.isExtra) {
-          this.updateState(States.QUESTION_SELECTION, Settings.TIME_FOR_ANSWER);
+          this.updateState(States.QUESTION_SELECTION, Settings.TIME_FOR_ANSWER_SHOWING);
         } else {
-          this.nextRound(Settings.TIME_FOR_ANSWER);
+          this.nextRound(Settings.TIME_FOR_ANSWER_SHOWING);
         }
         break;
 
       case States.QUESTION_SHOWING:
         this.timerQ = this.clock.setTimeout(
-          () => States.ANSWER_SHOWING,
+          () => this.updateState(States.ANSWER_SHOWING),
           Settings.TIME_FOR_QUESTION
         );
         break;
 
       case States.ROUND_END:
-        this.clock.setTimeout(() => this.generateExtraQuestion(), 5000);
+        this.clock.setTimeout(() => this.generateExtraQuestion(), Settings.TIME_FOR_ROUND_END);
         break;
 
       case States.ANSWER_WAITING:
@@ -131,13 +140,15 @@ class MyGame extends CringeRoom {
         break;
 
       case States.QUESTION_SELECTION: {
-        let flag = true;
+        let unavailableCount = 0;
 
         this.state.round.themes.forEach((value) => {
-          if (value.available.length === 0) flag = false;
+          if (value.available.length === 0) unavailableCount++;
         });
 
-        if (flag) this.updateState(States.ROUND_RESULTS_SHOWING);
+        if (unavailableCount === this.state.round.themes.size) {
+          this.updateState(States.ROUND_RESULTS_SHOWING);
+        }
         break;
       }
 
@@ -153,7 +164,28 @@ class MyGame extends CringeRoom {
     const r2 = Math.floor(Math.random() * Questions[theme][price].length);
     const question = Questions[theme][price][r2];
 
+    question.theme = theme;
+    question.price = price;
+
     return question;
+  }
+
+  generateQuestion(theme, price) {
+    const q = MyGame.getQuestion([theme], price);
+    const question = new MGQuestion(q.text, theme, price);
+
+    this.answer = q.answer;
+
+    this.state.round.curQuestion = question;
+    this.state.round.questions.push(question);
+
+    const arrayOfPrices = this.state.round.themes[theme].available;
+    const i = arrayOfPrices.indexOf(price);
+    arrayOfPrices.splice(i, 1);
+
+    this.state.questionWaitUntil = Date.now() + Settings.TIME_FOR_QUESTION;
+
+    this.updateState(States.QUESTION_SHOWING);
   }
 
   generateExtraQuestion() {
@@ -163,21 +195,7 @@ class MyGame extends CringeRoom {
     this.answer = question.answer;
     delete question.answer;
 
-    question.price *= 1.5;
-
-    this.state.round.curQuestion = question;
-    this.state.round.questions.push(question);
-
-    this.state.questionWaitUntil = Date.now() + Settings.TIME_FOR_QUESTION;
-
-    this.updateState(States.QUESTION_SHOWING);
-  }
-
-  generateQuestion(theme, price) {
-    const question = MyGame.getQuestion([theme], price);
-
-    this.answer = question.answer;
-    delete question.answer;
+    question.price *= Settings.EXTRA_MULTIPLIER;
 
     this.state.round.curQuestion = question;
     this.state.round.questions.push(question);
@@ -197,28 +215,31 @@ class MyGame extends CringeRoom {
       this.state.themes.splice(r, 1);
     }
 
-    this.state.round = new MGRound(themes);
+    const roundNum = this.state.round ? this.state.round.num + 1 : 1;
+
+    this.state.round = new MGRound(themes, roundNum);
 
     this.updateState(States.QUESTION_SELECTION, timeout);
   }
 
-  startWaitingForAnswer(clientId) {
+  startWaitingForAnswer() {
+    const clientId = this.state.answeringClientId;
+
     this.timeLeft = this.state.questionWaitUntil - Date.now();
-    this.state.answerWaitUntil = Date.now();
+    this.state.answerWaitUntil = Date.now() + Settings.TIME_FOR_ANSWER_WAITING;
 
-    const host = this.clients.find((x) => x.sessionId === this.host);
-    host.send(MessageTypes.RIGHT_ANSWER, this.answer);
+    const host = this.clients.find((x) => x.sessionId === this.state.host.id);
 
-    this.broadcast(MessageTypes.ANSWER_REQUEST_ACCEPT, {
-      clientId,
-      until: this.state.answerWaitUntil
-    });
+    this.broadcast(MessageTypes.ANSWER_REQUEST_ACCEPT, { clientId }, { except: host });
+    host.send(MessageTypes.ANSWER_REQUEST_ACCEPT, { clientId, answer: this.answer });
 
     this.timerA = this.clock.setTimeout(() => {
+      this.state.answerWaitUntil = undefined;
+
       this.broadcast(MessageTypes.ANSWER_DECISION, { accepted: false });
 
-      this.state.questionWaitUntil = Date.now() + this.timeLeft + 2000;
-      this.updateState(States.QUESTION_SHOWING, 2000);
+      this.state.questionWaitUntil = Date.now() + this.timeLeft + Settings.TIME_FOR_ANSWER_DECISION;
+      this.updateState(States.QUESTION_SHOWING, Settings.TIME_FOR_ANSWER_DECISION);
     }, Settings.TIME_FOR_ANSWER_WAITING);
   }
 }

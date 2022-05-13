@@ -27,10 +27,7 @@
         "react/react-in-jsx-scope": "off",
         "linebreak-style": ["error", "windows"],
         "comma-dangle": 0,
-        "object-curly-newline": ["error", {
-            "ObjectExpression": { "multiline": true },
-            "ObjectPattern": { "multiline": true }
-        }],
+        "object-curly-newline": ["off"],
         "react/jsx-props-no-spreading": "off",
         "valid-typeof": ["error", { "requireStringLiterals": false }],
         "react/function-component-definition": ["off"],

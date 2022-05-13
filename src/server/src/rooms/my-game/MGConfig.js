@@ -11,9 +11,14 @@ const MessageTypes = {
 const Settings = {
   ANSWER_RELOAD: 5,
   MAX_PRICE: 800,
+  PRICES: [100, 200, 300, 500, 800],
   TIME_FOR_QUESTION: 60 * 1000,
-  TIME_FOR_ANSWER_WAITING: 45 * 1000,
-  TIME_FOR_ANSWER: 10 * 1000,
+  TIME_FOR_ANSWER_WAITING: 5 * 1000, // 45
+  TIME_FOR_ANSWER_DECISION: 0.5 * 1000, // 1.5
+  TIME_FOR_ANSWER_SHOWING: 1 * 1000, // 10
+  TIME_FOR_START: 0 * 1000, // 5
+  TIME_FOR_ROUND_END: 5 * 1000,
+  EXTRA_MULTIPLIER: 1.5,
 };
 
 const States = {
@@ -22,8 +27,10 @@ const States = {
   ANSWER_WAITING: 'Waiting for an answer',
   THEME_SELECTION: 'Theme selection',
   QUESTION_SHOWING: 'Showing question',
+  ANSWER_SHOWING: 'Answer showing',
   ROUND_END: 'Round end',
   QUESTION_SELECTION: 'Question selection',
+  ROUND_RESULTS_SHOWING: 'Round results showing',
 };
 
 // eslint-disable-next-line import/prefer-default-export

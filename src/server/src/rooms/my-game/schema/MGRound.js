@@ -1,10 +1,12 @@
 import * as schema from '@colyseus/schema';
 import MGPrices from './MGPrices.js';
+import MGQuestion from './MGQuestion.js';
 
 class MGRound extends schema.Schema {
-  constructor(themes) {
+  constructor(themes, num) {
     super();
 
+    this.num = num;
     this.questions = new schema.ArraySchema();
 
     this.themes = new schema.MapSchema();
@@ -13,9 +15,10 @@ class MGRound extends schema.Schema {
 }
 
 schema.defineTypes(MGRound, {
+  num: 'number',
   themes: { map: MGPrices },
-  questions: { array: Object },
-  curQuestion: Object
+  questions: { array: MGQuestion },
+  curQuestion: MGQuestion
 });
 
 export default MGRound;
