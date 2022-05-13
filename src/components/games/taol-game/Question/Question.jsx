@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import useInput from '../../../../hooks/use-input';
 import Timer from '../../../Timer/Timer';
-import PlayerList from '../PlayersLIst/PlayersList';
+import PlayerList from '../PlayersList/PlayersList';
 import { sendMessage } from '../../../../modules/room-connect';
-import * as constants from '../config';
 import styles from './Question.module.css';
+import * as constants from '../config';
 
 function Question(props) {
   const { messageType, roomState } = props;

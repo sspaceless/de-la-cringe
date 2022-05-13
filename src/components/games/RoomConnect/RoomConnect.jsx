@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { createRoom, joinRoom } from '../../../modules/room-connect';
 import useInput from '../../../hooks/use-input';
 import userContext from '../../userContext';
@@ -13,6 +13,7 @@ function RoomConnect(props) {
 
   const { userState } = useContext(userContext);
   const { username, avatarUrl } = userState.user;
+  const userData = useMemo(() => ({ username, avatarUrl }), [username, avatarUrl]);
 
   const {
     valueChangeHandler: inputChangeHandler,
@@ -34,15 +35,14 @@ function RoomConnect(props) {
     };
 
     if (isInputRoomIdValid && !isJoined) {
-      joinRoom(gameId, username, avatarUrl, enteredRoomId, setState)
+      joinRoom(gameId, userData, enteredRoomId, setState)
         .catch((e) => {
           setError(e);
         });
     }
   }, [
-    username,
-    avatarUrl,
     gameId,
+    userData,
     isInputRoomIdValid,
     isJoined,
     enteredRoomId,
@@ -60,7 +60,7 @@ function RoomConnect(props) {
       setIsJoined(true);
     };
 
-    createRoom(gameId, username, avatarUrl, setRoomId, setState)
+    createRoom(gameId, userData, setRoomId, setState)
       .catch((e) => {
         console.log(e);
       });

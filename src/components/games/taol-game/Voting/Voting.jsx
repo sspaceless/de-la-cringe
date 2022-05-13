@@ -3,7 +3,7 @@ import arrayShuffle from '../../../../modules/array-shuffle';
 import { sendMessage } from '../../../../modules/room-connect';
 import { VOTE_MESSAGE_TYPE } from '../config';
 import Timer from '../../../Timer/Timer';
-import PlayerList from '../PlayersLIst/PlayersList';
+import PlayerList from '../PlayersList/PlayersList';
 import styles from './Voting.module.css';
 import OptionsList from './OptionsList';
 

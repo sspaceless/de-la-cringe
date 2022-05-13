@@ -137,7 +137,7 @@ class TaolRoom extends CringeRoom {
   }
 
   onJoin(client, options) {
-    const { userName: name, avatarUrl, isVip } = options;
+    const { username: name, avatarUrl, isVip } = options;
     const player = new PlayerState(client.sessionId, name, avatarUrl, isVip);
 
     this.state.players.push(player);

@@ -5,7 +5,7 @@ import Question from '../Question/Question';
 import Results from '../Results/Results';
 import Voting from '../Voting/Voting';
 import * as constants from '../config';
-import PlayerList from '../PlayersLIst/PlayersList';
+import PlayerList from '../PlayersList/PlayersList';
 
 function TaolMain(props) {
   const { roomId, roomState } = props;
