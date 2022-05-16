@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect, useContext, useMemo } from 'react';
-import { createRoom, joinRoom } from '../../../modules/room-connect';
-import useInput from '../../../hooks/use-input';
-import userContext from '../../userContext';
+import { createRoom, joinRoom } from '../../modules/room-connect';
+import useInput from '../../hooks/use-input';
+import userContext from '../userContext';
 import styles from './RoomConnect.module.css';
 
 function RoomConnect(props) {

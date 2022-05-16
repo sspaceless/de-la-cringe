@@ -7,10 +7,10 @@
     "type": "free"
   },
   {
-    "name": "game2",
+    "name": "Крокодил",
     "image": "logo.svg",
-    "description": "lolololollolololololololo",
-    "gameId": "game2",
+    "description": "Нуж-бо, всі ж чули про цю гру, хіба ні?",
+    "gameId": "crocodile",
     "type": "free"
   },
   {

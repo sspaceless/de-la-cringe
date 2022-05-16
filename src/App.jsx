@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import userContext from './components/userContext';
 import useUserState from './hooks/use-user-state';
 import LoadingWindow from './components/LoadingWindow/LoadingWindow';
+import CrocodileGame from './components/games/crocodile-game/CrocodileGame';
 
 function App() {
   const [userState, reloadUserState] = useUserState();
@@ -40,7 +41,7 @@ function App() {
 
         <Route path="games">
           <Route path="taol" element={renderGame('taol', <TaolGame />)} />
-          <Route path="game2" />
+          <Route path="crocodile" element={renderGame('crocodile', <CrocodileGame />)} />
           <Route path="game3" />
           <Route path="game4" />
           <Route path="game5" />

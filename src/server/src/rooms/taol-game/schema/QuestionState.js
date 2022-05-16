@@ -6,7 +6,6 @@ const { Schema, MapSchema } = schema;
 class QuestionState extends Schema {
   constructor({ id, personalQuestion, publicQuestion, isUsed }) {
     super();
-
     this.id = id;
     this.personalQuestion = personalQuestion;
     this.publicQuestion = publicQuestion;

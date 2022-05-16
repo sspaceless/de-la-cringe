@@ -1,0 +1,1 @@
+export const DRAWING_MESSAGE_TYPE = 'DRAWING';

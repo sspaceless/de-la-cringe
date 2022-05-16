@@ -2,7 +2,9 @@
 import { Server } from 'colyseus';
 import { createServer } from 'http';
 import express from 'express';
+import * as constants from './config.js';
 import TaolRoom from './rooms/taol-game/TaolRoom.js';
+import CrocodileRoom from './rooms/crocodile-game/CrocodileRoom.js';
 
 const port = 2567;
 
@@ -12,5 +14,5 @@ app.use(express.json());
 const gameServer = new Server({ server: createServer(app) });
 
 gameServer.listen(port);
-
-gameServer.define('taol', TaolRoom);
+gameServer.define(constants.TAOL_ID, TaolRoom);
+gameServer.define(constants.CROCODILE_ID, CrocodileRoom);

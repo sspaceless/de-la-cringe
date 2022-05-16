@@ -1,28 +1,25 @@
 import * as schema from '@colyseus/schema';
-import PlayerState from './PlayerState.js';
+import CringeState from '../../../CringeState.js';
 
-const { Schema, ArraySchema } = schema;
-
-class TaolRoomState extends Schema {
+class TaolRoomState extends CringeState {
   constructor() {
     super();
-    this.players = new ArraySchema();
     this.stage = 'preparation';
     this.questionNumber = 0;
   }
 
-  resetTimer() {
-    const date = new Date();
-    date.setSeconds(date.getSeconds() + 59);
-    this.timer = date.toISOString();
+  setStage(stage) {
+    this.stage = stage;
+  }
+
+  nextQuestion() {
+    this.questionNumber += 1;
   }
 }
 
 schema.defineTypes(TaolRoomState, {
   stage: 'string',
-  players: { array: PlayerState },
   questionNumber: 'number',
-  timer: 'string',
 });
 
 export default TaolRoomState;
