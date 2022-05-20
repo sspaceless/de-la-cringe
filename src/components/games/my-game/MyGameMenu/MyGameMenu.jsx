@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useRef, useState, useEffect, useContext, useMemo } from 'react';
 import { Client } from 'colyseus.js';
-import Input from '../../Input/Input';
-import MyGame from './MyGame';
-import { Themes } from './MGConfig';
-import Config from '../../../config.json';
-import UserContext from '../../userContext';
-import MGContext from './MGContext';
+import Input from '../../../Input/Input';
+import MyGame from '../MyGame/MyGame';
+import { Themes } from '../MGConfig';
+import Config from '../../../../config.json';
+import UserContext from '../../../userContext';
+import MGContext from '../MGContext';
+import styles from './MyGameMenu.module.css';
 
 function useForceUpdate() {
   const [, setValue] = useState(0);
@@ -91,18 +92,6 @@ function MyGameMenu() {
     </ul>
   );
 
-  const menu = (
-    <div>
-      {isShowingTopics
-        && themeChoose}
-      <input type="button" value="New Game" onClick={isShowingTopics ? createGame : showTopics} />
-
-      <Input onChange={setValue} placeholder="Room ID to Join" />
-      {isWrong
-        && <p>Invalid Room ID</p>}
-    </div>
-  );
-
   const getPlayer = () => {
     if (!room || !room.hasJoined) return undefined;
 
@@ -127,15 +116,31 @@ function MyGameMenu() {
     };
   }, [room, player, room?.state?.stage]);
 
-  if (context) {
-    return (
-      <MGContext.Provider value={context}>
-        <MyGame />
-      </MGContext.Provider>
-    );
-  }
+  const menu = (
+    <div>
+      {isShowingTopics
+        && themeChoose}
+      <input type="button" value="New Game" onClick={isShowingTopics ? createGame : showTopics} />
 
-  return menu;
+      <Input onChange={setValue} placeholder="Room ID to Join" />
+      {isWrong
+        && <p>Invalid Room ID</p>}
+    </div>
+  );
+
+  const game = (
+    <MGContext.Provider value={context}>
+      <MyGame />
+    </MGContext.Provider>
+  );
+
+  return (
+    <div className={styles.gameBody}>
+      {context
+        ? game
+        : menu}
+    </div>
+  );
 }
 
 export default MyGameMenu;

@@ -1,0 +1,10 @@
+:root {
+  --main-bg-grad: linear-gradient(287.56deg, #261633 0%, #372048 100%);
+  --page-bg-color-start: #4f3b5f;
+  --page-bg-color-end: #2f203a;
+  --sel-icon-color: #4f3b5f;
+  --purple: #7a2edb;
+  --light-purple: #8d43e6;
+  --corner-url: url("http://localhost:3002/files/games/my-game/corner.svg");
+  --background-url: url("http://localhost:3002/files/games/my-game/background.svg");
+}

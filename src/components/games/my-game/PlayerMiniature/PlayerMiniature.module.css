@@ -1,0 +1,7 @@
+@import '../vars.css';
+
+.wrapper {
+  background: var(--page-bg-grad);
+  height: 150px;
+  border-radius: 12px;
+}

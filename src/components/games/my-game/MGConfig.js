@@ -13,7 +13,7 @@ const Settings = {
   MAX_PRICE: 800,
   PRICES: [100, 200, 300, 500, 800],
   TIME_FOR_QUESTION: 60 * 1000,
-  TIME_FOR_ANSWER_WAITING: 45 * 1000,
+  TIME_FOR_ANSWER_WAITING: 5 * 1000, // 45
   TIME_FOR_ANSWER_DECISION: 0.5 * 1000, // 1.5
   TIME_FOR_ANSWER_SHOWING: 1 * 1000, // 10
   TIME_FOR_START: 0 * 1000, // 5
@@ -21,11 +21,10 @@ const Settings = {
   EXTRA_MULTIPLIER: 1.5,
 };
 
-const States = {
+const Stages = {
   LOBBY: 'Lobby',
   STARTING: 'Starting',
   ANSWER_WAITING: 'Waiting for an answer',
-  THEME_SELECTION: 'Theme selection',
   QUESTION_SHOWING: 'Showing question',
   ANSWER_SHOWING: 'Answer showing',
   ROUND_END: 'Round end',
@@ -33,5 +32,7 @@ const States = {
   ROUND_RESULTS_SHOWING: 'Round results showing',
 };
 
+const stageIcons = ['lobby', 'map', 'station', 'results'];
+
 // eslint-disable-next-line import/prefer-default-export
-export { Themes, MessageTypes, Settings, States };
+export { Themes, MessageTypes, Settings, Stages, stageIcons };

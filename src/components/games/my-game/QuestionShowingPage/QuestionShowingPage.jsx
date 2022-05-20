@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import MGContext from '../MGContext';
-import { MessageTypes, States } from '../MGConfig';
+import { MessageTypes, Stages } from '../MGConfig';
 import AnswerShowingWindow from '../AnswerShowingWindow/AnswerShowingWindow';
 import AnswerAcceptWindow from '../AnswerAcceptWindow/AnswerAcceptWindow';
 import AnsweringWindow from '../AnsweringWindow/AnsweringWindow';
@@ -18,8 +18,8 @@ function QuestionShowingPage() {
 
   const prevStageRef = useRef(stage);
 
-  if ((stage === States.QUESTION_SHOWING && prevStageRef.current === States.ANSWER_WAITING)
-    || stage === States.ANSWER_SHOWING) {
+  if ((stage === Stages.QUESTION_SHOWING && prevStageRef.current === Stages.ANSWER_WAITING)
+    || stage === Stages.ANSWER_SHOWING) {
     if (isAnswering) setIsAnswering(false);
     if (answer) setAnswer(null);
     if (answeringUserId) setAnsweringUserId(null);
@@ -75,7 +75,7 @@ function QuestionShowingPage() {
             />
           )}
 
-        {stage === States.ANSWER_SHOWING && state.curAnswer
+        {stage === Stages.ANSWER_SHOWING && state.curAnswer
           && (
             <AnswerShowingWindow
               answer={state.curAnswer}

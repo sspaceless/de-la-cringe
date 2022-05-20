@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './PlayerMiniature.module.css';
 
 function PlayerMiniature({ avatarUrl, username, isVip = false }) {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <img width="100" src={avatarUrl} alt="Player's avatar" />
       <h1>{username}</h1>
       {isVip

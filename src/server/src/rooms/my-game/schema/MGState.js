@@ -1,7 +1,7 @@
 import * as schema from '@colyseus/schema';
 import MGPlayer from './MGPlayer.js';
 import MGRound from './MGRound.js';
-import { States } from '../MGConfig.js';
+import { Stages } from '../MGConfig.js';
 
 class MGState extends schema.Schema {
   constructor(themes) {
@@ -13,7 +13,7 @@ class MGState extends schema.Schema {
 
     this.players = new schema.MapSchema();
 
-    this.stage = States.LOBBY;
+    this.stage = Stages.LOBBY;
 
     this.isExtra = false;
   }

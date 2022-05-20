@@ -21,11 +21,10 @@ const Settings = {
   EXTRA_MULTIPLIER: 1.5,
 };
 
-const States = {
+const Stages = {
   LOBBY: 'Lobby',
   STARTING: 'Starting',
   ANSWER_WAITING: 'Waiting for an answer',
-  THEME_SELECTION: 'Theme selection',
   QUESTION_SHOWING: 'Showing question',
   ANSWER_SHOWING: 'Answer showing',
   ROUND_END: 'Round end',
@@ -34,4 +33,4 @@ const States = {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { Themes, MessageTypes, Settings, States };
+export { Themes, MessageTypes, Settings, Stages };

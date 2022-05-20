@@ -6,7 +6,7 @@ import Home from './components/Home/Home';
 import userContext from './components/userContext';
 import useUserState from './hooks/use-user-state';
 import LoadingWindow from './components/LoadingWindow/LoadingWindow';
-import MyGameMenu from './components/games/my-game/MyGameMenu';
+import MyGameMenu from './components/games/my-game/MyGameMenu/MyGameMenu';
 
 function App() {
   const [userState, reloadUserState] = useUserState();
