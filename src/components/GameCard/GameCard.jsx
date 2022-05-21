@@ -8,14 +8,25 @@ import config from '../../config.json';
 
 function GameCard(props) {
   const { gameInfo } = props;
-  const { image, name, description, type, gameId, untilDate = undefined } = gameInfo;
+  const {
+    image,
+    name,
+    description,
+    type,
+    gameId,
+    untilDate = undefined,
+    color = undefined,
+    filter = undefined
+  } = gameInfo;
 
   const { reloadUserState } = useContext(userContext);
+
+  const style = color ? { color } : {};
 
   return (
     <div className={styles.card}>
       <img className={styles.icon} src={`${config.apiUrl}/files/${image}`} alt={name} />
-      <h1>{name}</h1>
+      <h1 style={style}>{name}</h1>
       <p>{description}</p>
 
       <div className={styles.btnsWrapper}>
@@ -23,11 +34,11 @@ function GameCard(props) {
           && <Timer untilDate={untilDate} onAlarm={reloadUserState} format="hh:mm:ss" />}
 
         {(type === 'payable' && !untilDate)
-          && <TrialButton gameId={gameId} />}
+          && <TrialButton filter={filter} gameId={gameId} />}
 
         {(type === 'payable')
-          ? <BuyButton gameId={gameId} />
-          : <PlayButton gameId={gameId} />}
+          ? <BuyButton filter={filter} gameId={gameId} />
+          : <PlayButton filter={filter} gameId={gameId} />}
       </div>
     </div>
   );
@@ -40,7 +51,9 @@ GameCard.propTypes = {
     description: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     gameId: PropTypes.string.isRequired,
-    untilDate: PropTypes.instanceOf(Date)
+    untilDate: PropTypes.instanceOf(Date),
+    color: PropTypes.string,
+    filter: PropTypes.string
   }).isRequired
 };
 

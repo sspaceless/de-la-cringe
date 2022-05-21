@@ -7,11 +7,13 @@
     "type": "free"
   },
   {
-    "name": "My Game",
-    "image": "logo.svg",
-    "description": "lolololollolololololololo",
+    "name": "Космическая вечеринка",
+    "image": "games/my-game/logo.png",
+    "description": "Космическая вечеринка на выживание хи-хи-хи 😉",
     "gameId": "my-game",
-    "type": "free"
+    "type": "free",
+    "color": "#7a2edb",
+    "filter": "brightness(0) saturate(100%) invert(21%) sepia(60%) saturate(5669%) hue-rotate(262deg) brightness(89%) contrast(93%)"
   },
   {
     "name": "game3",

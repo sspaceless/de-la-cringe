@@ -37,7 +37,8 @@
         "no-underscore-dangle": ["off"],
         "no-plusplus": ["off"],
         "no-mixed-operators": ["off"],
-        "react/no-array-index-key": ["off"]
+        "react/no-array-index-key": ["off"],
+        "jsx-a11y/mouse-events-have-key-events": ["off"]
     },
     "overrides": [
         {
