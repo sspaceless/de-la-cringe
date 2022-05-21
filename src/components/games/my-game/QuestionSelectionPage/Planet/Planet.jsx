@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import MGContext from '../../MGContext';
 import config from '../../../../../config.json';
@@ -7,11 +7,9 @@ import styles from './Planet.module.css';
 import { MessageTypes } from '../../MGConfig';
 import Orbit from '../Orbit/Orbit';
 
-function Planet({ topic, rot = 0, prices, orbit: { angle, width, height } }) {
+function Planet({ topic, prices, rotation, orbit: { angle, width, height }, onHover = undefined }) {
   const { room, player, state } = useContext(MGContext);
   const canChoose = state.lastAnsweredUserId === player.id || state.host.id === player.id;
-
-  const [rotation, setRotation] = useState(rot);
 
   const priceClick = (top, price) => () => room.send(MessageTypes.QUESTION_SELECT, {
     theme: top,
@@ -28,13 +26,7 @@ function Planet({ topic, rot = 0, prices, orbit: { angle, width, height } }) {
   const leftPosPrice = (i) => Math.cos(-rotation + Math.PI * 2 / len * (i + 1)) * radPrice;
   const topPosPrice = (i) => Math.sin(-rotation + Math.PI * 2 / len * (i + 1)) * radPrice;
 
-  const imgRot = (Math.atan(top / left) * 180) / Math.PI + 90 * Math.sign(left);
-
-  useEffect(() => {
-    const interval = setInterval(() => setRotation((r) => r + Math.PI / 1100), 10);
-
-    return () => clearInterval(interval);
-  }, [setRotation]);
+  const imgRot = Math.atan(top / left) + (Math.PI / 2) * Math.sign(left);
 
   const orbit = {
     height: radPrice * 2,
@@ -42,21 +34,35 @@ function Planet({ topic, rot = 0, prices, orbit: { angle, width, height } }) {
     angle: 0
   };
 
+  const onMouseEnter = () => {
+    if (onHover) onHover(true);
+  };
+
+  const onMouseOut = () => {
+    if (onHover) onHover(false);
+  };
+
   return (
-    <div className={styles.planet} style={{ transform: `translate(calc(-50% + ${left}px), calc(-50% + ${top}px))` }}>
-      <Orbit orbit={orbit} dashed>
-        <div className={styles.wrapper} key={topic}>
-          <img
-            className={styles.objImage}
-            src={`${config.apiUrl}/files/games/my-game/planet.svg`}
-            alt="Planet"
-            style={{ transform: `rotateZ(${imgRot}deg)` }}
-          />
+    <div
+      className={styles.planet}
+      style={{ transform: `translate(calc(-50% + ${left}px), calc(-50% + ${top}px))` }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseOut}
+    >
+      <div className={styles.wrapper} key={topic}>
+        <img
+          className={styles.objImage}
+          src={`${config.apiUrl}/files/games/my-game/planet.svg`}
+          alt="Planet"
+          style={{ transform: `rotateZ(${imgRot}rad)` }}
+        />
 
-          <h1>{topic}</h1>
+        <h1 className={styles.topic}>{topic}</h1>
 
+        <Orbit orbit={orbit} dashed>
           {prices.available.map((price, i) => (
             <input
+              className={styles.satellite}
               key={price}
               type="button"
               value={price}
@@ -65,8 +71,8 @@ function Planet({ topic, rot = 0, prices, orbit: { angle, width, height } }) {
               style={{ transform: `translate(calc(-50% + ${leftPosPrice(i)}px), calc(-50% + ${topPosPrice(i)}px))` }}
             />
           ))}
-        </div>
-      </Orbit>
+        </Orbit>
+      </div>
     </div>
   );
 }
@@ -74,14 +80,17 @@ function Planet({ topic, rot = 0, prices, orbit: { angle, width, height } }) {
 Planet.propTypes = {
   topic: PropTypes.string.isRequired,
   prices: PropTypes.any.isRequired,
-  rot: PropTypes.number,
   orbit: PropTypes.shape({
     angle: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired
-  }).isRequired
+  }).isRequired,
+  onHover: PropTypes.func,
+  rotation: PropTypes.number.isRequired
 };
 
-Planet.defaultProps = { rot: 0 };
+Planet.defaultProps = {
+  onHover: undefined
+};
 
 export default Planet;

@@ -13,17 +13,6 @@
 
 .star {
   width: 100%;
-  transition: transform 0s linear;
-  animation: 20s linear 0s infinite rotation;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg);
-  }
 }
 
 .wrapper h1 {

@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MGContext from '../../MGContext';
 import Orbit from '../Orbit/Orbit';
 import Planet from '../Planet/Planet';
@@ -32,16 +32,33 @@ function SolarSystem() {
     width: orbitWidth
   };
 
+  const [speed, setSpeed] = useState(1 / 1100);
+  const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setRotation((r) => r + Math.PI * speed), 10);
+
+    return () => clearInterval(interval);
+  }, [setRotation, speed]);
+
   const planets = [];
 
   let i = 0;
   state.round.themes.forEach((prices, topic) => planets.push(
-    <Planet key={topic} topic={topic} prices={prices} rot={i++ * Math.PI} orbit={orbit} />
+    <Planet
+      key={topic}
+      speed={speed}
+      topic={topic}
+      prices={prices}
+      rotation={i++ * Math.PI + rotation}
+      orbit={orbit}
+      onHover={(b) => (b ? setSpeed(1 / 5000) : setSpeed(1 / 1100))}
+    />
   ));
 
   return (
     <Orbit orbit={orbit}>
-      <Sun roundNum={state.round.num} />
+      <Sun rotation={rotation} roundNum={state.round.num} />
 
       {planets}
     </Orbit>

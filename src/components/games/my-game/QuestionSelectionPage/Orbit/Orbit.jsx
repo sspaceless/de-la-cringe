@@ -12,10 +12,12 @@ function Orbit({ orbit, children, dashed = false }) {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.orbit} style={style} />
+    <div className={styles.center}>
+      <div className={styles.wrapper}>
+        <div className={styles.orbit} style={style} />
 
-      {children}
+        {children}
+      </div>
     </div>
   );
 }
