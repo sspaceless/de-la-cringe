@@ -60,7 +60,7 @@ class MyGame extends CringeRoom {
       this.broadcast(MessageTypes.ANSWER_DECISION, { accepted });
 
       const player = this.state.players.get(this.state.answeringClientId);
-      const pointsChange = this.state.round.curQuestion.price * accepted ? 1 : -1;
+      const pointsChange = this.state.round.curQuestion.price * (accepted ? 1 : -1);
       player.points += pointsChange;
 
       if (accepted) {
@@ -189,7 +189,7 @@ class MyGame extends CringeRoom {
   }
 
   generateExtraQuestion() {
-    const themes = Themes.filter((v) => !this.themes.includes(v));
+    const themes = Themes.filter((v) => !this.state.themes.includes(v));
     const question = MyGame.getQuestion(themes, Settings.MAX_PRICE);
 
     this.answer = question.answer;
@@ -208,11 +208,11 @@ class MyGame extends CringeRoom {
   nextRound(timeout) {
     const themes = [];
 
-    for (let i = 0; i < 2 && this.state.themes.length; i++) {
-      const r = Math.floor(Math.random() * this.state.themes.length);
+    for (let i = 0; i < 2 && this.state.availableThemes.length; i++) {
+      const r = Math.floor(Math.random() * this.state.availableThemes.length);
 
-      themes.push(this.state.themes[r]);
-      this.state.themes.splice(r, 1);
+      themes.push(this.state.availableThemes[r]);
+      this.state.availableThemes.splice(r, 1);
     }
 
     const roundNum = this.state.round ? this.state.round.num + 1 : 1;
