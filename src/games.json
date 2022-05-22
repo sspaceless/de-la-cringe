@@ -12,8 +12,7 @@
     "description": "Космическая вечеринка на выживание хи-хи-хи 😉",
     "gameId": "my-game",
     "type": "free",
-    "color": "#7a2edb",
-    "filter": "brightness(0) saturate(100%) invert(21%) sepia(60%) saturate(5669%) hue-rotate(262deg) brightness(89%) contrast(93%)"
+    "color": "#7a2edb"
   },
   {
     "name": "game3",

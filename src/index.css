@@ -4,12 +4,6 @@
   font-family: 'Nunito', sans-serif;
 }
 
-body {
-  background: radial-gradient(circle at bottom left, #ea853c 5%, #6002b4 85%);
-  height: 100vh;
-  overflow: hidden;
-}
-
 a {
   color: #fb9331;
 }
