@@ -56,6 +56,7 @@ function MyGame() {
       key={state.host.id}
       username={state.host.name}
       avatarUrl={state.host.avatarUrl}
+      isVip
     />
   );
   state.players.forEach((p) => playersList.push(
@@ -63,6 +64,7 @@ function MyGame() {
       key={p.id}
       username={p.name}
       avatarUrl={p.avatarUrl}
+      points={p.points}
     />
   ));
 

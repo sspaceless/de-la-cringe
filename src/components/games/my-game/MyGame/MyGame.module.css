@@ -53,15 +53,22 @@
 }
 
 header {
-  height: 30px;
+  height: 150px;
 }
 
 .mainContent {
   display: flex;
+  flex-direction: row;
   position: relative;
   height: calc(100vh - 150px);
   padding: 30px;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 1260px) {
+  .mainContent {
+    flex-direction: column;
+  }
 }
 
 .pages {
@@ -88,4 +95,7 @@ header {
 
 .players {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }

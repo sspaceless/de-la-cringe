@@ -34,5 +34,9 @@ const Stages = {
 
 const stageIcons = ['lobby', 'map', 'station', 'results'];
 
+const ClientSettings = {
+  FUEL_BAR_MULTIPLIER: 1 / 5,
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { Themes, MessageTypes, Settings, Stages, stageIcons };
+export { Themes, MessageTypes, Settings, Stages, stageIcons, ClientSettings };

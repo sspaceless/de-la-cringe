@@ -1,7 +1,108 @@
 @import '../vars.css';
 
 .wrapper {
-  background: var(--page-bg-grad);
+  display: flex;
+  align-items: center;
+  background: radial-gradient(at bottom right, var(--page-bg-color-start) 10%, var(--page-bg-color-end) 100%);
   height: 150px;
   border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.avatar {
+  height: 100%;
+  border-radius: 12px;
+}
+
+.name {
+  color: var(--grey);
+  font-size: 2.5rem;
+}
+
+.info {
+  height: 100%;
+  width: 100%;
+  margin-left: 25px;  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fuelOuter {
+  position: relative;
+  background-color: var(--grey);
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.points {
+  z-index: 1;
+  position: absolute;
+  color: var(--orange);
+  top: 0;
+  left: 5px;
+  margin: 0;
+  height: 100%;
+  line-height: 40px;
+  mix-blend-mode: color-dodge;
+}
+
+.fuelInner {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  transition: left 1.5s, width 1.5s;
+}
+
+.fuelInner.negative {
+  right: 0;
+  left: auto !important;
+  transform: scale(-1, 1);
+  filter: hue-rotate(100deg);
+}
+
+.fuelInner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  height: 100%;
+  animation: 2.5s ease-in-out 0s infinite alternate waving;
+  background: var(--fuel-background-url) repeat 0/100px fixed,
+              linear-gradient(90deg, var(--purple) 78%, var(--light-purple) 97%) center/cover fixed;
+}
+
+.fuelInner.negative::before {
+  background: var(--fuel-background-url) repeat 0/100px fixed, var(--purple);
+  transform: scale(-1, 1);
+}
+
+.fuelInner::after {
+  content: '';
+  position: absolute;
+  right: -9px;
+  mask: var(--fuel-wave-mask) left/contain repeat-y;
+  height: 100%;
+  width: 10px;
+  animation: 2.5s ease-in-out 0s infinite alternate waving;
+  background: var(--fuel-background-url) repeat 0/100px fixed,
+              linear-gradient(90deg, var(--purple) 78%, var(--light-purple) 97%) center/cover fixed;
+}
+
+.fuelInner.negative::after {
+  background: var(--fuel-background-url) repeat 0/100px fixed, var(--purple);
+}
+
+@keyframes waving {
+  0% {
+    mask-position: 0 0;
+  }
+  100% {
+    mask-position: 0 30px;
+  }
 }
