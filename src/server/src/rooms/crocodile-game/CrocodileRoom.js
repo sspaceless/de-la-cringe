@@ -2,6 +2,7 @@ import CringeRoom from '../../CringeRoom.js';
 import CrocodileRoomState from './schema/CrocodileRoomState.js';
 import PlayerState from './schema/PlayerSate.js';
 import * as constants from './config.js';
+import getRandomWord from './modules/word-api.js';
 
 class CrocodileRoom extends CringeRoom {
   async onCreate() {
@@ -9,19 +10,25 @@ class CrocodileRoom extends CringeRoom {
     this.maxClients = 8;
     this.setState(new CrocodileRoomState());
 
-    this.onMessage(constants.DRAWING_MESSAGE_TYPE, (client, message) => {
-      const { canvasState } = message;
-      this.state.setCanvasState(canvasState);
+    this.onMessage(constants.STAGE_MESSAGE_TYPE, async (client, message) => {
+      this.state.setStage(message.stage);
+
+      if (this.state.message === constants.GAME_STAGE) {
+        const word = await getRandomWord();
+        this.state.setWord(word);
+      }
+    });
+
+    this.onMessage(constants.DRAW_MESSAGE_TYPE, (client, message) => {
+      this.state.canvas.resetPoints();
+      this.state.setCanvasState(message);
     });
   }
 
   onJoin(client, options) {
     const { username: name, avatarUrl, isVip } = options;
     const player = new PlayerState(client.sessionId, name, avatarUrl, isVip);
-
     this.state.addPlayer(player);
-
-    console.log(client.sessionId, 'joined!');
   }
 
   onLeave(client) {
@@ -31,7 +38,6 @@ class CrocodileRoom extends CringeRoom {
 
   async onDispose() {
     await super.onDispose();
-    console.log('room', this.roomId, 'disposing...');
   }
 }
 

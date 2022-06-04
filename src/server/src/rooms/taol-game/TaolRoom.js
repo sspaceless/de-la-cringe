@@ -7,14 +7,14 @@ import QuestionState from './schema/QuestionState.js';
 import TaolRoomState from './schema/TaolRoomState.js';
 import * as constants from './config.js';
 
-const toalQuestionsPath = './src/rooms/taol-game/taol-questions.json';
-const toalQuestionsJSON = fs.readFileSync(toalQuestionsPath, 'utf8');
-const toalQuestions = JSON.parse(toalQuestionsJSON);
+const taolQuestionsPath = './src/rooms/taol-game/taol-questions.json';
+const taolQuestionsJSON = fs.readFileSync(taolQuestionsPath, 'utf8');
+const taolQuestions = JSON.parse(taolQuestionsJSON);
 
 class TaolRoom extends CringeRoom {
   constructor() {
     super();
-    this.questions = [...toalQuestions];
+    this.questions = [...taolQuestions];
   }
 
   async onCreate() {

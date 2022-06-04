@@ -1,10 +1,8 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-const useCanvas = (width, height, onDrawing) => {
-  const [isDrawing, setIsDrawing] = useState(false);
+const useCanvasSpectator = (width, height) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
-  const points = [];
 
   const setupCanvas = () => {
     const canvas = canvasRef.current;
@@ -15,52 +13,24 @@ const useCanvas = (width, height, onDrawing) => {
 
     const context = canvas.getContext('2d');
     context.scale(2, 2);
-    context.lineJoin = 'round';
     context.lineCap = 'round';
     context.strokeStyle = 'black';
     context.lineWidth = 5;
     contextRef.current = context;
   };
 
-  const startDrawing = (event) => {
-    const { nativeEvent } = event;
-    const { offsetX, offsetY } = nativeEvent;
-
-    points.push({ x: offsetX, y: offsetY });
-
+  const startDrawing = (x, y) => {
     contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY);
-    setIsDrawing(true);
+    contextRef.current.moveTo(x, y);
   };
 
-  const draw = (event) => {
-    if (!isDrawing) {
-      return;
-    }
-
-    const { nativeEvent } = event;
-    const { offsetX, offsetY } = nativeEvent;
-
-    points.push({ x: offsetX, y: offsetY });
-
-    contextRef.current.lineTo(offsetX, offsetY);
+  const draw = (x, y) => {
+    contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
   };
 
   const finishDrawing = () => {
-    const { lineWidth, strokeStyle } = contextRef.current;
-    const canvasState = {
-      points,
-      lineWidth,
-      strokeStyle,
-      isDrawing: false
-    };
-
     contextRef.current.closePath();
-    setIsDrawing(false);
-
-    onDrawing(canvasState);
-    points.splice(0, points.length);
   };
 
   const clearCanvas = () => {
@@ -81,4 +51,4 @@ const useCanvas = (width, height, onDrawing) => {
   };
 };
 
-export default useCanvas;
+export default useCanvasSpectator;
