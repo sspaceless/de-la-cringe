@@ -1,6 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Textfit } from 'react-textfit';
 import MGContext from '../../MGContext';
 import config from '../../../../../config.json';
 import styles from './Planet.module.css';
@@ -57,21 +58,24 @@ function Planet({ topic, prices, rotation, orbit: { angle, width, height }, onHo
           style={{ transform: `rotateZ(${imgRot}rad)` }}
         />
 
-        <h1 className={styles.topic}>{topic}</h1>
+        <Textfit mode="multi" className={styles.topic}>{topic}</Textfit>
 
-        <Orbit orbit={orbit} dashed>
-          {prices.available.map((price, i) => (
-            <input
-              className={styles.satellite}
-              key={price}
-              type="button"
-              value={price}
-              onClick={priceClick(topic, price)}
-              disabled={canChoose ? 0 : 1}
-              style={{ transform: `translate(calc(-50% + ${leftPosPrice(i)}px), calc(-50% + ${topPosPrice(i)}px))` }}
-            />
-          ))}
-        </Orbit>
+        {prices.available.length > 0
+          && (
+            <Orbit orbit={orbit} dashed>
+              {prices.available.map((price, i) => (
+                <input
+                  className={styles.satellite}
+                  key={price}
+                  type="button"
+                  value={price}
+                  onClick={priceClick(topic, price)}
+                  disabled={canChoose ? 0 : 1}
+                  style={{ transform: `translate(calc(-50% + ${leftPosPrice(i)}px), calc(-50% + ${topPosPrice(i)}px))` }}
+                />
+              ))}
+            </Orbit>
+          )}
       </div>
     </div>
   );

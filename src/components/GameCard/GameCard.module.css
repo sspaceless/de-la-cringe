@@ -34,7 +34,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  mask-image: linear-gradient(to right, black 75%, transparent);
   height: 100%;
   width: 30%;
   object-fit: contain;

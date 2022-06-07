@@ -18,8 +18,9 @@
 .topic {
   position: absolute;
   top: 50%; 
-  transform: translateY(-50%);
-  width: 100%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 90%;
   text-align: center;
   color: white;
   font-size: 2rem;

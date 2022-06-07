@@ -1,6 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Textfit } from 'react-textfit';
 import config from '../../../../../config.json';
 import styles from './Sun.module.css';
 
@@ -18,7 +19,7 @@ function Sun({ roundNum, rotation }) {
           src={`${config.apiUrl}/files/games/my-game/star.svg`}
           alt="Star"
         />
-        <h1>Round {roundNum}</h1>
+        <Textfit mode="single" className={styles.roundNum}>Round {roundNum}</Textfit>
       </div>
     </div>
   );

@@ -5,20 +5,12 @@ import { Settings, ClientSettings } from '../MGConfig';
 import MGContext from '../MGContext';
 
 function pointsToPercentage(points, themesCount) {
-  const total = Settings.PRICES.reduce((s, v) => s + v, 0) * themesCount;
-  const maxPrice = Settings.MAX_PRICE;
+  let total = Settings.PRICES.reduce((s, v) => s + v, 0) * themesCount;
+  total += Math.ceil(themesCount / 2) * Settings.MAX_PRICE * Settings.EXTRA_MULTIPLIER;
 
-  let max = total;
-  let width = 0;
+  const mult = ClientSettings.FUEL_BAR_MULTIPLIER;
 
-  for (let p = Math.abs(points); p > 0; p -= maxPrice) {
-    const curWidth = max * ClientSettings.FUEL_BAR_MULTIPLIER;
-    max -= curWidth;
-
-    width += (Math.min(p, maxPrice) / maxPrice) * curWidth;
-  }
-
-  return width / total * 100;
+  return (mult ** (points / total) - 1) / (mult - 1) * 100;
 }
 
 function PlayerMiniature({ avatarUrl, points = 0, username, isVip = false }) {

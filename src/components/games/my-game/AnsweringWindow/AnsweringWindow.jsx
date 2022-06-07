@@ -19,11 +19,12 @@ function AnsweringWindow({ answeringPlayer, isAnswering }) {
               untilDate={state.answerWaitUntil}
               onStep={(percent) => setLoadingPercent(percent * 100)}
               format="ss"
+              step={10}
               hidden
             />
 
             <div style={{ position: 'relative', margin: 0, padding: 0, background: 'grey', width: 400, height: 20 }}>
-              <div style={{ position: 'relative', margin: 0, padding: 0, transition: 'width 1s linear', width: `${loadingPercent}%`, height: 20, background: 'black' }}> </div>
+              <div style={{ position: 'relative', margin: 0, padding: 0, width: `${loadingPercent}%`, height: 20, background: 'black' }}> </div>
             </div>
           </>
         )}

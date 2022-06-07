@@ -1,4 +1,4 @@
-const Themes = ['Anime', 'Games'];
+const Themes = ['Аніме', 'Ігри', 'Логотипи', 'Музика', 'Кінематограф', 'Столиці', 'Загадкові речі'];
 
 const MessageTypes = {
   START: 'Start',
@@ -17,7 +17,7 @@ const Settings = {
   TIME_FOR_ANSWER_DECISION: 0.5 * 1000, // 1.5
   TIME_FOR_ANSWER_SHOWING: 1 * 1000, // 10
   TIME_FOR_START: 0 * 1000, // 5
-  TIME_FOR_ROUND_END: 5 * 1000,
+  TIME_FOR_RESULTS_SHOWING: 10 * 1000,
   EXTRA_MULTIPLIER: 1.5,
 };
 
@@ -27,15 +27,15 @@ const Stages = {
   ANSWER_WAITING: 'Waiting for an answer',
   QUESTION_SHOWING: 'Showing question',
   ANSWER_SHOWING: 'Answer showing',
-  ROUND_END: 'Round end',
   QUESTION_SELECTION: 'Question selection',
   ROUND_RESULTS_SHOWING: 'Round results showing',
+  GAME_RESULTS: 'Game results'
 };
 
 const stageIcons = ['lobby', 'map', 'station', 'results'];
 
 const ClientSettings = {
-  FUEL_BAR_MULTIPLIER: 1 / 5,
+  FUEL_BAR_MULTIPLIER: 0.3,
 };
 
 // eslint-disable-next-line import/prefer-default-export

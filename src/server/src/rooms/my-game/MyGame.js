@@ -25,6 +25,42 @@ class MyGame extends CringeRoom {
     });
 
     this.onMessage(MessageTypes.QUESTION_SELECT, (client, { theme, price }) => {
+      const q = MyGame.getQuestion([theme], price);
+      const question = new MGQuestion(q.text, theme, price);
+
+      this.answer = q.answer;
+
+      this.state.round.curQuestion = question;
+      this.state.round.questions.push(question);
+
+      const arrayOfPrices = this.state.round.themes[theme].available;
+      const i = arrayOfPrices.indexOf(price);
+      arrayOfPrices.splice(i, 1);
+
+      if (this.timerA?.active) this.timerA.clear();
+
+      this.state.answerWaitUntil = undefined;
+
+      const player = this.state.players.get(client.sessionId);
+      const pointsChange = this.state.round.curQuestion.price;
+      player.points += pointsChange;
+
+      this.state.lastAnsweredUserId = player.id;
+      this.state.round.curQuestion.answeredUserId = player.id;
+
+      let unavailableCount = 0;
+
+      this.state.round.themes.forEach((value) => {
+        if (value.available.length === 0) unavailableCount++;
+      });
+
+      if (unavailableCount === this.state.round.themes.size) {
+        this.updateState(Stages.ROUND_RESULTS_SHOWING);
+      } else {
+        this.updateState(Stages.QUESTION_SELECTION);
+      }
+
+      /*
       if (this.state.stage !== Stages.QUESTION_SELECTION) return;
       if (this.state.lastAnsweredUserId !== client.sessionId
        && this.state.host.id !== client.sessionId) return;
@@ -32,6 +68,7 @@ class MyGame extends CringeRoom {
       if (this.timerState?.active) return;
 
       this.generateQuestion(theme, price);
+      */
     });
 
     this.onMessage(MessageTypes.ANSWER_REQUEST, (client) => {
@@ -118,7 +155,17 @@ class MyGame extends CringeRoom {
         if (this.timerQ?.active) this.timerQ.clear();
 
         if (!this.state.isExtra) {
-          this.updateState(Stages.QUESTION_SELECTION, Settings.TIME_FOR_ANSWER_SHOWING);
+          let unavailableCount = 0;
+
+          this.state.round.themes.forEach((value) => {
+            if (value.available.length === 0) unavailableCount++;
+          });
+
+          if (unavailableCount === this.state.round.themes.size) {
+            this.updateState(Stages.ROUND_RESULTS_SHOWING, Settings.TIME_FOR_ANSWER_SHOWING);
+          } else {
+            this.updateState(Stages.QUESTION_SELECTION, Settings.TIME_FOR_ANSWER_SHOWING);
+          }
         } else {
           this.nextRound(Settings.TIME_FOR_ANSWER_SHOWING);
         }
@@ -131,24 +178,19 @@ class MyGame extends CringeRoom {
         );
         break;
 
-      case Stages.ROUND_END:
-        this.clock.setTimeout(() => this.generateExtraQuestion(), Settings.TIME_FOR_ROUND_END);
-        break;
-
       case Stages.ANSWER_WAITING:
         this.startWaitingForAnswer();
         break;
 
-      case Stages.QUESTION_SELECTION: {
-        let unavailableCount = 0;
+      case Stages.ROUND_RESULTS_SHOWING: {
+        this.state.isExtra = true;
 
-        this.state.round.themes.forEach((value) => {
-          if (value.available.length === 0) unavailableCount++;
-        });
+        const unusedTopics = Themes.filter((x) => !this.state.themes.includes(x));
 
-        if (unavailableCount === this.state.round.themes.size) {
-          this.updateState(Stages.ROUND_RESULTS_SHOWING);
-        }
+        const r = Math.floor(Math.random() * unusedTopics.length);
+        const theme = unusedTopics[r];
+
+        this.generateQuestion(theme, Settings.MAX_PRICE, Settings.TIME_FOR_RESULTS_SHOWING);
         break;
       }
 
@@ -157,69 +199,53 @@ class MyGame extends CringeRoom {
     }
   }
 
-  static getQuestion(themes, price) {
-    const r = Math.floor(Math.random() * themes.length);
-    const theme = themes[r];
-
+  static getQuestion(theme, price) {
     const r2 = Math.floor(Math.random() * Questions[theme][price].length);
     const question = Questions[theme][price][r2];
-
-    question.theme = theme;
-    question.price = price;
 
     return question;
   }
 
-  generateQuestion(theme, price) {
-    const q = MyGame.getQuestion([theme], price);
-    const question = new MGQuestion(q.text, theme, price);
+  generateQuestion(theme, price, delay) {
+    const mult = this.state.isExtra ? Settings.EXTRA_MULTIPLIER : 1;
+
+    const q = MyGame.getQuestion(theme, price);
+    const question = new MGQuestion(q.text, theme, price * mult);
 
     this.answer = q.answer;
 
     this.state.round.curQuestion = question;
-    this.state.round.questions.push(question);
 
-    const arrayOfPrices = this.state.round.themes[theme].available;
-    const i = arrayOfPrices.indexOf(price);
-    arrayOfPrices.splice(i, 1);
+    if (!this.state.isExtra) {
+      this.state.round.questions.push(question);
 
-    this.state.questionWaitUntil = Date.now() + Settings.TIME_FOR_QUESTION;
-
-    this.updateState(Stages.QUESTION_SHOWING);
-  }
-
-  generateExtraQuestion() {
-    const themes = Themes.filter((v) => !this.state.themes.includes(v));
-    const question = MyGame.getQuestion(themes, Settings.MAX_PRICE);
-
-    this.answer = question.answer;
-    delete question.answer;
-
-    question.price *= Settings.EXTRA_MULTIPLIER;
-
-    this.state.round.curQuestion = question;
-    this.state.round.questions.push(question);
+      const arrayOfPrices = this.state.round.themes[theme].available;
+      const i = arrayOfPrices.indexOf(price);
+      arrayOfPrices.splice(i, 1);
+    }
 
     this.state.questionWaitUntil = Date.now() + Settings.TIME_FOR_QUESTION;
 
-    this.updateState(Stages.QUESTION_SHOWING);
+    this.updateState(Stages.QUESTION_SHOWING, delay);
   }
 
   nextRound(timeout) {
-    const themes = [];
+    this.clock.setTimeout(() => {
+      const themes = [];
 
-    for (let i = 0; i < 2 && this.state.availableThemes.length; i++) {
-      const r = Math.floor(Math.random() * this.state.availableThemes.length);
+      for (let i = 0; i < 2 && this.state.availableThemes.length; i++) {
+        const r = Math.floor(Math.random() * this.state.availableThemes.length);
 
-      themes.push(this.state.availableThemes[r]);
-      this.state.availableThemes.splice(r, 1);
-    }
+        themes.push(this.state.availableThemes[r]);
+        this.state.availableThemes.splice(r, 1);
+      }
 
-    const roundNum = this.state.round ? this.state.round.num + 1 : 1;
+      const roundNum = this.state.round ? this.state.round.num + 1 : 1;
 
-    this.state.round = new MGRound(themes, roundNum);
+      this.state.round = new MGRound(themes, roundNum);
 
-    this.updateState(Stages.QUESTION_SELECTION, timeout);
+      this.updateState(Stages.QUESTION_SELECTION);
+    }, timeout);
   }
 
   startWaitingForAnswer() {
