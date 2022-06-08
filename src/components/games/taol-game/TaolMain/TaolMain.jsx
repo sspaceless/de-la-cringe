@@ -19,14 +19,6 @@ function TaolMain(props) {
     sendMessage(constants.STAGE_MESSAGE_TYPE, { stage: constants.PERSONAL_QUESTION_STAGE });
   };
 
-  const content = (
-    <div>
-      <h2>{`ID кімнати: ${roomId}`}</h2>
-      <PlayerList players={players} />
-      {isPlayerVip && <button type="button" disabled={!isButtonActive} onClick={buttonClickHandler}>Грати</button>}
-    </div>
-  );
-
   switch (stage) {
     case constants.PERSONAL_QUESTION_STAGE:
       return (
@@ -59,7 +51,13 @@ function TaolMain(props) {
       break;
 
     default:
-      return (content);
+      return (
+        <div>
+          <h2>{`ID кімнати: ${roomId}`}</h2>
+          <PlayerList players={players} />
+          {isPlayerVip && <button type="button" disabled={!isButtonActive} onClick={buttonClickHandler}>Грати</button>}
+        </div>
+      );
   }
 }
 

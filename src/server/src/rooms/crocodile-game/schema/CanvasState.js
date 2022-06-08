@@ -35,7 +35,7 @@ class CanvasState extends Schema {
 
 schema.defineTypes(CanvasState, {
   points: { array: PointState },
-  lineWidth: 'number',
+  lineWidth: 'string',
   strokeStyle: 'string',
   isDrawing: 'boolean'
 });

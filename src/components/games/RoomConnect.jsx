@@ -50,7 +50,7 @@ function RoomConnect(props) {
     setRoomState
   ]);
 
-  const buttonClickHanler = () => {
+  const buttonClickHandler = () => {
     const setState = (clientId, state) => {
       setRoomState({
         clientId,
@@ -79,7 +79,7 @@ function RoomConnect(props) {
       />
       {inputRoomIdHasError && <p className={styles['error-text']}>Не вірний ID кімнати!</p>}
       {!inputRoomIdHasError && error && <p className={styles['error-text']}>{error.message}</p>}
-      <button type="button" onClick={buttonClickHanler}> Нова гра </button>
+      <button type="button" onClick={buttonClickHandler}> Нова гра </button>
     </>
   );
 

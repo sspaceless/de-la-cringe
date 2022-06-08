@@ -1,25 +1,28 @@
 import { useRef } from 'react';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../components/games/crocodile-game/config';
 
-const useCanvasSpectator = (width, height) => {
+const useCanvasSpectator = (strokeStyle, lineWidth) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
 
   const setupCanvas = () => {
     const canvas = canvasRef.current;
-    canvas.width = width * 2;
-    canvas.height = height * 2;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+    canvas.width = CANVAS_WIDTH * 2;
+    canvas.height = CANVAS_HEIGHT * 2;
+    canvas.style.width = `${CANVAS_WIDTH}px`;
+    canvas.style.height = `${CANVAS_HEIGHT}px`;
 
     const context = canvas.getContext('2d');
     context.scale(2, 2);
     context.lineCap = 'round';
-    context.strokeStyle = 'black';
-    context.lineWidth = 5;
+    context.strokeStyle = strokeStyle;
+    context.lineWidth = lineWidth;
     contextRef.current = context;
   };
 
   const startDrawing = (x, y) => {
+    contextRef.current.strokeStyle = strokeStyle;
+    contextRef.current.lineWidth = lineWidth;
     contextRef.current.beginPath();
     contextRef.current.moveTo(x, y);
   };

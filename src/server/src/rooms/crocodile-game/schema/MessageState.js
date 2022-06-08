@@ -5,14 +5,16 @@ const { Schema } = schema;
 class MessageState extends Schema {
   constructor(message, sender) {
     super();
-    this.message = message;
-    this.sender = sender;
+    this.messageText = message;
+    this.senderId = sender;
+    this.sendingDate = new Date().toISOString();
   }
 }
 
 schema.defineTypes(MessageState, {
-  message: 'string',
-  sender: 'string'
+  messageText: 'string',
+  senderId: 'string',
+  sendingDate: 'string'
 });
 
 export default MessageState;

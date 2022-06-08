@@ -1,10 +1,11 @@
 import propTypes from 'prop-types';
 import { useEffect } from 'react';
 import useCanvasSpectator from '../../../../hooks/use-canvas-spectator';
+import styles from './CanvasSpectator.module.css';
 
 function CanvasSpectator(props) {
   const { canvasState } = props;
-  const { points, isDrawing } = canvasState;
+  const { points, strokeStyle, lineWidth, isDrawing } = canvasState;
 
   const {
     canvasRef,
@@ -12,10 +13,10 @@ function CanvasSpectator(props) {
     startDrawing,
     draw,
     finishDrawing,
-  } = useCanvasSpectator(500, 500);
+  } = useCanvasSpectator(strokeStyle, lineWidth);
 
   useEffect(() => {
-    setupCanvas(500, 500);
+    setupCanvas();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,7 +30,9 @@ function CanvasSpectator(props) {
   }, [draw, finishDrawing, isDrawing, points, startDrawing]);
 
   return (
-    <canvas ref={canvasRef} />
+    <div className={styles.canvas}>
+      <canvas ref={canvasRef} />
+    </div>
   );
 }
 
@@ -38,6 +41,8 @@ export default CanvasSpectator;
 CanvasSpectator.propTypes = {
   canvasState: propTypes.shape({
     points: propTypes.instanceOf(Array).isRequired,
-    isDrawing: propTypes.bool.isRequired
+    strokeStyle: propTypes.string.isRequired,
+    lineWidth: propTypes.string.isRequired,
+    isDrawing: propTypes.bool.isRequired,
   }).isRequired,
 };

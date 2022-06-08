@@ -2,6 +2,7 @@ import * as schema from '@colyseus/schema';
 import CringeState from '../../../CringeState.js';
 import CanvasState from './CanvasState.js';
 import MessageState from './MessageState.js';
+import getRandomWord from '../modules/word-api.js';
 
 const { ArraySchema } = schema;
 
@@ -18,7 +19,8 @@ class CrocodileRoomState extends CringeState {
     this.stage = stage;
   }
 
-  setWord(word) {
+  async setNewWord() {
+    const word = await getRandomWord();
     this.word = word.toUpperCase();
   }
 
@@ -28,10 +30,6 @@ class CrocodileRoomState extends CringeState {
     this.canvas.setIsDrawing(isDrawing);
     this.canvas.setStrokeStyle(strokeStyle);
     this.canvas.setLineWidth(lineWidth);
-  }
-
-  checkAnswer(message) {
-    return message.trim().toUpperCase() === this.word;
   }
 }
 

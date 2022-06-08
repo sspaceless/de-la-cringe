@@ -1,24 +1,25 @@
 import { useRef, useState } from 'react';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../components/games/crocodile-game/config';
 
-const useCanvas = (width, height, onDrawing) => {
+const useCanvas = (onDrawing) => {
   const [isDrawing, setIsDrawing] = useState(false);
+  const [lineWidth, setLineWidth] = useState('5');
+  const [strokeStyle, setStrokeStyle] = useState('#000000');
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const points = [];
 
   const setupCanvas = () => {
     const canvas = canvasRef.current;
-    canvas.width = width * 2;
-    canvas.height = height * 2;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+    canvas.width = CANVAS_WIDTH * 2;
+    canvas.height = CANVAS_HEIGHT * 2;
+    canvas.style.width = `${CANVAS_WIDTH}px`;
+    canvas.style.height = `${CANVAS_HEIGHT}px`;
 
     const context = canvas.getContext('2d');
     context.scale(2, 2);
     context.lineJoin = 'round';
     context.lineCap = 'round';
-    context.strokeStyle = 'black';
-    context.lineWidth = 5;
     contextRef.current = context;
   };
 
@@ -28,6 +29,8 @@ const useCanvas = (width, height, onDrawing) => {
 
     points.push({ x: offsetX, y: offsetY });
 
+    contextRef.current.strokeStyle = strokeStyle;
+    contextRef.current.lineWidth = lineWidth;
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
     setIsDrawing(true);
@@ -48,7 +51,6 @@ const useCanvas = (width, height, onDrawing) => {
   };
 
   const finishDrawing = () => {
-    const { lineWidth, strokeStyle } = contextRef.current;
     const canvasState = {
       points,
       lineWidth,
@@ -76,6 +78,10 @@ const useCanvas = (width, height, onDrawing) => {
     setupCanvas,
     startDrawing,
     finishDrawing,
+    lineWidth,
+    strokeStyle,
+    setStrokeStyle,
+    setLineWidth,
     clearCanvas,
     draw,
   };
