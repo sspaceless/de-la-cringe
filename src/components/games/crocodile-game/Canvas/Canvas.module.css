@@ -90,9 +90,16 @@
   border-radius: 50%;
   border: 1px solid;
 }
-
+.erase-button, .clear-button {
+  display: flex;
+  align-items: center;
+}
 .erase-button img {
-    transform: scale(1.5);
-  margin-left: 1rem;
-  margin-right: 1rem;
+  transform: scale(1.5);
+  margin: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.clear-button img {
+  transform: scale(0.8);
+  margin: 0.25rem 0.5rem 0.25rem 0.5rem;
 }

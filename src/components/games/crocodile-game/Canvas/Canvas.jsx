@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import useCanvas from '../../../../hooks/use-canvas';
-import { sendMessage } from '../../../../modules/room-connect';
-import { CANVAS_PEN_COLORS, DRAW_MESSAGE_TYPE } from '../config';
+import { onMessage, sendMessage } from '../../../../modules/room-connect';
+import * as constants from '../config';
 import styles from './Canvas.module.css';
 
 function Canvas() {
@@ -11,14 +11,16 @@ function Canvas() {
     setupCanvas,
     startDrawing,
     draw,
-    lineWidth,
+    finishDrawing,
+    clearCanvas,
     strokeStyle,
+    lineWidth,
     setStrokeStyle,
     setLineWidth,
-    finishDrawing,
-  } = useCanvas(sendMessage.bind(null, DRAW_MESSAGE_TYPE));
+  } = useCanvas(sendMessage.bind(null, constants.DRAW_MESSAGE_TYPE));
 
   useEffect(() => {
+    onMessage(constants.CLEAR_CANVAS_MESSAGE_TYPE, clearCanvas);
     setupCanvas();
   }, []);
 
@@ -36,14 +38,21 @@ function Canvas() {
     setStrokeStyle('#FFFFFF');
   };
 
-  const colorButtons = CANVAS_PEN_COLORS.map((item) => {
+  const clearButtonClickHandler = () => {
+    sendMessage(constants.CLEAR_CANVAS_MESSAGE_TYPE);
+  };
+
+  const colorButtons = constants.CANVAS_PEN_COLORS.map((item) => {
     const colorChangeHandler = () => {
       setStrokeStyle(item);
     };
 
     return (
       <button type="button" key={item} onClick={colorChangeHandler}>
-        <div className={styles['color-example']} style={{ backgroundColor: item }} />
+        <div
+          className={styles['color-example']}
+          style={{ backgroundColor: item }}
+        />
       </button>
     );
   });
@@ -57,10 +66,22 @@ function Canvas() {
         ref={canvasRef}
       />
       <div className={styles['tools-panel']}>
-        {colorButtons}
-        <button type="button" className={styles['erase-button']} onClick={eraseButtonClickHandler}>
-          <img alt="erase-button" src="https://api.iconify.design/mdi/eraser.svg" />
+        <button
+          type="button"
+          className={styles['clear-button']}
+          onClick={clearButtonClickHandler}
+        >
+          <img alt="clear-button" src={constants.CLEAR_BUTTON_URL} />
         </button>
+
+        <button
+          type="button"
+          className={styles['erase-button']}
+          onClick={eraseButtonClickHandler}
+        >
+          <img alt="erase-button" src={constants.ERASE_BUTTON_URL} />
+        </button>
+        {colorButtons}
         <div className={styles.eyedropper}>
           <label>
             Обери колір:
@@ -73,14 +94,22 @@ function Canvas() {
         </div>
         <div className={styles['width-range']}>
           <div className={styles['line-example']}>
-            <div style={{
-              width: `${lineWidth}px`,
-              height: `${lineWidth}px`,
-              backgroundColor: strokeStyle
-            }}
+            <div
+              style={{
+                width: `${lineWidth}px`,
+                height: `${lineWidth}px`,
+                backgroundColor: strokeStyle,
+              }}
             />
           </div>
-          <input type="range" min="5" max="25" step="1" value={lineWidth} onChange={changeLineWidthHandler} />
+          <input
+            type="range"
+            min="5"
+            max="25"
+            step="1"
+            value={lineWidth}
+            onChange={changeLineWidthHandler}
+          />
         </div>
       </div>
     </div>

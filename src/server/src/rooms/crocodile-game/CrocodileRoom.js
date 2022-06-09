@@ -18,6 +18,10 @@ class CrocodileRoom extends CringeRoom {
       }
     });
 
+    this.onMessage(constants.CLEAR_CANVAS_MESSAGE_TYPE, () => {
+      this.broadcast(constants.CLEAR_CANVAS_MESSAGE_TYPE);
+    });
+
     this.onMessage(constants.DRAW_MESSAGE_TYPE, (client, message) => {
       this.state.canvas.resetPoints();
       this.state.setCanvasState(message);

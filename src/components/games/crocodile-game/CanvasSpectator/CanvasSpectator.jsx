@@ -1,6 +1,8 @@
 import propTypes from 'prop-types';
 import { useEffect } from 'react';
 import useCanvasSpectator from '../../../../hooks/use-canvas-spectator';
+import { onMessage } from '../../../../modules/room-connect';
+import * as constants from '../config';
 import styles from './CanvasSpectator.module.css';
 
 function CanvasSpectator(props) {
@@ -13,9 +15,11 @@ function CanvasSpectator(props) {
     startDrawing,
     draw,
     finishDrawing,
+    clearCanvas
   } = useCanvasSpectator(strokeStyle, lineWidth);
 
   useEffect(() => {
+    onMessage(constants.CLEAR_CANVAS_MESSAGE_TYPE, clearCanvas);
     setupCanvas();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

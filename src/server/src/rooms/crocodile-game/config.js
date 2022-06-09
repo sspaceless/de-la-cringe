@@ -1,6 +1,7 @@
 export const DRAW_MESSAGE_TYPE = 'DRAW';
 export const STAGE_MESSAGE_TYPE = 'STAGE';
 export const NEW_MESSAGE_MESSAGE_TYPE = 'NEW_MESSAGE';
+export const CLEAR_CANVAS_MESSAGE_TYPE = 'CLEAR_CANVAS';
 
 export const GAME_STAGE = 'GAME';
 export const RESULTS_STAGE = 'RESULTS';
