@@ -9,4 +9,4 @@ export const RESULTS_STAGE = 'RESULTS';
 export const POINTS_FOR_ANSWER = 50;
 export const POINTS_FOR_EXPLANATION = 50;
 
-export const WORD_API_URL = 'https://www.wordunscrambler.net/wg_api/pict_words.aspx?startsWith=&contains=&endsWith=&minLen=0&maxLen=0&wordtype=medium';
+export const WORD_API_URL = 'https://pictionary-charades-word-generator.p.rapidapi.com/pictionary?difficulty=easy';

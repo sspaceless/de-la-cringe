@@ -1,0 +1,51 @@
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: solid 2px;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0.5rem;
+  max-width: fit-content;
+  height: 20rem;
+}
+
+.chat-wrapper button:not(.crocodile-game) {
+  width: max-content;
+}
+
+.new-message-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.new-message-form input {
+  margin-right: 0;
+}
+
+.send-message-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-message-button img {
+  margin: 0.5rem;
+}
+
+.messages {
+  max-height: 20rem;
+  overflow-y: auto;
+  scroll-behavior: smooth
+}
+
+@media screen and (max-width: 900px) {
+  .chat-wrapper {
+    max-width: fit-content;
+    height: 12rem;
+  }
+  .messages {
+    max-height: 100%;
+  }
+}
+

@@ -55,6 +55,7 @@ function TaolMain(props) {
         <div>
           <h2>{`ID кімнати: ${roomId}`}</h2>
           <PlayerList players={players} />
+          <p>Мінімальна кількість гравців - 4</p>
           {isPlayerVip && <button type="button" disabled={!isButtonActive} onClick={buttonClickHandler}>Грати</button>}
         </div>
       );

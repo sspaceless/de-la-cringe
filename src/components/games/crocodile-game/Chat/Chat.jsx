@@ -1,29 +1,51 @@
 import propTypes from 'prop-types';
+import { useRef, useEffect } from 'react';
 import useInput from '../../../../hooks/use-input';
 import { sendMessage } from '../../../../modules/room-connect';
-import Message from './Messsage';
+import Message from './Message';
 import * as constants from '../config';
+import config from '../../../../config.json';
+import styles from './Chat.module.css';
 
 function Chat(props) {
   const { messages: messagesArray, isSpectator, players } = props;
+  const chatBottom = useRef(null);
 
   const {
     valueChangeHandler: inputChangeHandler,
     isValid: isInputMessageValid,
     value: enteredMessage,
     inputBlurHandler,
-    reset,
+    reset: resetInputValue,
   } = useInput((value) => value.trim().length > 0);
 
   const sendMessageButtonHandler = () => {
-    sendMessage(constants.NEW_MESSAGE_MESSAGE_TYPE, { messageText: enteredMessage });
-    reset();
+    sendMessage(constants.NEW_MESSAGE_MESSAGE_TYPE, { messageText: enteredMessage, });
+    resetInputValue();
+  };
+
+  const keyDownHandler = (event) => {
+    if (event.code !== 'Enter' || !isInputMessageValid) {
+      return;
+    }
+    sendMessageButtonHandler();
   };
 
   const messages = messagesArray.map((message) => {
     const { messageText, senderId, sendingDate } = message;
-    const sender = players.find((player) => player.id === senderId);
 
+    if (senderId === 'SYSTEM') {
+      return (
+        <Message
+          messageText={messageText}
+          sendingDate={sendingDate}
+          senderName="Крокодил"
+          senderAvatarUrl={`${config.apiUrl}/files/logo.svg`}
+        />
+      );
+    }
+
+    const sender = players.find((player) => player.id === senderId);
     return (
       <Message
         messageText={messageText}
@@ -34,29 +56,47 @@ function Chat(props) {
     );
   });
 
+  useEffect(() => {
+    chatBottom.current.scrollIntoView({ behavior: 'smooth' });
+  });
+
   const newMessageForm = (
-    <div>
+    <div className={styles['new-message-form']}>
       <input
         type="text"
         value={enteredMessage}
+        disabled={!isSpectator}
         onChange={inputChangeHandler}
         onBlur={inputBlurHandler}
+        onKeyDown={keyDownHandler}
       />
       <button
         type="button"
+        className={styles['send-message-button']}
         disabled={!isInputMessageValid}
         onClick={sendMessageButtonHandler}
-      >Надіслати
+      >
+        <img
+          alt="send-message-button"
+          src={constants.SEND_MESSAGE_BUTTON_URL}
+        />
       </button>
     </div>
   );
 
   return (
     <div>
-      <div>
-        {messages}
+      <div className={styles['chat-wrapper']}>
+        <div className={styles.messages}>
+          <p>
+            Надсилай свої здогадки <br />
+            до чату :)
+          </p>
+          {messages}
+          <div ref={chatBottom} />
+        </div>
+        {newMessageForm}
       </div>
-      {isSpectator && newMessageForm}
     </div>
   );
 }

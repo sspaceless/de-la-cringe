@@ -8,4 +8,5 @@
 }
 .canvas canvas {
   border: solid 2px; 
+  width: 100%;
 }

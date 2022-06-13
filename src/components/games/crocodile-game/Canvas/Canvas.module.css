@@ -1,11 +1,11 @@
 .canvas {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   border: solid 2px;
   border-radius: 10px;
-  padding: 1rem;
   margin: 0.5rem;
-  padding-bottom: 0;
+  padding: 1rem 1rem 0 1rem;  
 }
 
 .tools-panel {
@@ -16,6 +16,7 @@
 
 .canvas canvas {
   border: solid 2px;
+  width: 100%;
 }
 
 .canvas button:not(.crocodile-game) {
@@ -94,6 +95,7 @@
   display: flex;
   align-items: center;
 }
+
 .erase-button img {
   transform: scale(1.5);
   margin: 0.5rem 1rem 0.5rem 1rem;

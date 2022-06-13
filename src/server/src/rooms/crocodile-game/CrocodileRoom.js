@@ -13,12 +13,14 @@ class CrocodileRoom extends CringeRoom {
     this.onMessage(constants.STAGE_MESSAGE_TYPE, async (client, message) => {
       this.state.setStage(message.stage);
 
-      if (this.state.message === constants.GAME_STAGE) {
+      if (this.state.stage === constants.GAME_STAGE) {
         await this.state.setNewWord();
+        this.state.resetTimer();
       }
     });
 
     this.onMessage(constants.CLEAR_CANVAS_MESSAGE_TYPE, () => {
+      this.state.canvas.resetPoints();
       this.broadcast(constants.CLEAR_CANVAS_MESSAGE_TYPE);
     });
 
@@ -27,7 +29,7 @@ class CrocodileRoom extends CringeRoom {
       this.state.setCanvasState(message);
     });
 
-    this.onMessage(constants.NEW_MESSAGE_MESSAGE_TYPE, (client, message) => {
+    this.onMessage(constants.NEW_MESSAGE_MESSAGE_TYPE, async (client, message) => {
       const { messageText } = message;
       const newMessage = new MessageState(messageText, client.sessionId);
       this.state.messages.push(newMessage);
@@ -40,13 +42,21 @@ class CrocodileRoom extends CringeRoom {
         painter.addPoints(constants.POINTS_FOR_EXPLANATION);
         guesser.addPoints(constants.POINTS_FOR_ANSWER);
 
-        this.state.setStage(constants.RESULTS_STAGE);
+        const winMessageText = `${guesser.name} розпізнав малюнок ${painter.name}.
+                                ${guesser.name} + ${constants.POINTS_FOR_ANSWER} балів,
+                                ${painter.name} + ${constants.POINTS_FOR_EXPLANATION} балів :)`;
+        const winMessage = new MessageState(winMessageText, 'SYSTEM');
+        this.state.messages.push(winMessage);
+
+        this.state.nextPlayer();
+        await this.state.setNewWord();
+        this.state.resetTimer();
       }
     });
   }
 
   checkAnswer(message) {
-    return message.trim().toUpperCase() === this.word;
+    return message.trim().toUpperCase() === this.state.word;
   }
 
   onJoin(client, options) {

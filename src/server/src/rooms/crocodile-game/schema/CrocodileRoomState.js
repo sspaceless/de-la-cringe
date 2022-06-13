@@ -19,6 +19,10 @@ class CrocodileRoomState extends CringeState {
     this.stage = stage;
   }
 
+  nextPlayer() {
+    this.queueNumber += 1;
+  }
+
   async setNewWord() {
     const word = await getRandomWord();
     this.word = word.toUpperCase();

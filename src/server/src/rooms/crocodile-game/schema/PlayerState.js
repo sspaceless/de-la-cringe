@@ -12,6 +12,6 @@ class PlayerState extends CringePlayer {
   }
 }
 
-schema.defineTypes(PlayerState, {});
+schema.defineTypes(PlayerState, { points: 'number' });
 
 export default PlayerState;

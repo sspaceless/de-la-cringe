@@ -40,6 +40,7 @@ function Canvas() {
 
   const clearButtonClickHandler = () => {
     sendMessage(constants.CLEAR_CANVAS_MESSAGE_TYPE);
+    setStrokeStyle('#000000');
   };
 
   const colorButtons = constants.CANVAS_PEN_COLORS.map((item) => {
