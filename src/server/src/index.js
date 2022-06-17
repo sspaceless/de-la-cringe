@@ -17,3 +17,4 @@ const gameServer = new Server({ server: createServer(app) });
 gameServer.listen(port);
 gameServer.define(constants.TAOL_ID, TaolRoom);
 gameServer.define(constants.CROCODILE_ID, CrocodileRoom);
+gameServer.define(constants.ROCKET_GAME_ID, MyGame);
