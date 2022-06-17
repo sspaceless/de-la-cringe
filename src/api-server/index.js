@@ -11,7 +11,7 @@ const port = 3002;
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://de-la-cringe.azurewebsites.net/',
   credentials: true,
   optionsSuccessStatus: 200
 };
