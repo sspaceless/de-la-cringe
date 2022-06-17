@@ -60,7 +60,12 @@
   cursor: pointer;
 }
 
-.wrapper input:hover {
+.wrapper input:disabled {
+  filter: brightness(50%);
+  cursor: default;
+}
+
+.wrapper input:not(:disabled):hover {
   box-shadow: none;
   transform: translateX(-50%) translateY(5px);
 }

@@ -13,12 +13,14 @@ function Lobby() {
 
   const hostname = <span style={{ color: 'var(--pink)' }}>{state.host.name}</span>;
 
+  const isBtnActive = state.players.size > 0;
+
   return (
     <div className={styles.wrapper}>
       <Textfit className={styles.top}>ID кімнати: <span style={{ color: 'var(--pink)' }}>{room.id}</span>. Чекаємо на інших гравців...</Textfit>
 
       {isHost
-        ? <input type="button" onClick={start} value="Start" />
+        ? <input type="button" onClick={start} value="Start" disabled={!isBtnActive} />
         : <div className={styles.empty} />}
 
       <h2>Необов&apos;язкова історія, яку можна не читати</h2>
