@@ -1,21 +1,31 @@
-import CringeRoom from '../../CringeRoom.js';
 import CrocodileRoomState from './schema/CrocodileRoomState.js';
-import PlayerState from './schema/PlayerState.js';
-import * as constants from './config.js';
+import getRandomWord from './modules/word-api.js';
 import MessageState from './schema/MessageState.js';
+import PlayerState from './schema/PlayerState.js';
+import CringeRoom from '../../CringeRoom.js';
+import * as constants from './config.js';
 
 class CrocodileRoom extends CringeRoom {
+  constructor() {
+    super();
+    this.wordsArray = [];
+  }
+
   async onCreate() {
     await super.onCreate();
     this.maxClients = 8;
     this.setState(new CrocodileRoomState());
 
+    const word = await getRandomWord();
+    this.wordsArray.push(word);
+
     this.onMessage(constants.STAGE_MESSAGE_TYPE, async (client, message) => {
       this.state.setStage(message.stage);
 
       if (this.state.stage === constants.GAME_STAGE) {
-        await this.state.setNewWord();
-        this.state.resetTimer();
+        this.state.resetTimer(89);
+        this.state.resetQueue();
+        await this.setNewWord();
       }
     });
 
@@ -27,6 +37,16 @@ class CrocodileRoom extends CringeRoom {
     this.onMessage(constants.DRAW_MESSAGE_TYPE, (client, message) => {
       this.state.canvas.resetPoints();
       this.state.setCanvasState(message);
+    });
+
+    this.onMessage(constants.SKIP_DRAWING_MESSAGE_TYPE, async () => {
+      const painter = this.state.players[this.state.queueNumber];
+
+      const loseMessageText = `На жаль, ${painter.name} не встиг :( Правильна відповідь - ${this.state.word}.`;
+      const loseMessage = new MessageState(loseMessageText, 'SYSTEM');
+      this.state.messages.push(loseMessage);
+
+      await this.nextRound();
     });
 
     this.onMessage(constants.NEW_MESSAGE_MESSAGE_TYPE, async (client, message) => {
@@ -48,11 +68,30 @@ class CrocodileRoom extends CringeRoom {
         const winMessage = new MessageState(winMessageText, 'SYSTEM');
         this.state.messages.push(winMessage);
 
-        this.state.nextPlayer();
-        await this.state.setNewWord();
-        this.state.resetTimer();
+        await this.nextRound();
       }
     });
+  }
+
+  async setNewWord() {
+    this.state.setWord(this.wordsArray.pop());
+    const newWord = await getRandomWord();
+    this.wordsArray.push(newWord);
+  }
+
+  async nextRound() {
+    const isPlayerLast = this.state.queueNumber + 1 === this.state.players.length;
+    if (isPlayerLast) {
+      this.state.setStage(constants.RESULTS_STAGE);
+      return;
+    }
+
+    this.state.canvas.resetPoints();
+    this.broadcast(constants.CLEAR_CANVAS_MESSAGE_TYPE);
+
+    this.state.resetTimer(89);
+    this.state.nextPlayer();
+    await this.setNewWord();
   }
 
   checkAnswer(message) {

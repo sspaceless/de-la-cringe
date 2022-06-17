@@ -2,7 +2,6 @@ import * as schema from '@colyseus/schema';
 import CringeState from '../../../CringeState.js';
 import CanvasState from './CanvasState.js';
 import MessageState from './MessageState.js';
-import getRandomWord from '../modules/word-api.js';
 
 const { ArraySchema } = schema;
 
@@ -23,9 +22,12 @@ class CrocodileRoomState extends CringeState {
     this.queueNumber += 1;
   }
 
-  async setNewWord() {
-    const word = await getRandomWord();
+  setWord(word) {
     this.word = word.toUpperCase();
+  }
+
+  resetQueue() {
+    this.queueNumber = 0;
   }
 
   setCanvasState(canvasState) {
