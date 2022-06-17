@@ -1,4 +1,4 @@
-# De La Cringe
+# [De La Cringe](http://de-la-cringe.azurewebsites.net/)
 De La Cringe is an online platform that allows you to have fun with a large group of friends by playing multiplayer mini-games.
 
 ## Technologies we are using:
@@ -7,3 +7,4 @@ De La Cringe is an online platform that allows you to have fun with a large grou
 <img src="https://github.com/colyseus/colyseus/raw/master/media/header.png?raw=true)" height="28"/>
 ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![image](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)

@@ -1,0 +1,11 @@
+FROM node:alpine
+
+WORKDIR /server
+
+EXPOSE 2567
+
+COPY package*.json ./
+RUN npm i --force
+COPY . . 
+
+CMD ["npm", "start"]
