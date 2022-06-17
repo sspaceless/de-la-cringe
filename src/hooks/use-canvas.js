@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-// import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../components/games/crocodile-game/config';
 
 const useCanvas = (onDrawing) => {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -13,8 +12,6 @@ const useCanvas = (onDrawing) => {
     const canvas = canvasRef.current;
     canvas.width *= 2;
     canvas.height *= 2;
-    // canvas.style.width = `${CANVAS_WIDTH}px`;
-    // canvas.style.height = `${CANVAS_HEIGHT}px`;
     const context = canvas.getContext('2d');
     context.scale(1, 1);
     context.lineJoin = 'round';
@@ -35,6 +32,13 @@ const useCanvas = (onDrawing) => {
     setIsDrawing(true);
   };
 
+  const startDrawingSpectator = (x, y) => {
+    contextRef.current.strokeStyle = strokeStyle;
+    contextRef.current.lineWidth = lineWidth;
+    contextRef.current.beginPath();
+    contextRef.current.moveTo(x, y);
+  };
+
   const draw = (event) => {
     if (!isDrawing) {
       return;
@@ -46,6 +50,11 @@ const useCanvas = (onDrawing) => {
     points.push({ x: offsetX, y: offsetY });
 
     contextRef.current.lineTo(offsetX, offsetY);
+    contextRef.current.stroke();
+  };
+
+  const drawSpectator = (x, y) => {
+    contextRef.current.lineTo(x, y);
     contextRef.current.stroke();
   };
 
@@ -64,6 +73,10 @@ const useCanvas = (onDrawing) => {
     points.splice(0, points.length);
   };
 
+  const finishDrawingSpectator = () => {
+    contextRef.current.closePath();
+  };
+
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -76,13 +89,16 @@ const useCanvas = (onDrawing) => {
     contextRef,
     setupCanvas,
     startDrawing,
+    startDrawingSpectator,
     finishDrawing,
+    finishDrawingSpectator,
     lineWidth,
     strokeStyle,
     setStrokeStyle,
     setLineWidth,
     clearCanvas,
     draw,
+    drawSpectator,
   };
 };
 

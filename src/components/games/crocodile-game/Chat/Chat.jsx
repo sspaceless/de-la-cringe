@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import propTypes from 'prop-types';
 import { useRef, useEffect } from 'react';
 import useInput from '../../../../hooks/use-input';
@@ -31,12 +32,13 @@ function Chat(props) {
     sendMessageButtonHandler();
   };
 
-  const messages = messagesArray.map((message) => {
+  const messages = messagesArray.map((message, index) => {
     const { messageText, senderId, sendingDate } = message;
 
     if (senderId === 'SYSTEM') {
       return (
         <Message
+          key={index}
           messageText={messageText}
           sendingDate={sendingDate}
           senderName="Крокодил"
@@ -48,6 +50,7 @@ function Chat(props) {
     const sender = players.find((player) => player.id === senderId);
     return (
       <Message
+        key={index}
         messageText={messageText}
         sendingDate={sendingDate}
         senderName={sender.name}

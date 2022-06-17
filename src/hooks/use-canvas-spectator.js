@@ -9,8 +9,6 @@ const useCanvasSpectator = (strokeStyle, lineWidth) => {
     const canvas = canvasRef.current;
     canvas.width *= 2;
     canvas.height *= 2;
-    // canvas.style.width = `${CANVAS_WIDTH}px`;
-    // canvas.style.height = `${CANVAS_HEIGHT}px`;
 
     const context = canvas.getContext('2d');
     context.scale(1, 1);

@@ -31,7 +31,7 @@ function Question(props) {
 
   const sendAnswer = () => {
     const sendingAnswer = (answer.trim().length === 0)
-      ? 'Нажаль, гравець не вигадав відповіді :('
+      ? 'На жаль, гравець не вигадав відповіді :('
       : answer;
 
     sendMessage(constants.ANSWER_MESSAGE_TYPE, {
