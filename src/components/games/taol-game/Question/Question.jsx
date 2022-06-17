@@ -19,8 +19,8 @@ function Question(props) {
     : clientQuestion.personalQuestion;
 
   const task = messageType === constants.PUBLIC_MESSAGE_TYPE
-    ? 'Вигадайте найбільшь правдиву відповідь, аби заплутати інших гравців ;)'
-    : 'відповіді немає :(';
+    ? 'Вигадайте найбільш правдиву відповідь, аби заплутати інших гравців ;)'
+    : 'Вкажи чесну відповідь:';
 
   const {
     value: answer,
@@ -31,7 +31,7 @@ function Question(props) {
 
   const sendAnswer = () => {
     const sendingAnswer = (answer.trim().length === 0)
-      ? 'Нажаль, гравець не вигадав відповіді :('
+      ? 'На жаль, гравець не вигадав відповіді :('
       : answer;
 
     sendMessage(constants.ANSWER_MESSAGE_TYPE, {

@@ -39,4 +39,8 @@ const sendMessage = (type, message) => {
   connectedRoom.send(type, message);
 };
 
-export { createRoom, joinRoom, sendMessage };
+const onMessage = (type, callback) => {
+  connectedRoom.onMessage(type, callback);
+};
+
+export { createRoom, joinRoom, sendMessage, onMessage };

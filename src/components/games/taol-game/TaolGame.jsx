@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TAOL_ID } from './config';
 import TaolMain from './TaolMain/TaolMain';
-import RoomConnect from '../RoomConnect/RoomConnect';
+import RoomConnect from '../RoomConnect';
 import styles from './TaolGame.module.css';
 
 function TaolGame() {

@@ -1,0 +1,49 @@
+.crocodile-game{
+    overflow: auto;
+    width: 100%;
+    height: 100vh;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .crocodile-game button {
+    background-color: #FFF;
+    font-size: 1.5rem;
+    border: solid 1px;
+    border-radius: 20px;
+    filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, .23));
+    transition: filter 0.1s;
+    width: 10rem;
+    vertical-align: middle;
+    margin: 0.5rem;
+  }
+  
+  .crocodile-game button:disabled {
+    filter: none;
+  }
+  
+  .crocodile-game button:active:enabled {
+    filter: none;
+  }
+  
+  .crocodile-game input {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    border: 1px solid;
+    border-radius: 20px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .crocodile-game input:focus {
+    outline: none;
+  }
+  
+  .crocodile-game h1, .crocodile-game h2, .crocodile-game p {
+    color: #000;
+    margin: 0
+  }
+  

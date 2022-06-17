@@ -1,0 +1,31 @@
+.message-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-avatar {
+  vertical-align: middle;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: 0.5rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-text {
+  text-align: start;
+  margin: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

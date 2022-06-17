@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect, useContext, useMemo } from 'react';
-import { createRoom, joinRoom } from '../../../modules/room-connect';
-import useInput from '../../../hooks/use-input';
-import userContext from '../../userContext';
+import { createRoom, joinRoom } from '../../modules/room-connect';
+import useInput from '../../hooks/use-input';
+import userContext from '../userContext';
 import styles from './RoomConnect.module.css';
 
 function RoomConnect(props) {
@@ -50,7 +50,7 @@ function RoomConnect(props) {
     setRoomState
   ]);
 
-  const buttonClickHanler = () => {
+  const buttonClickHandler = () => {
     const setState = (clientId, state) => {
       setRoomState({
         clientId,
@@ -79,7 +79,7 @@ function RoomConnect(props) {
       />
       {inputRoomIdHasError && <p className={styles['error-text']}>Не вірний ID кімнати!</p>}
       {!inputRoomIdHasError && error && <p className={styles['error-text']}>{error.message}</p>}
-      <button type="button" onClick={buttonClickHanler}> Нова гра </button>
+      <button type="button" onClick={buttonClickHandler}> Нова гра </button>
     </>
   );
 

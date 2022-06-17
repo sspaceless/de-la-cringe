@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import userContext from './components/userContext';
 import useUserState from './hooks/use-user-state';
 import LoadingWindow from './components/LoadingWindow/LoadingWindow';
+import CrocodileGame from './components/games/crocodile-game/CrocodileGame';
 import MyGameMenu from './components/games/my-game/MyGameMenu/MyGameMenu';
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
     return null;
   };
 
+
+  
   const renderHome = () => {
     if (userState.isFetched) {
       return <Home />;
@@ -42,7 +45,7 @@ function App() {
         <Route path="games">
           <Route path="taol" element={renderGame('taol', <TaolGame />)} />
           <Route path="my-game" element={renderGame('my-game', <MyGameMenu />)} />
-          <Route path="game3" />
+          <Route path="crocodile" element={renderGame('crocodile', <CrocodileGame />)} />
           <Route path="game4" />
           <Route path="game5" />
         </Route>
