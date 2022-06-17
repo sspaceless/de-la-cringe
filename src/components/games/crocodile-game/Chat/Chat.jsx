@@ -5,7 +5,7 @@ import useInput from '../../../../hooks/use-input';
 import { sendMessage } from '../../../../modules/room-connect';
 import Message from './Message';
 import * as constants from '../config';
-import config from '../../../../config.json';
+import Config from '../../../../config';
 import styles from './Chat.module.css';
 
 function Chat(props) {
@@ -42,7 +42,7 @@ function Chat(props) {
           messageText={messageText}
           sendingDate={sendingDate}
           senderName="Крокодил"
-          senderAvatarUrl={`${config.apiUrl}/files/logo.svg`}
+          senderAvatarUrl={`${Config.API_URL}/files/logo.svg`}
         />
       );
     }

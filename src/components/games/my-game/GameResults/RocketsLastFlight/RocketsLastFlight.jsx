@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MGContext from '../../MGContext';
-import config from '../../../../../config.json';
+import Config from '../../../../../config';
 import styles from './RocketsLastFlight.module.css';
 
 function RocketsLastFlight() {
@@ -36,16 +36,16 @@ function RocketsLastFlight() {
     <div className={styles.wrapper}>
       <div className={styles.rocketWrapper} style={styleFirst}>
         <img className={styles.avatar} src={state.host.avatarUrl} alt="avatar" />
-        <img className={styles.rocket} src={`${config.apiUrl}/files/games/my-game/emptyRocket.svg`} alt="rocket" />
+        <img className={styles.rocket} src={`${Config.API_URL}/files/games/my-game/emptyRocket.svg`} alt="rocket" />
       </div>
 
       <div className={styles.rocketWrapper2} style={styleSecond}>
         <img className={styles.avatar} src={state.winner.avatarUrl} alt="avatar" />
-        <img className={styles.rocket} src={`${config.apiUrl}/files/games/my-game/emptyRocket.svg`} alt="rocket2" />
+        <img className={styles.rocket} src={`${Config.API_URL}/files/games/my-game/emptyRocket.svg`} alt="rocket2" />
       </div>
 
-      <img className={styles.portalInner} src={`${config.apiUrl}/files/games/my-game/portalInner.svg`} alt="portal" />
-      <img className={styles.portalOuter} src={`${config.apiUrl}/files/games/my-game/portalOuter.svg`} alt="portal" />
+      <img className={styles.portalInner} src={`${Config.API_URL}/files/games/my-game/portalInner.svg`} alt="portal" />
+      <img className={styles.portalOuter} src={`${Config.API_URL}/files/games/my-game/portalOuter.svg`} alt="portal" />
 
       {angle < Math.PI / 2
         && (

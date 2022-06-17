@@ -9,7 +9,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import MediaContent from './MediaContent/MediaContent';
 import Orbit from '../QuestionSelectionPage/Orbit/Orbit';
 import QuestionWindow from './QuestionWindow/QuestionWindow';
-import config from '../../../../config.json';
+import Config from '../../../../config';
 import styles from './QuestionShowingPage.module.css';
 import Rockets from './Rockets/Rockets';
 
@@ -143,7 +143,7 @@ function QuestionShowingPage() {
         <img
           className={styles.center}
           width={r * 2}
-          src={`${config.apiUrl}/files/games/my-game/planet.svg`}
+          src={`${Config.API_URL}/files/games/my-game/planet.svg`}
           alt="Planet"
         />
 

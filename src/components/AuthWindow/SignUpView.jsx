@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Input from '../Input/Input';
 import { quickPost } from '../../modules/quickfetch';
 import styles from './AuthWindow.module.css';
-import config from '../../config.json';
+import Config from '../../config';
 
 const rules = {
   username: [
@@ -66,7 +66,7 @@ function SignUpView({ accountCreatedCallback = undefined }) {
     event.preventDefault();
 
     try {
-      const result = await quickPost(`${config.apiUrl}/api/users/createAccount`, { username, password });
+      const result = await quickPost(`${Config.API_URL}/api/users/createAccount`, { username, password });
 
       if (!result.success) {
         setCreateError(true);
@@ -90,7 +90,7 @@ function SignUpView({ accountCreatedCallback = undefined }) {
   };
 
   return (
-    <form action={`${config.apiUrl}/api/users/createAccount`} method="POST" onSubmit={formSubmit}>
+    <form action={`${Config.API_URL}/api/users/createAccount`} method="POST" onSubmit={formSubmit}>
       <h1 className={styles.topText}>Create Account</h1>
 
       <label htmlFor="username">Username</label>
@@ -111,7 +111,7 @@ function SignUpView({ accountCreatedCallback = undefined }) {
         </div>
       </div>
 
-      <input className={styles.submitBtn} type="image" src={`${config.apiUrl}/files/buttons/SignUpButton.svg`} alt="Sign Up" disabled={isCreateError || isError} />
+      <input className={styles.submitBtn} type="image" src={`${Config.API_URL}/files/buttons/SignUpButton.svg`} alt="Sign Up" disabled={isCreateError || isError} />
       {isCreateError
         && <p className={[styles.red, styles.center].join(' ')}>This username is already in use</p>}
     </form>

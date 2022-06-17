@@ -1,4 +1,4 @@
-const FILES_URL = 'http://192.168.1.152:3002/files/games/my-game/questions';
+const FILES_URL = 'http://localhost:3002/files/games/my-game/questions';
 const Themes = ['Аніме', 'Ігри', 'Логотипи', 'Музика', 'Кінематограф', 'Столиці', 'Загадкові речі'];
 
 const MessageTypes = {

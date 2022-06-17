@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Textfit } from 'react-textfit';
-import config from '../../../../../config.json';
+import Config from '../../../../../config';
 import styles from './Sun.module.css';
 
 function Sun({ roundNum, rotation }) {
@@ -16,7 +16,7 @@ function Sun({ roundNum, rotation }) {
         <img
           className={styles.star}
           style={style}
-          src={`${config.apiUrl}/files/games/my-game/star.svg`}
+          src={`${Config.API_URL}/files/games/my-game/star.svg`}
           alt="Star"
         />
         <Textfit mode="single" className={styles.roundNum}>Round {roundNum}</Textfit>

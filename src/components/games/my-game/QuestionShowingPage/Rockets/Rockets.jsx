@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import MGContext from '../../MGContext';
-import config from '../../../../../config.json';
+import Config from '../../../../../config';
 import styles from './Rockets.module.css';
 
 function Rockets({ style = {} }) {
@@ -10,7 +10,7 @@ function Rockets({ style = {} }) {
   const positions = [[[0, 0]], [[-35, 0], [35, 0]], [[-35, 45], [35, 45], [0, -45]]];
 
   let rockets = new Array(Math.min(state.players.size, 3)).fill(undefined);
-  const rocketUrl = `${config.apiUrl}/files/games/my-game/rocket.svg`;
+  const rocketUrl = `${Config.API_URL}/files/games/my-game/rocket.svg`;
 
   rockets = rockets.map((_, i) => {
     const pos = positions[rockets.length - 1];

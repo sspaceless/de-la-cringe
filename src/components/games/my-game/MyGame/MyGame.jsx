@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import Lobby from '../Lobby/Lobby';
 import MGContext from '../MGContext';
 import { Stages, stageIcons } from '../MGConfig';
-import config from '../../../../config.json';
+import Config from '../../../../config';
 import StartingCountPage from '../StartingCountPage/StartingCountPage';
 import QuestionSelectionPage from '../QuestionSelectionPage/QuestionSelectionPage';
 import QuestionShowingPage from '../QuestionShowingPage/QuestionShowingPage';
@@ -59,7 +59,7 @@ function MyGame() {
 
   const iconsList = stageIcons.map((icon) => (
     <div className={styles.iconWrapper} key={icon} data-selected={selectedIcon === icon ? 1 : 0}>
-      <img className={styles.icon} alt={icon} src={`${config.apiUrl}/files/games/my-game/stages/${icon}.svg`} />
+      <img className={styles.icon} alt={icon} src={`${Config.API_URL}/files/games/my-game/stages/${icon}.svg`} />
     </div>
   ));
 
@@ -85,7 +85,7 @@ function MyGame() {
   return (
     <>
       <header>
-        <img className={styles.logo} src={`${config.apiUrl}/files/games/my-game/ingamelogo.svg`} alt="logo" />
+        <img className={styles.logo} src={`${Config.API_URL}/files/games/my-game/ingamelogo.svg`} alt="logo" />
       </header>
 
       <div className={styles.mainContent}>

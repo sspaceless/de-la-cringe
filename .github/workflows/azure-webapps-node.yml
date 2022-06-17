@@ -24,9 +24,13 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: de-la-cringe    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '16.x'                # set this to the node version to use
+  AZURE_WEBAPP_NAME: de-la-cringe
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
+
+  AZURE_API_WEBAPP_NAME: de-la-cringe-api
+  AZURE_API_WEBAPP_PACKAGE_PATH: '.'
+
+  NODE_VERSION: '16.x'
 
 jobs:
   build:
@@ -42,7 +46,7 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        npm install
+        npm install --force
         CI=false npm run build --if-present
         CI=false npm run test --if-present
         
@@ -55,6 +59,16 @@ jobs:
       with:
         name: de-la-cringe
         path: ./build
+
+    - name: change folder to api-server
+      run: |
+        cd src/api-server
+
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: de-la-cringe-api
+        path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -76,3 +90,16 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+        name: de-la-cringe-api
+
+    - name: 'Deploy to Azure WebApp'
+      id: deploy-to-webapp 
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_API_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_API_SERVER_PUBLISH_PROFILE }}
+        package: ${{ env.AZURE_API_WEBAPP_PACKAGE_PATH }}

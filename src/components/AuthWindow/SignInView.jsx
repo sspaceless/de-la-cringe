@@ -4,7 +4,7 @@ import { quickPost } from '../../modules/quickfetch';
 import Input from '../Input/Input';
 import userContext from '../userContext';
 import styles from './AuthWindow.module.css';
-import config from '../../config.json';
+import Config from '../../config';
 
 function SignInView({ hideFunction }) {
   const { reloadUserState } = useContext(userContext);
@@ -17,7 +17,7 @@ function SignInView({ hideFunction }) {
     event.preventDefault();
 
     try {
-      const answer = await quickPost(`${config.apiUrl}/api/users/signInAccount`, { username, password });
+      const answer = await quickPost(`${Config.API_URL}/api/users/signInAccount`, { username, password });
 
       if (answer.success) {
         await reloadUserState();
@@ -42,7 +42,7 @@ function SignInView({ hideFunction }) {
   };
 
   return (
-    <form action={`${config.apiUrl}/api/users/signInAccount`} method="POST" onSubmit={formSubmit}>
+    <form action={`${Config.API_URL}/api/users/signInAccount`} method="POST" onSubmit={formSubmit}>
       <h1 className={styles.topText}>Login</h1>
 
       <label htmlFor="username">Username</label>
@@ -51,7 +51,7 @@ function SignInView({ hideFunction }) {
       <label htmlFor="password">Password</label>
       <Input autoComplete="current-password" onChange={onPasswordChange} id="password" type="password" name="password" />
 
-      <input className={styles.submitBtn} type="image" src={`${config.apiUrl}/files/buttons/LogInButton.svg`} alt="Log In" disabled={isLoginError} />
+      <input className={styles.submitBtn} type="image" src={`${Config.API_URL}/files/buttons/LogInButton.svg`} alt="Log In" disabled={isLoginError} />
 
       {isLoginError
         && <p className={[styles.center, styles.red].join(' ')}>The username or password is incorrect</p>}

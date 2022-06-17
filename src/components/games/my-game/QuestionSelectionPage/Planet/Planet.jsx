@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Textfit } from 'react-textfit';
 import MGContext from '../../MGContext';
-import config from '../../../../../config.json';
+import Config from '../../../../../config';
 import styles from './Planet.module.css';
 import { MessageTypes } from '../../MGConfig';
 import Orbit from '../Orbit/Orbit';
@@ -53,7 +53,7 @@ function Planet({ topic, prices, rotation, orbit: { angle, width, height }, onHo
       <div className={styles.wrapper} key={topic}>
         <img
           className={styles.objImage}
-          src={`${config.apiUrl}/files/games/my-game/planet.svg`}
+          src={`${Config.API_URL}/files/games/my-game/planet.svg`}
           alt="Planet"
           style={{ transform: `rotateZ(${imgRot}rad)` }}
         />

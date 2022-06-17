@@ -3,11 +3,11 @@ import userContext from '../userContext';
 import { LogOutButton } from '../Buttons/Buttons';
 import AuthWindow from '../AuthWindow/AuthWindow';
 import styles from './AccountControl.module.css';
-import config from '../../config.json';
+import Config from '../../config';
 
 function AccountControl() {
   const { userState } = useContext(userContext);
-  const avatarUrl = userState.isAuthorized ? userState.user.avatarUrl : `${config.apiUrl}/files/avatars/avatar.png`;
+  const avatarUrl = userState.isAuthorized ? userState.user.avatarUrl : `${Config.API_URL}/files/avatars/avatar.png`;
 
   const [isShowButton, setIsShowButton] = useState(false);
   const [isAvatarClicked, setIsAvatarClicked] = useState(false);

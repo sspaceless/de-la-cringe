@@ -1,12 +1,12 @@
 import React from 'react';
 import AccountControl from '../AccountControl/AccountControl';
 import styles from './Header.module.css';
-import config from '../../config.json';
+import Config from '../../config';
 
 function Header() {
   return (
     <header className={styles.header}>
-      <img className={styles.logo} src={`${config.apiUrl}/files/fullLogo.svg`} alt="logo" />
+      <img className={styles.logo} src={`${Config.API_URL}/files/fullLogo.svg`} alt="logo" />
 
       <AccountControl />
 

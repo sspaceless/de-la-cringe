@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Textfit } from 'react-textfit';
 import MGContext from '../../MGContext';
 import { MessageTypes, Stages } from '../../MGConfig';
-import config from '../../../../../config.json';
+import Config from '../../../../../config';
 import styles from './QuestionWindow.module.css';
 import Timer from '../../../../Timer/Timer';
 
@@ -34,8 +34,8 @@ function QuestionWindow({ radius, angle, canAnswer = false }) {
   const [font, setFont] = useState();
 
   const icon = upscaled
-    ? `${config.apiUrl}/files/games/my-game/downscaleIcon.svg`
-    : `${config.apiUrl}/files/games/my-game/upscaleIcon.svg`;
+    ? `${Config.API_URL}/files/games/my-game/downscaleIcon.svg`
+    : `${Config.API_URL}/files/games/my-game/upscaleIcon.svg`;
 
   const requestAnswer = () => room.send(MessageTypes.ANSWER_REQUEST);
 

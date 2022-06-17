@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { quickGet } from '../../modules/quickfetch';
 import userContext from '../userContext';
 import styles from './buttons.module.css';
-import config from '../../config.json';
+import Config from '../../config';
 import MessageWindow from '../MessageWindow/MessageWindow';
 import ConfirmWindow from '../ConfirmWindow/ConfirmWindow';
 
@@ -22,7 +22,7 @@ const PlayButton = (props) => {
         style={style}
         className={[styles.btn, styles.gameBtn].join(' ')}
         alt="Play"
-        src={`${config.apiUrl}/files/buttons/PlayButton.svg`}
+        src={`${Config.API_URL}/files/buttons/PlayButton.svg`}
         onMouseOver={() => setHovered(true)}
         onMouseOut={() => setHovered(false)}
       />
@@ -44,7 +44,7 @@ const BuyButton = (props) => {
   const { reloadUserState } = useContext(userContext);
 
   const buyGame = async () => {
-    await quickGet(new URL(`/api/games/buy?gameId=${encodeURIComponent(gameId)}`, config.apiUrl));
+    await quickGet(new URL(`/api/games/buy?gameId=${encodeURIComponent(gameId)}`, Config.API_URL));
     await reloadUserState();
   };
 
@@ -58,7 +58,7 @@ const BuyButton = (props) => {
       style={style}
       className={[styles.btn, styles.gameBtn].join(' ')}
       type="image"
-      src={`${config.apiUrl}/files/buttons/BuyButton.svg`}
+      src={`${Config.API_URL}/files/buttons/BuyButton.svg`}
       alt="Buy"
       onClick={buyGame}
       onMouseOver={() => setHovered(true)}
@@ -90,7 +90,7 @@ const TrialButton = (props) => {
 
   const grantFreeTrial = async (answer) => {
     if (answer) {
-      await quickGet(new URL(`/api/games/grantFreeTrial?gameId=${encodeURIComponent(gameId)}`, config.apiUrl));
+      await quickGet(new URL(`/api/games/grantFreeTrial?gameId=${encodeURIComponent(gameId)}`, Config.API_URL));
       await reloadUserState();
     }
   };
@@ -171,14 +171,14 @@ const LogOutButton = () => {
   const { reloadUserState } = useContext(userContext);
 
   const logout = async () => {
-    const result = await quickGet(new URL('/api/users/logoutFromAccount', config.apiUrl));
+    const result = await quickGet(new URL('/api/users/logoutFromAccount', Config.API_URL));
 
     if (result.success) {
       await reloadUserState();
     }
   };
 
-  return <input className={styles.logOutBtn} type="image" src={`${config.apiUrl}/files/buttons/LogOutButton.svg`} alt="Log out" onClick={logout} />;
+  return <input className={styles.logOutBtn} type="image" src={`${Config.API_URL}/files/buttons/LogOutButton.svg`} alt="Log out" onClick={logout} />;
 };
 
 export { TrialButton, BuyButton, PlayButton, LogOutButton };

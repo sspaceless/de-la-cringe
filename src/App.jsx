@@ -24,8 +24,6 @@ function App() {
     return null;
   };
 
-
-  
   const renderHome = () => {
     if (userState.isFetched) {
       return <Home />;

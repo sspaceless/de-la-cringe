@@ -4,7 +4,7 @@ import { Client } from 'colyseus.js';
 import Input from '../../../Input/Input';
 import MyGame from '../MyGame/MyGame';
 import { Themes } from '../MGConfig';
-import config from '../../../../config.json';
+import Config from '../../../../config';
 import UserContext from '../../../userContext';
 import MGContext from '../MGContext';
 import styles from './MyGameMenu.module.css';
@@ -18,7 +18,7 @@ function useForceUpdate() {
 function MyGameMenu() {
   const forceUpdate = useForceUpdate();
 
-  const clientRef = useRef(new Client(config.colyseusUrl));
+  const clientRef = useRef(new Client(Config.COLYSEUS_URL));
   const client = clientRef.current;
 
   const { userState } = useContext(UserContext);
@@ -149,7 +149,7 @@ function MyGameMenu() {
 
         <Input className={[styles.inp, isWrong ? styles.wrong : ''].join(' ')} onChange={setValue} placeholder="Room ID to Join" />
 
-        <img src={`${config.apiUrl}/files/games/my-game/ingamelogo.svg`} alt="logo" />
+        <img src={`${Config.API_URL}/files/games/my-game/ingamelogo.svg`} alt="logo" />
       </div>
     </div>
   );
