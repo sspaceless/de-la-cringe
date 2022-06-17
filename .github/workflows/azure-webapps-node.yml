@@ -35,7 +35,7 @@ env:
 stages:
 - stage: client
   jobs:
-    build:
+    - job: build
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
@@ -62,7 +62,7 @@ stages:
           name: de-la-cringe
           path: ./build
 
-    deploy:
+    - job: deploy
       runs-on: ubuntu-latest
       needs: build
       environment:
@@ -85,7 +85,7 @@ stages:
 
 - stage: api_server
   jobs:
-    build:
+    - job: build
       runs-on: ubuntu-latest
       steps:
       - dir: ./src/api-server
@@ -107,7 +107,7 @@ stages:
           name: de-la-cringe-api
           path: .
 
-    deploy:
+    - job: deploy
       runs-on: ubuntu-latest
       needs: build
       environment:
@@ -127,4 +127,3 @@ stages:
           app-name: ${{ env.AZURE_API_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_API_SERVER_PUBLISH_PROFILE }}
           package: ${{ env.AZURE_API_WEBAPP_PACKAGE_PATH }}
-          
