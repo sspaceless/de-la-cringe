@@ -64,7 +64,7 @@ jobs:
       run: |
         cd src/api-server
 
-    - name: Upload artifact for deployment job
+    - name: Upload artifact for deployment job 2
       uses: actions/upload-artifact@v3
       with:
         name: de-la-cringe-api
@@ -83,7 +83,7 @@ jobs:
       with:
         name: de-la-cringe
 
-    - name: 'Deploy to Azure WebApp'
+    - name: Deploy to Azure WebApp
       id: deploy-to-webapp 
       uses: azure/webapps-deploy@v2
       with:
@@ -91,13 +91,13 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-    - name: Download artifact from build job
+    - name: Download artifact from build job 2
       uses: actions/download-artifact@v3
       with:
         name: de-la-cringe-api
 
-    - name: 'Deploy to Azure WebApp'
-      id: deploy-to-webapp 
+    - name: Deploy to Azure WebApp 2
+      id: deploy-to-webapp-2
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_API_WEBAPP_NAME }}
