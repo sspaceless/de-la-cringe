@@ -1,0 +1,142 @@
+@import '../../vars.css';
+
+.center {
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.questionWrapper {
+  z-index: 0;
+  height: 225px;
+  width: 390px;
+  box-sizing: border-box;
+  padding: 10px;
+  transition: all 1.5s;
+}
+
+.questionWrapper::before {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+}
+
+.question {
+  margin: 0;
+  height: calc(100% - 90px);
+  width: 100%;
+  color: white;
+  text-align: center;
+  transition: all 1.5s;
+  white-space: pre-wrap;
+}
+
+.topic {
+  color: var(--pink);
+  font-size: 2.5em;
+  text-align: center;
+  font-weight: 1000;
+  margin-bottom: 20px;
+  height: 55px;
+}
+
+.scaleIcon {
+  z-index: 0;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+}
+
+.scaleIcon input {
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+
+.scaleIcon input:hover {
+  opacity: 1;
+}
+
+.aboveEl::before {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.bottom {
+  position: absolute;
+  left: 50%;
+  bottom: -15px;
+  transform: translateX(-50%);
+  line-height: 26px;
+  height: 30px;
+}
+
+.timer {
+  position: relative;
+  height: 30px;
+  width: 30px;
+  padding: 2px;
+  line-height: 26px;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: right;
+}
+
+.answerWrapper {
+  position: relative;
+  height: 30px;
+  width: 120px;
+  display: inline-block;
+  margin-right: 25px; 
+}
+
+.answerBtn {
+  height: 100%;
+  width: 100%; 
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 21px;
+  transition: all 0.3s;
+  line-height: 26px;
+}
+
+.answerBtn:hover {
+  color: var(--purple);
+}
+
+/*
+.questionWrapper::before {
+  content: '';
+  height: 100%;
+  width: 50%;
+  float: left;
+  shape-outside: radial-gradient(farthest-side at right, transparent 100%, #fff 0);
+}
+
+.question::before {
+  content: '';
+  height: 100%;
+  width: 50%;
+  float: right;
+  shape-outside: radial-gradient(farthest-side at left, transparent 100%, #fff 0);
+}*/

@@ -1,0 +1,40 @@
+@import '../vars.css';
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.questionsWrapper {
+  height: calc(100% - 65px);
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin: -20px 0 10px 0;
+  padding: 20px 0;
+  box-sizing: border-box;
+  mask: linear-gradient(transparent, black 20px, black calc(100% - 20px), transparent);
+}
+
+.questionsWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.questionList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.progress {
+  height: 75px;
+}
+
+.progressText {
+  color: var(--pink);
+  font-size: 1.4em;
+  font-weight: 1000;
+  height: 35px;
+  margin-bottom: 5px;
+}

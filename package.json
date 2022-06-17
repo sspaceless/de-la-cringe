@@ -11,6 +11,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-textfit": "^1.1.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
@@ -18,14 +19,14 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-react": "^7.16.7",
     "concurrently": "^7.1.0",
-    "eslint": "^8.13.0",
+    "eslint": "^8.15.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.29.4"
   },
   "scripts": {
     "lint": "eslint ./src/ --ext jsx --ext js",
-    "start": "concurrently --kill-others \"npm run start:client\" \"npm run start:api\"",
+    "start": "concurrently --kill-others \"npm run start:api\" \"npm run start:colyseus\" \"npm run start:client\"",
     "start:client": "react-scripts start",
     "start:api": "npm --prefix \"./src/api-server\" run start",
     "start:colyseus": "npm --prefix ./src/server run start",

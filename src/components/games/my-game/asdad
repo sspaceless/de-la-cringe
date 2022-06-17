@@ -1,0 +1,12 @@
+import React, { useContext } from 'react';
+import MGContext from '../MGContext';
+
+function () {
+  const { state } = useContext(MGContext);
+
+  return (
+
+  );
+}
+
+export default ;

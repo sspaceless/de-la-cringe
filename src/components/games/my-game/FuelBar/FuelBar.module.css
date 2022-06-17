@@ -1,0 +1,75 @@
+@import '../vars.css';
+
+.fuelOuter {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.points {
+  z-index: 1;
+  position: absolute;
+  color: #ff612f;
+  top: 0;
+  left: 10px;
+  margin: 0;
+  height: 100%;
+  mix-blend-mode: color-dodge;
+}
+
+.fuelInner {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  transition: left 1.5s, width 1.5s;
+}
+
+.fuelInner.negative {
+  right: 0;
+  left: auto !important;
+  transform: scale(-1, 1);
+}
+
+.fuelInner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  height: 100%;
+  animation: 2.5s ease-in-out 0s infinite alternate waving;
+  background: var(--fuel-background-url) repeat 0/100px fixed,
+              linear-gradient(90deg, var(--purple) 78%, var(--light-purple) 97%) center/cover fixed;
+}
+
+.fuelInner.negative::before {
+  background: var(--fuel-background-url) repeat 0/100px fixed, var(--orange);
+  transform: scale(-1, 1);
+}
+
+.fuelInner::after {
+  content: '';
+  position: absolute;
+  right: -9px;
+  mask: var(--fuel-wave-mask) left/contain repeat-y;
+  height: 100%;
+  width: 10px;
+  animation: 2.5s ease-in-out 0s infinite alternate waving;
+  background: var(--fuel-background-url) repeat 0/100px fixed,
+              linear-gradient(90deg, var(--purple) 78%, var(--light-purple) 97%) center/cover fixed;
+}
+
+.fuelInner.negative::after {
+  background: var(--fuel-background-url) repeat 0/100px fixed, var(--orange);
+}
+
+@keyframes waving {
+  0% {
+    mask-position: 0 0;
+  }
+  100% {
+    mask-position: 0 30px;
+  }
+}

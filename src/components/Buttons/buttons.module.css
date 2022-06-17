@@ -1,11 +1,6 @@
 .btn {
-  filter: drop-shadow(-5px 8px 5px rgba(0, 0, 0, .23));
   transition: filter 0.5s;
   vertical-align: middle;
-}
-
-.btn:hover {
-  filter: none;
 }
 
 .gameBtn {

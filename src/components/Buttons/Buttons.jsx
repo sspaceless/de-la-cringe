@@ -9,15 +9,38 @@ import MessageWindow from '../MessageWindow/MessageWindow';
 import ConfirmWindow from '../ConfirmWindow/ConfirmWindow';
 
 const PlayButton = (props) => {
-  const { gameId } = props;
+  const { gameId, filter = '' } = props;
 
-  return <Link to={`/games/${gameId}`}><img className={[styles.btn, styles.gameBtn].join(' ')} alt="Play" src={`${config.apiUrl}/files/buttons/PlayButton.svg`} /></Link>;
+  const [hovered, setHovered] = useState(false);
+
+  const shadow = !hovered ? 'drop-shadow(-5px 8px 5px rgba(0, 0, 0, .23))' : '';
+  const style = { filter: `${filter} ${shadow}` };
+
+  return (
+    <Link to={`/games/${gameId}`}>
+      <img
+        style={style}
+        className={[styles.btn, styles.gameBtn].join(' ')}
+        alt="Play"
+        src={`${config.apiUrl}/files/buttons/PlayButton.svg`}
+        onMouseOver={() => setHovered(true)}
+        onMouseOut={() => setHovered(false)}
+      />
+    </Link>
+  );
 };
 
-PlayButton.propTypes = { gameId: PropTypes.string.isRequired };
+PlayButton.propTypes = {
+  gameId: PropTypes.string.isRequired,
+  filter: PropTypes.string
+};
+
+PlayButton.defaultProps = {
+  filter: ''
+};
 
 const BuyButton = (props) => {
-  const { gameId } = props;
+  const { gameId, filter = '' } = props;
   const { reloadUserState } = useContext(userContext);
 
   const buyGame = async () => {
@@ -25,17 +48,45 @@ const BuyButton = (props) => {
     await reloadUserState();
   };
 
-  return <input className={[styles.btn, styles.gameBtn].join(' ')} type="image" src={`${config.apiUrl}/files/buttons/BuyButton.svg`} alt="Buy" onClick={buyGame} />;
+  const [hovered, setHovered] = useState(false);
+
+  const shadow = !hovered ? 'drop-shadow(-5px 8px 5px rgba(0, 0, 0, .23))' : '';
+  const style = { filter: `${filter} ${shadow}` };
+
+  return (
+    <input
+      style={style}
+      className={[styles.btn, styles.gameBtn].join(' ')}
+      type="image"
+      src={`${config.apiUrl}/files/buttons/BuyButton.svg`}
+      alt="Buy"
+      onClick={buyGame}
+      onMouseOver={() => setHovered(true)}
+      onMouseOut={() => setHovered(false)}
+    />
+  );
 };
 
-BuyButton.propTypes = { gameId: PropTypes.string.isRequired };
+BuyButton.propTypes = {
+  gameId: PropTypes.string.isRequired,
+  filter: PropTypes.string
+};
+
+BuyButton.defaultProps = {
+  filter: ''
+};
 
 const TrialButton = (props) => {
-  const { gameId } = props;
+  const { gameId, filter = '' } = props;
   const { userState, reloadUserState } = useContext(userContext);
 
   const [isMsgShown, setIsMsgShown] = useState(false);
   const [isConfirmShown, setIsConfirmShown] = useState(false);
+
+  const [hovered, setHovered] = useState(false);
+
+  const shadow = !hovered ? 'drop-shadow(-5px 8px 5px rgba(0, 0, 0, .23))' : '';
+  const style = { filter: `${filter} ${shadow}` };
 
   const grantFreeTrial = async (answer) => {
     if (answer) {
@@ -61,7 +112,15 @@ const TrialButton = (props) => {
   if (userState.isAuthorized) {
     return (
       <>
-        <input className={styles.trialBtn} type="button" value="Free trial" onClick={showConfirm} />
+        <input
+          style={style}
+          className={styles.trialBtn}
+          type="button"
+          value="Free trial"
+          onClick={showConfirm}
+          onMouseOver={() => setHovered(true)}
+          onMouseOut={() => setHovered(false)}
+        />
 
         {isConfirmShown
           && (
@@ -77,7 +136,15 @@ const TrialButton = (props) => {
 
   return (
     <>
-      <input className={styles.trialBtn} type="button" value="Free trial" onClick={showMsg} />
+      <input
+        style={style}
+        className={styles.trialBtn}
+        type="button"
+        value="Free trial"
+        onClick={showMsg}
+        onMouseOver={() => setHovered(true)}
+        onMouseOut={() => setHovered(false)}
+      />
 
       {isMsgShown
         && (
@@ -91,7 +158,14 @@ const TrialButton = (props) => {
   );
 };
 
-TrialButton.propTypes = { gameId: PropTypes.string.isRequired };
+TrialButton.propTypes = {
+  gameId: PropTypes.string.isRequired,
+  filter: PropTypes.string
+};
+
+TrialButton.defaultProps = {
+  filter: ''
+};
 
 const LogOutButton = () => {
   const { reloadUserState } = useContext(userContext);

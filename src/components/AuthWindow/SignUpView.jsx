@@ -66,7 +66,7 @@ function SignUpView({ accountCreatedCallback = undefined }) {
     event.preventDefault();
 
     try {
-      const result = await quickPost('http://localhost:3002/api/users/createAccount', { username, password });
+      const result = await quickPost(`${config.apiUrl}/api/users/createAccount`, { username, password });
 
       if (!result.success) {
         setCreateError(true);
@@ -84,8 +84,13 @@ function SignUpView({ accountCreatedCallback = undefined }) {
     setUsername(value);
   };
 
+  const onPasswordChange = (value) => {
+    setCreateError(false);
+    setPassword(value);
+  };
+
   return (
-    <form action="http://localhost:3002/api/users/createAccount" method="POST" onSubmit={formSubmit}>
+    <form action={`${config.apiUrl}/api/users/createAccount`} method="POST" onSubmit={formSubmit}>
       <h1 className={styles.topText}>Create Account</h1>
 
       <label htmlFor="username">Username</label>
@@ -99,7 +104,7 @@ function SignUpView({ accountCreatedCallback = undefined }) {
 
       <label htmlFor="password">Password</label>
       <div className={styles.inputBlock}>
-        <Input autoComplete="new-password" onChange={setPassword} type="password" name="password" />
+        <Input autoComplete="new-password" onChange={onPasswordChange} type="password" name="password" />
 
         <div className={[styles.testMessages, styles.leftMsg, 'blurBack'].join(' ')}>
           {passwordRules}

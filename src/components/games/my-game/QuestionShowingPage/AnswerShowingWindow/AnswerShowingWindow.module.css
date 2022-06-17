@@ -1,0 +1,19 @@
+@import '../../vars.css';
+
+.wrapper {
+  width: 350px;
+  height: 150px;
+  text-align: center;
+}
+
+.text {
+  height: 35px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.answer {
+  height: calc(100% - 50px);
+  width: 100%;
+  color: var(--pink);
+}

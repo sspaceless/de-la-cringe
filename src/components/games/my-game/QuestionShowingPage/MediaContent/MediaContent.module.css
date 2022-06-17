@@ -1,0 +1,57 @@
+.file {
+  border-radius: 6px;
+  object-fit: scale-down;
+  vertical-align: middle;
+}
+
+.audioText {
+  font-size: 1.5em;
+  color: white;
+}
+
+.volumeSlider {
+  -webkit-appearance: none;
+  height: 25px;
+  position: absolute;
+  bottom: -30px;
+  overflow: hidden;
+  transform-origin: top left;
+  transform: rotateZ(-90deg);
+  border-radius: 12px;
+  border: none;
+}
+
+.volumeSlider:focus {
+  outline: none;
+}
+
+.volumeSlider::-webkit-slider-runnable-track {
+  background: white;
+  border: 0;
+  cursor: pointer;
+  height: 25px;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  width: 0px;
+  box-shadow: -2000px 0 0 2000px var(--pink);
+  -webkit-appearance: none;
+}
+
+.volumeSlider::-moz-range-track {
+  background: white;
+  border: 0;
+  cursor: pointer;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.volumeSlider::-moz-range-thumb {
+  margin-top: 0px;
+  width: 3px;
+  height: 25px;
+  background: var(--pink);
+  cursor: pointer;
+  box-shadow: -2000px 0 0 2000px var(--pink);
+  -webkit-appearance: none;
+}

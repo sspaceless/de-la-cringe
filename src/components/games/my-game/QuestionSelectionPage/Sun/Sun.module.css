@@ -1,0 +1,31 @@
+.main {
+  width: 160px;
+  height: 160px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wrapper {
+  position: relative;
+}
+
+.star {
+  width: 100%;
+}
+
+.roundNum {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 60%;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.wrapper input {
+  position: absolute;
+}
