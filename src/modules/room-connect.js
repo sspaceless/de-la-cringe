@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as Colyseus from 'colyseus.js';
 
-const client = new Colyseus.Client('ws://localhost:2567');
+const client = new Colyseus.Client('https://game-server.azurewebsites.net/');
 let connectedRoom;
 
 const createRoom = async (game, userData, setRoomId, onStateChange) => {
