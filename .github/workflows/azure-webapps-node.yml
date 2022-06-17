@@ -60,15 +60,11 @@ jobs:
         name: de-la-cringe
         path: ./build
 
-    - name: change folder to api-server
-      run: |
-        cd src/api-server
-
     - name: Upload artifact for deployment job 2
       uses: actions/upload-artifact@v3
       with:
         name: de-la-cringe-api
-        path: .
+        path: ./src/api-server
 
   deploy:
     runs-on: ubuntu-latest
