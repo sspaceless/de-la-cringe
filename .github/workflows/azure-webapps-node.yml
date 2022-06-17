@@ -87,18 +87,18 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Set up Node.js
-      working-directory: ./src/api-server
+      working-directory: './src/api-server'
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
 
     - name: npm install
-      working-directory: ./src/api-server
+      working-directory: './src/api-server'
       run: npm install --force
 
     - name: Upload artifact for deployment job
-      working-directory: ./src/api-server
+      working-directory: './src/api-server'
       uses: actions/upload-artifact@v3
       with:
         name: de-la-cringe-api
