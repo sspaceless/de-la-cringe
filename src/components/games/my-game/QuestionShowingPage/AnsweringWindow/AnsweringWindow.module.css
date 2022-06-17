@@ -1,0 +1,12 @@
+.text {
+  color: white;
+  width: 100%;
+  height: calc(100% - 45px);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.wrapper {
+  width: 350px;
+  height: 100px;
+}

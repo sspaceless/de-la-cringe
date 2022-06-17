@@ -4,12 +4,6 @@
   font-family: 'Nunito', sans-serif;
 }
 
-body {
-  background: radial-gradient(circle at bottom left, #ea853c 5%, #6002b4 85%);
-  height: 100vh;
-  overflow: hidden;
-}
-
 a {
   color: #fb9331;
 }
@@ -27,4 +21,8 @@ a {
   border-radius: inherit;
   filter: blur(1px);
   backdrop-filter: blur(40px);
+}
+
+[hidden] {
+  display:none;
 }

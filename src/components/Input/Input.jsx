@@ -18,7 +18,7 @@ function Input({ initialValue = '', onChange = undefined, validator = undefined,
     }
   };
 
-  return <input value={value} onChange={onInputChange} {...props} />;
+  return <input type="text" value={value} onChange={onInputChange} {...props} />;
 }
 
 Input.propTypes = {

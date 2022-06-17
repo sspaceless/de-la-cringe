@@ -1,0 +1,26 @@
+@import '../../vars.css';
+
+.wrapper {
+  position: relative;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.orbit {
+  z-index: -3;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  outline: 3px dotted var(--purple);
+  border-radius: 50%;
+  opacity: 50%;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

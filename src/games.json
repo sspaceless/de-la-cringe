@@ -7,11 +7,12 @@
     "type": "free"
   },
   {
-    "name": "game2",
-    "image": "logo.svg",
-    "description": "lolololollolololololololo",
-    "gameId": "game2",
-    "type": "free"
+    "name": "Космическая вечеринка",
+    "image": "games/my-game/logo.png",
+    "description": "Космическая вечеринка на выживание хи-хи-хи 😉",
+    "gameId": "my-game",
+    "type": "free",
+    "color": "#7a2edb"
   },
   {
     "name": "game3",

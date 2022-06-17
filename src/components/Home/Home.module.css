@@ -1,3 +1,12 @@
+.back {
+  background: radial-gradient(circle at bottom left, #ea853c 5%, #6002b4 85%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .content {
   display: flex;
   align-items: stretch;
@@ -12,9 +21,9 @@
   display: flex;
   flex-direction: column;
   flex: 2 1 66%;
-  overflow: overlay;
+  overflow-y: scroll;
   box-sizing: border-box;
-  padding-right: 54px;
+  padding-right: 30px;
   padding-top: 15px;
 }
 
@@ -39,6 +48,7 @@
 
 .info {
   position: relative;
+  z-index: 0;
   box-sizing: border-box;
   padding: 15px;
   margin: 15px;

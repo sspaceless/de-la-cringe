@@ -5,7 +5,7 @@ import styles from './LoadingWindow.module.css';
 function LoadingWindow() {
   return (
     <BlurWrapper>
-      <img className={styles.loadingIcon} src="loadingIcon.svg" alt="Loading..." />
+      <img className={styles.loadingIcon} src="/loadingIcon.svg" alt="Loading..." />
     </BlurWrapper>
   );
 }

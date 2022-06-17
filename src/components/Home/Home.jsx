@@ -9,7 +9,7 @@ function Home() {
   const { availableGames: games } = userState.user;
 
   return (
-    <>
+    <div className={styles.back}>
       <Header />
 
       <div className={styles.content}>
@@ -26,7 +26,7 @@ function Home() {
           Hello
         </p>
       </div>
-    </>
+    </div>
   );
 }
 

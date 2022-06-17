@@ -1,0 +1,18 @@
+:root {
+  --main-bg-grad: linear-gradient(287.56deg, #261633 0%, #372048 100%);
+  --page-bg-color-start: #4f3b5f;
+  --page-bg-color-end: #2f203a;
+  --sel-icon-color: #4f3b5f;
+  --purple: #7a2edb;
+  --light-purple: #9250e2;
+  --pink: #cf60e6;
+  --light-pink: #f299ff;
+  --corner-url: url("http://192.168.1.152:3002/files/games/my-game/corner.svg");
+  --outcircle-url: url("http://192.168.1.152:3002/files/games/my-game/outcircle.svg");
+  --background-url: url("http://192.168.1.152:3002/files/games/my-game/background.svg");
+  --fuel-background-url: url("http://192.168.1.152:3002/files/games/my-game/fuelBack.svg");
+  --fuel-wave-mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 104.07 263" xmlns="http://www.w3.org/2000/svg"><path d="M72.41,263H0V0H72.41S41,12.83,40.74,65.75C41,118.68,72.41,131.5,72.41,131.5s31.44,12.83,31.66,65.75C103.85,250.18,72.41,263,72.41,263Z"/></svg>');
+  --grey: #a495b9;
+  --orange: #fb9d26;
+  --green: #37e440;
+} 
