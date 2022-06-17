@@ -2,11 +2,7 @@
 import * as Colyseus from 'colyseus.js';
 import Config from '../config';
 
-<<<<<<< HEAD
 const client = new Colyseus.Client(Config.COLYSEUS_URL);
-=======
-const client = new Colyseus.Client('https://game-server.azurewebsites.net/');
->>>>>>> 2af578decb0fabb82d5e25fec8f9f96352a7eadb
 let connectedRoom;
 
 const createRoom = async (game, userData, setRoomId, onStateChange) => {
