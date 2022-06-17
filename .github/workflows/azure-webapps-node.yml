@@ -35,11 +35,6 @@ env:
 jobs:
   build-client:
     runs-on: ubuntu-latest
-    environment:
-      REACT_APP_API_URL: 'https://de-la-cringe-api-server.azurewebsites.net'
-      REACT_APP_COLYSEUS_URL: 'https://game-server.azurewebsites.net'
-      REACT_APP_CLIENT_URL: 'https://de-la-cringe.azurewebsites.net'
-
     steps:
     - uses: actions/checkout@v3
 
@@ -48,6 +43,10 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
+
+    - name: add .env
+      run: |
+        echo "REACT_APP_API_URL='https://de-la-cringe-api-server.azurewebsites.net' \n REACT_APP_COLYSEUS_URL='https://game-server.azurewebsites.net' \n REACT_APP_CLIENT_URL='https://de-la-cringe.azurewebsites.net'" >> .env
 
     - name: npm install, build, and test
       run: |
