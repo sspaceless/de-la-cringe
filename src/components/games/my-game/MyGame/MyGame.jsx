@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Lobby from '../Lobby/Lobby';
 import MGContext from '../MGContext';
 import { Stages, stageIcons } from '../MGConfig';
@@ -14,6 +14,13 @@ import GameResults from '../GameResults/GameResults';
 
 function MyGame() {
   const { stage, state } = useContext(MGContext);
+
+  useEffect(() => {
+    const url = `${Config.API_URL}/files/games/my-game`;
+
+    document.documentElement.style.setProperty('--background-url', `url("${url}/background.svg")`);
+    document.documentElement.style.setProperty('--fuel-background-url', `url(${url}/fuelBack.svg")`);
+  }, []);
 
   let page;
   let selectedIcon;

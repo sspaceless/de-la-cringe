@@ -1,6 +1,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const Config = require('./config').default;
 
 class UsersDB {
   defaultGames = [];
@@ -67,7 +68,7 @@ class UsersDB {
       userId: record.userId,
       user: {
         username: record.username,
-        avatarUrl: `http://localhost:3002/files/${record.avatarUrl}`,
+        avatarUrl: `${Config.API_URL}/files/${record.avatarUrl}`,
         availableGames: record.availableGames,
       }
     };
@@ -87,7 +88,7 @@ class UsersDB {
       success: true,
       user: {
         username: record.username,
-        avatarUrl: `http://localhost:3002/files/${record.avatarUrl}`,
+        avatarUrl: `${Config.API_URL}/files/${record.avatarUrl}`,
         availableGames: record.availableGames,
       }
     };

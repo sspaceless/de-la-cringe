@@ -1,4 +1,6 @@
-const FILES_URL = 'http://localhost:3002/files/games/my-game/questions';
+import { API_URL } from '../../config.js';
+
+const FILES_URL = `${API_URL}/files/games/my-game/questions`;
 const Themes = ['Аніме', 'Ігри', 'Логотипи', 'Музика', 'Кінематограф', 'Столиці', 'Загадкові речі'];
 
 const MessageTypes = {

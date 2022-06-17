@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "colyseus.js": "^0.14.13",
+    "dotenv": "^16.0.1",
     "moment": "^2.29.3",
     "moment-duration-format": "^2.3.2",
     "prop-types": "^15.8.1",

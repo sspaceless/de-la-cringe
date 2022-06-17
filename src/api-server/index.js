@@ -5,13 +5,14 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const rateLimiter = require('express-rate-limit');
 const UsersDB = require('./usersDB').default;
+const Config = require('./config').default;
 
 const port = 3002;
 
 const app = express();
 
 const corsOptions = {
-  origin: 'https://de-la-cringe.azurewebsites.net/',
+  origin: Config.CLIENT_URL,
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -196,7 +197,4 @@ app.get('/api/games/grantFreeTrial', async (req, res) => {
   return res.json(result);
 });
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`server started on localhost:${port}`);
-});
+app.listen(port);

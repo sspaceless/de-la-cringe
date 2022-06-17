@@ -1,7 +1,7 @@
 @import '../vars.css';
 
 .icons {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   gap: 20px;
   flex-direction: column;
@@ -28,24 +28,27 @@
 }
 
 .iconWrapper[data-selected='1']::before {
-  content: var(--corner-url);
-  height: 15px;
-  width: 15px;
+  content: '';
+  height: 30px;
+  width: 30px;
   position: absolute;
-  top: -16px;
+  top: -30px;
   right: 0;
-  filter: invert(25%) sepia(10%) saturate(1977%) hue-rotate(230deg) brightness(93%) contrast(91%);
+  background-color: transparent;
+  box-shadow: 15px 15px var(--page-bg-color-start);
+  border-radius: 50%;
 }
 
 .iconWrapper[data-selected='1']::after {
-  content: var(--corner-url);
-  height: 15px;
-  width: 15px;
+  content: '';
+  height: 30px;
+  width: 30px;
   position: absolute;
-  transform: scale(1, -1);
-  bottom: -16px;
+  bottom: -30px;
   right: 0;
-  filter: invert(25%) sepia(10%) saturate(1977%) hue-rotate(230deg) brightness(93%) contrast(91%);
+  background-color: transparent;
+  box-shadow: 15px -15px var(--page-bg-color-start);
+  border-radius: 50%;
 }
 
 .icon {

@@ -1,4 +1,3 @@
-const FILES_URL = 'http://localhost:3002/files/games/my-game/questions';
 const Themes = ['Аніме', 'Ігри', 'Логотипи', 'Музика', 'Кінематограф', 'Столиці', 'Загадкові речі'];
 
 const MessageTypes = {
@@ -41,4 +40,4 @@ const ClientSettings = {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { Themes, MessageTypes, Settings, Stages, stageIcons, FILES_URL, ClientSettings };
+export { Themes, MessageTypes, Settings, Stages, stageIcons, ClientSettings };

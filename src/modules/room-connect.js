@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import * as Colyseus from 'colyseus.js';
+import Config from '../config';
 
-const client = new Colyseus.Client('ws://localhost:2567');
+const client = new Colyseus.Client(Config.COLYSEUS_URL);
 let connectedRoom;
 
 const createRoom = async (game, userData, setRoomId, onStateChange) => {
