@@ -1,3 +1,4 @@
+const FILES_URL = 'http://192.168.1.152:3002/files/games/my-game/questions';
 const Themes = ['Аніме', 'Ігри', 'Логотипи', 'Музика', 'Кінематограф', 'Столиці', 'Загадкові речі'];
 
 const MessageTypes = {
@@ -13,11 +14,11 @@ const Settings = {
   MAX_PRICE: 800,
   PRICES: [100, 200, 300, 500, 800],
   TIME_FOR_QUESTION: 60 * 1000,
-  TIME_FOR_ANSWER_WAITING: 5 * 1000, // 45
-  TIME_FOR_ANSWER_DECISION: 0.5 * 1000, // 1.5
-  TIME_FOR_ANSWER_SHOWING: 1 * 1000, // 10
-  TIME_FOR_START: 0 * 1000, // 5
-  TIME_FOR_RESULTS_SHOWING: 10 * 1000,
+  TIME_FOR_ANSWER_WAITING: 45 * 1000,
+  TIME_FOR_ANSWER_DECISION: 3 * 1000,
+  TIME_FOR_ANSWER_SHOWING: 5 * 1000,
+  TIME_FOR_START: 5 * 1000,
+  TIME_FOR_RESULTS_SHOWING: 30 * 1000,
   EXTRA_MULTIPLIER: 1.5,
 };
 
@@ -26,6 +27,7 @@ const Stages = {
   STARTING: 'Starting',
   ANSWER_WAITING: 'Waiting for an answer',
   QUESTION_SHOWING: 'Showing question',
+  QUESTION_FILE_SHOWING: 'Showing question file',
   ANSWER_SHOWING: 'Answer showing',
   QUESTION_SELECTION: 'Question selection',
   ROUND_RESULTS_SHOWING: 'Round results showing',
@@ -33,4 +35,4 @@ const Stages = {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { Themes, MessageTypes, Settings, Stages };
+export { Themes, MessageTypes, Settings, Stages, FILES_URL };

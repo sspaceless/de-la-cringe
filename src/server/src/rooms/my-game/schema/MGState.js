@@ -8,6 +8,8 @@ class MGState extends schema.Schema {
     super();
 
     this.answeredQuestions = new schema.ArraySchema();
+    this.curQuestionAnswers = new schema.ArraySchema();
+
     this.themes = new schema.ArraySchema(...themes);
     this.availableThemes = new schema.ArraySchema(...themes);
 
@@ -30,9 +32,12 @@ schema.defineTypes(MGState, {
   questionWaitUntil: 'number',
   answerWaitUntil: 'number',
   startingUntil: 'number',
+  showingResultsUntil: 'number',
+  fileShowingWaitUntil: 'number',
   lastAnsweredUserId: 'string',
   isExtra: 'boolean',
-  curAnswer: 'string',
+  curQuestionAnswers: { array: 'string' },
+  winner: MGPlayer
 });
 
 export default MGState;

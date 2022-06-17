@@ -1,0 +1,15 @@
+.wrapper {
+  z-index: -2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.rocket {
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

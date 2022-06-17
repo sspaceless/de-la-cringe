@@ -1,0 +1,100 @@
+@import '../vars.css';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  position: absolute;
+  z-index: 0;
+  top: -15px;
+  left: -15px;
+  bottom: -15px;
+  right: -15px;
+  border-radius: 15px;
+}
+
+.popup::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  background: radial-gradient(circle at 50%, rgba(0, 0, 0, 0.4) 30%, transparent 70%);
+}
+
+.popupWindow {
+  box-sizing: border-box;
+  position: absolute;
+  max-width: calc(100% - 30px);
+  max-height: calc(100% - 30px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 12px;
+  border: 5px solid var(--light-purple);
+  background: radial-gradient(circle at top left, var(--purple), var(--light-purple));
+}
+
+.accepted {
+  animation: acceptedGlow ease-in-out 0.75s 0s alternate-reverse infinite;
+}
+
+@keyframes acceptedGlow {
+  from {
+    box-shadow: 0 0 25px 25px rgba(60, 255, 0, 0.35),
+                0 0 10px 10px rgba(60, 255, 0, 0.7);
+  }
+
+  to {
+    box-shadow: 0 0 35px 35px rgba(60, 255, 0, 0.35),
+                0 0 18px 18px rgba(60, 255, 0, 0.7);
+  }
+}
+
+.rejected {
+  animation: rejectedGlow ease-in-out 0.75s 0s alternate-reverse infinite;
+}
+
+@keyframes rejectedGlow {
+  from {
+    box-shadow: 0 0 25px 25px rgba(255, 38, 0, 0.35),
+                0 0 10px 10px rgba(255, 38, 0, 0.7);
+  }
+
+  to {
+    box-shadow: 0 0 35px 35px rgba(255, 38, 0, 0.35),
+                0 0 18px 18px rgba(255, 38, 0, 0.7);
+  }
+}
+
+.left {
+  transform: translate(calc(-50% - 45px / 2), -50%);
+}
+
+.center {
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.fuel {
+  z-index: -2;
+  border-radius: 10px;
+  border: solid white 1.5px;
+  height: 20px;
+  width: 70px;
+  text-align: center;
+  line-height: 20px;
+  color: white;
+  background: var(--fuel-background-url) repeat 0/100px,
+              linear-gradient(90deg, var(--purple), var(--light-purple)) center/cover;
+}

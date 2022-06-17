@@ -22,3 +22,7 @@ a {
   filter: blur(1px);
   backdrop-filter: blur(40px);
 }
+
+[hidden] {
+  display:none;
+}

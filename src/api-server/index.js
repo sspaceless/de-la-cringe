@@ -11,7 +11,7 @@ const port = 3002;
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://192.168.1.152:3000',
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -119,7 +119,7 @@ app.post('/api/users/signInAccount', async (req, res) => {
   return res.json(result);
 });
 
-app.use('/api/users/getUserInfo', createLimiter(1 * 1000, 1));
+app.use('/api/users/getUserInfo', createLimiter(1 * 2000, 1));
 app.get('/api/users/getUserInfo', async (req, res) => {
   const { userId } = req.cookies;
 
@@ -141,7 +141,7 @@ app.get('/api/users/getUserInfo', async (req, res) => {
   return res.json(result);
 });
 
-app.use('/api/users/isAuthorized', createLimiter(1 * 1000, 1));
+app.use('/api/users/isAuthorized', createLimiter(1 * 2000, 1));
 app.get('/api/users/isAuthorized', async (req, res) => {
   const { userId } = req.cookies;
 

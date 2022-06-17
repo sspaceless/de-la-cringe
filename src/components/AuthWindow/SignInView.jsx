@@ -17,7 +17,7 @@ function SignInView({ hideFunction }) {
     event.preventDefault();
 
     try {
-      const answer = await quickPost('http://localhost:3002/api/users/signInAccount', { username, password });
+      const answer = await quickPost(`${config.apiUrl}/api/users/signInAccount`, { username, password });
 
       if (answer.success) {
         await reloadUserState();
@@ -36,15 +36,20 @@ function SignInView({ hideFunction }) {
     setUsername(value);
   };
 
+  const onPasswordChange = (value) => {
+    setLoginError(false);
+    setPassword(value);
+  };
+
   return (
-    <form action="http://localhost:3002/api/users/signInAccount" method="POST" onSubmit={formSubmit}>
+    <form action={`${config.apiUrl}/api/users/signInAccount`} method="POST" onSubmit={formSubmit}>
       <h1 className={styles.topText}>Login</h1>
 
       <label htmlFor="username">Username</label>
       <Input autoComplete="username" onChange={onUsernameChange} id="username" type="text" name="username" />
 
       <label htmlFor="password">Password</label>
-      <Input autoComplete="current-password" onChange={setPassword} id="password" type="password" name="password" />
+      <Input autoComplete="current-password" onChange={onPasswordChange} id="password" type="password" name="password" />
 
       <input className={styles.submitBtn} type="image" src={`${config.apiUrl}/files/buttons/LogInButton.svg`} alt="Log In" disabled={isLoginError} />
 

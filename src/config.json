@@ -1,4 +1,4 @@
 {
-  "apiUrl": "http://localhost:3002",
-  "colyseusUrl": "ws://localhost:2567"
+  "apiUrl": "http://192.168.1.152:3002",
+  "colyseusUrl": "ws://192.168.1.152:2567"
 }

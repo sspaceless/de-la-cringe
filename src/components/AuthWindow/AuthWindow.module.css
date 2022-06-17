@@ -32,7 +32,7 @@
   border: none;
   border-radius: 25px;
   box-sizing: border-box;
-  color: white;
+  color: #878787;
 }
 
 .authWin input[type="text"], input[type="password"] {

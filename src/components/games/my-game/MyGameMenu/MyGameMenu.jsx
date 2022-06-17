@@ -4,7 +4,7 @@ import { Client } from 'colyseus.js';
 import Input from '../../../Input/Input';
 import MyGame from '../MyGame/MyGame';
 import { Themes } from '../MGConfig';
-import Config from '../../../../config.json';
+import config from '../../../../config.json';
 import UserContext from '../../../userContext';
 import MGContext from '../MGContext';
 import styles from './MyGameMenu.module.css';
@@ -18,7 +18,7 @@ function useForceUpdate() {
 function MyGameMenu() {
   const forceUpdate = useForceUpdate();
 
-  const clientRef = useRef(new Client(Config.colyseusUrl));
+  const clientRef = useRef(new Client(config.colyseusUrl));
   const client = clientRef.current;
 
   const { userState } = useContext(UserContext);
@@ -38,10 +38,12 @@ function MyGameMenu() {
   }, [room, forceUpdate]);
 
   const [isWrong, setIsWrong] = useState(false);
-  const [isShowingTopics, setIsShowingTopics] = useState(false);
 
   useEffect(() => {
-    if (!value) return;
+    if (!value) {
+      setIsWrong(false);
+      return;
+    }
 
     const checkRoomId = async () => {
       if ((await client.getAvailableRooms('my-game')).find((r) => r.roomId === value)) {
@@ -56,11 +58,9 @@ function MyGameMenu() {
     checkRoomId();
   }, [client, value, forceUpdate]);
 
-  const showTopics = () => {
-    setIsShowingTopics(true);
-  };
-
   const createGame = async () => {
+    if (selectedTopicsRef.current.length === 0) return;
+
     userOptionsRef.current.isVip = true;
 
     const r = await client.create('my-game', {
@@ -72,25 +72,20 @@ function MyGameMenu() {
   };
 
   const updateTheme = (event) => {
-    if (event.currentTarget.checked) {
+    const target = event.currentTarget;
+
+    if (target.checked) {
+      if (selectedTopicsRef.current.length === 6) {
+        target.checked = false;
+        return;
+      }
+
       selectedTopicsRef.current.push(event.currentTarget.name);
     } else {
       const pos = selectedTopicsRef.current.indexOf(event.currentTarget.name);
       selectedTopicsRef.current.splice(pos, 1);
     }
   };
-
-  let counter = 1;
-  const themeChoose = (
-    <ul>
-      {Themes.map((topic) => (
-        <li key={topic}>
-          <input type="checkbox" name={topic} id={`checkbox${counter}`} onChange={updateTheme} />
-          <label htmlFor={`checkbox${counter++}`}>{topic}</label>
-        </li>
-      ))}
-    </ul>
-  );
 
   const getPlayer = () => {
     if (!room || !room.hasJoined) return undefined;
@@ -116,15 +111,46 @@ function MyGameMenu() {
     };
   }, [room, player, room?.state?.stage]);
 
-  const menu = (
-    <div>
-      {isShowingTopics
-        && themeChoose}
-      <input type="button" value="New Game" onClick={isShowingTopics ? createGame : showTopics} />
+  const [isVisibleList, setIsVisibleList] = useState(false);
+  const cls = isVisibleList ? styles.visibleList : '';
+  const clsInp = isVisibleList ? styles.hoveredInp : '';
 
-      <Input onChange={setValue} placeholder="Room ID to Join" />
-      {isWrong
-        && <p>Invalid Room ID</p>}
+  const menu = (
+    <div className={styles.wrapper}>
+      <div className={styles.menu}>
+        <div id="themesWrapper" className={styles.themesListWrapper} onMouseLeave={() => setIsVisibleList(false)}>
+          <ul id="themes" className={[styles.themesList, cls].join(' ')}>
+            {Themes.map((topic, counter) => (
+              <li key={topic}>
+                <input type="checkbox" name={topic} id={`checkbox${counter + 1}`} onChange={updateTheme} />
+                <label htmlFor={`checkbox${counter + 1}`}>{topic}</label>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <input
+          className={[styles.inp, clsInp].join(' ')}
+          type="button"
+          value="New Game"
+          onMouseEnter={() => setIsVisibleList(true)}
+          onMouseLeave={(e) => {
+            const isLeaving = e.relatedTarget !== document.getElementById('themes')
+              && e.relatedTarget !== document.getElementById('themesWrapper')
+              && e.relatedTarget.tagName !== 'LI'
+              && e.relatedTarget.tagName !== 'LABEL';
+
+            if (isLeaving) {
+              setIsVisibleList(false);
+            }
+          }}
+          onClick={createGame}
+        />
+
+        <Input className={[styles.inp, isWrong ? styles.wrong : ''].join(' ')} onChange={setValue} placeholder="Room ID to Join" />
+
+        <img src={`${config.apiUrl}/files/games/my-game/ingamelogo.svg`} alt="logo" />
+      </div>
     </div>
   );
 

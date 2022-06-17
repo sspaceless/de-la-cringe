@@ -9,6 +9,8 @@ import QuestionSelectionPage from '../QuestionSelectionPage/QuestionSelectionPag
 import QuestionShowingPage from '../QuestionShowingPage/QuestionShowingPage';
 import PlayerMiniature from '../PlayerMiniature/PlayerMiniature';
 import styles from './MyGame.module.css';
+import RoundResultsPage from '../RoundResultsPage/RoundResultsPage';
+import GameResults from '../GameResults/GameResults';
 
 function MyGame() {
   const { stage, state } = useContext(MGContext);
@@ -32,11 +34,22 @@ function MyGame() {
       selectedIcon = 'map';
       break;
 
+    case Stages.QUESTION_FILE_SHOWING:
     case Stages.QUESTION_SHOWING:
     case Stages.ANSWER_WAITING:
     case Stages.ANSWER_SHOWING:
       page = <QuestionShowingPage />;
       selectedIcon = 'station';
+      break;
+
+    case Stages.ROUND_RESULTS_SHOWING:
+      page = <RoundResultsPage />;
+      selectedIcon = 'results';
+      break;
+
+    case Stages.GAME_RESULTS:
+      page = <GameResults />;
+      selectedIcon = 'end';
       break;
 
     default:
@@ -46,7 +59,7 @@ function MyGame() {
 
   const iconsList = stageIcons.map((icon) => (
     <div className={styles.iconWrapper} key={icon} data-selected={selectedIcon === icon ? 1 : 0}>
-      <img className={styles.icon} alt={icon} src={`${config.apiUrl}\\files\\games\\my-game\\stages\\${icon}.svg`} />
+      <img className={styles.icon} alt={icon} src={`${config.apiUrl}/files/games/my-game/stages/${icon}.svg`} />
     </div>
   ));
 
@@ -65,13 +78,14 @@ function MyGame() {
       username={p.name}
       avatarUrl={p.avatarUrl}
       points={p.points}
+      isAnswering={state.answeringClientId === p.id}
     />
   ));
 
   return (
     <>
       <header>
-        Rocket/Company
+        <img className={styles.logo} src={`${config.apiUrl}/files/games/my-game/ingamelogo.svg`} alt="logo" />
       </header>
 
       <div className={styles.mainContent}>
@@ -85,7 +99,7 @@ function MyGame() {
           </div>
         </div>
 
-        <div className={styles.players}>
+        <div className={styles.players} hidden={stage === Stages.GAME_RESULTS}>
           {playersList}
         </div>
       </div>
