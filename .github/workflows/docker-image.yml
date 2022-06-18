@@ -27,8 +27,8 @@ jobs:
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
         - run: |
-            docker build ./src/server -t ${{ secrets.ACR_ENDPOINT }}/game-server:${{ github.sha }}
-            docker push ${{ secrets.ACR_ENDPOINT }}/game-server:${{ github.sha }}
+            docker build ./src/server -t ${{ secrets.ACR_ENDPOINT }}/game-server:latest
+            docker push ${{ secrets.ACR_ENDPOINT }}/game-server:latest
     
     build-and-deploy-api-server:
         runs-on: ubuntu-latest
@@ -51,5 +51,5 @@ jobs:
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
         - run: |
-            docker build ./src/api-server -t ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
-            docker push ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
+            docker build ./src/api-server -t ${{ secrets.ACR_ENDPOINT }}/api-server:latest
+            docker push ${{ secrets.ACR_ENDPOINT }}/api-server:latest

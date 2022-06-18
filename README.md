@@ -1,4 +1,4 @@
-# [De La Cringe](http://de-la-cringe.azurewebsites.net/)
+# [De La Cringe](https://de-la-cringe.azurewebsites.net/)
 De La Cringe is an online platform that allows you to have fun with a large group of friends by playing multiplayer mini-games.
 
 ## Technologies we are using:
