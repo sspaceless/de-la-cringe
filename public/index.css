@@ -4,6 +4,16 @@
   font-family: 'Nunito', sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
+@media only screen and (hover: none) and (pointer: coarse){
+  body {
+    display: none;
+  }
+}
+
 a {
   color: #fb9331;
 }
