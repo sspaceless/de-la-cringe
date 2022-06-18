@@ -12,8 +12,8 @@ function RoomConnect(props) {
   const [error, setError] = useState(null);
 
   const { userState } = useContext(userContext);
-  const { username, avatarUrl } = userState.user;
-  const userData = useMemo(() => ({ username, avatarUrl }), [username, avatarUrl]);
+  const { username, avatar } = userState.user;
+  const userData = useMemo(() => ({ username, avatar }), [username, avatar]);
 
   const {
     valueChangeHandler: inputChangeHandler,

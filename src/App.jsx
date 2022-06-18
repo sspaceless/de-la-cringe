@@ -44,8 +44,6 @@ function App() {
           <Route path="taol" element={renderGame('taol', <TaolGame />)} />
           <Route path="my-game" element={renderGame('my-game', <MyGameMenu />)} />
           <Route path="crocodile" element={renderGame('crocodile', <CrocodileGame />)} />
-          <Route path="game4" />
-          <Route path="game5" />
         </Route>
       </Routes>
     </userContext.Provider>

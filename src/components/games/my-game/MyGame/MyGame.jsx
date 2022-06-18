@@ -75,7 +75,7 @@ function MyGame() {
     <PlayerMiniature
       key={state.host.id}
       username={state.host.name}
-      avatarUrl={state.host.avatarUrl}
+      avatar={state.host.avatar}
       isVip
     />
   );
@@ -83,7 +83,7 @@ function MyGame() {
     <PlayerMiniature
       key={p.id}
       username={p.name}
-      avatarUrl={p.avatarUrl}
+      avatar={p.avatar}
       points={p.points}
       isAnswering={state.answeringClientId === p.id}
     />

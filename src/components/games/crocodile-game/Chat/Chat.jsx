@@ -54,7 +54,7 @@ function Chat(props) {
         messageText={messageText}
         sendingDate={sendingDate}
         senderName={sender.name}
-        senderAvatarUrl={sender.avatarUrl}
+        senderAvatar={sender.avatar}
       />
     );
   });

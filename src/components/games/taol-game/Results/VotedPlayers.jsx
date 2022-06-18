@@ -6,7 +6,7 @@ function VotedPlayers(props) {
   return (
     players.map((item) => (
       <div key={item.id}>
-        <img alt="avatar" src={item.avatarUrl} />
+        <img alt="avatar" src={item.avatar} />
       </div>
     ))
   );

@@ -79,13 +79,13 @@ class MyGame extends CringeRoom {
   }
 
   onJoin(client, options) {
-    if (!options.avatarUrl) throw new Error('Unauthorized user');
+    if (!options.avatar) throw new Error('Unauthorized user');
 
     const player = new MGPlayer(
       client.sessionId,
       options.username,
       options.isVip,
-      options.avatarUrl
+      options.avatar
     );
 
     if (this.state.host) {

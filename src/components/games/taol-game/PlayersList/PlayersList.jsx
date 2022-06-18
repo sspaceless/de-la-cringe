@@ -11,7 +11,7 @@ function PlayerList(props) {
         <Player
           key={item.id}
           name={item.name}
-          avatarUrl={item.avatarUrl}
+          avatar={item.avatar}
           isVip={item.isVip}
           isReady={item.isAnswered}
         />

@@ -27,7 +27,7 @@ function GameResults() {
 
   const createCard = (user, isWinner) => (
     <div className={[styles.playerCard, isWinner ? styles.winnerCard : ''].join(' ')}>
-      <img className={styles.avatar} src={user.avatarUrl} alt={`${user.name}'s avatar`} />
+      <img className={styles.avatar} src={user.avatar} alt={`${user.name}'s avatar`} />
 
       <div>
         <Textfit className={styles.username}>{user.name}</Textfit>

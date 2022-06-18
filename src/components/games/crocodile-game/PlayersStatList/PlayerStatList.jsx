@@ -7,7 +7,7 @@ function PlayerStatList(props) {
     <div className={styles['players-list']}>
       {players.map((item) => (
         <div key={item.id} className={styles.player}>
-          <img alt="avatar" src={item.avatarUrl} />
+          <img alt="avatar" src={item.avatar} />
           <p>{`${item.name} - ${item.points}`}</p>
         </div>
       ))}

@@ -35,12 +35,12 @@ function RocketsLastFlight() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.rocketWrapper} style={styleFirst}>
-        <img className={styles.avatar} src={state.host.avatarUrl} alt="avatar" />
+        <img className={styles.avatar} src={state.host.avatar} alt="avatar" />
         <img className={styles.rocket} src={`${Config.API_URL}/files/games/my-game/emptyRocket.svg`} alt="rocket" />
       </div>
 
       <div className={styles.rocketWrapper2} style={styleSecond}>
-        <img className={styles.avatar} src={state.winner.avatarUrl} alt="avatar" />
+        <img className={styles.avatar} src={state.winner.avatar} alt="avatar" />
         <img className={styles.rocket} src={`${Config.API_URL}/files/games/my-game/emptyRocket.svg`} alt="rocket2" />
       </div>
 

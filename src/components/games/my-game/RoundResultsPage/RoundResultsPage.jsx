@@ -28,7 +28,7 @@ function RoundResultsPage() {
               answer={q.answer}
               theme={q.theme}
               price={q.price}
-              avatarUrl={q.answeredUserId ? players[q.answeredUserId].avatarUrl : undefined}
+              avatar={q.answeredUserId ? players[q.answeredUserId].avatar : undefined}
             />
           ))}
         </div>

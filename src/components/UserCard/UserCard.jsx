@@ -4,7 +4,7 @@ import userContext from '../userContext';
 import { quickGet } from '../../modules/quickfetch';
 import Config from '../../config';
 
-function UserCard({ avatarUrl, username }) {
+function UserCard({ avatar, username }) {
   const { reloadUserState } = useContext(userContext);
 
   const logout = async () => {
@@ -17,7 +17,7 @@ function UserCard({ avatarUrl, username }) {
 
   return (
     <div>
-      <img src={avatarUrl} alt="avatar" />
+      <img src={avatar} alt="avatar" />
       <h4>{username}</h4>
       <button type="button" onClick={logout}>Exit</button>
     </div>
@@ -25,7 +25,7 @@ function UserCard({ avatarUrl, username }) {
 }
 
 UserCard.propTypes = {
-  avatarUrl: propTypes.string.isRequired,
+  avatar: propTypes.string.isRequired,
   username: propTypes.string.isRequired
 };
 

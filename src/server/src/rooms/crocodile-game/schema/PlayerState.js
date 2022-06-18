@@ -2,8 +2,8 @@ import * as schema from '@colyseus/schema';
 import CringePlayer from '../../../CringePlayer.js';
 
 class PlayerState extends CringePlayer {
-  constructor(id, name, avatarUrl, isVip,) {
-    super(id, name, avatarUrl, isVip);
+  constructor(id, name, avatar, isVip,) {
+    super(id, name, avatar, isVip);
     this.points = 0;
   }
 

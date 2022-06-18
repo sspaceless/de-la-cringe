@@ -22,6 +22,7 @@ function Home() {
             />
           ))}
         </div>
+
         <p className={styles.info}>
           Hello
         </p>

@@ -24,7 +24,7 @@ function MyGameMenu() {
   const { userState } = useContext(UserContext);
   const userOptionsRef = useRef({
     username: userState.user.username,
-    avatarUrl: userState.user.avatarUrl,
+    avatar: userState.user.avatar,
     isVip: false,
   });
 

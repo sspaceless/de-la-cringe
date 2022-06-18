@@ -2,7 +2,6 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const { Image } = require('image-js');
-const Config = require('./config').default;
 
 class UsersDB {
   defaultGames = [];
@@ -38,13 +37,9 @@ class UsersDB {
       image = image.add(Math.random() * 255, { channels: [i] });
     }
 
-    const fileName = `${username}.png`;
-
-    image.save(`public/files/avatars/${fileName}`);
-
     const profile = {
       username,
-      avatarUrl: `avatars/${fileName}`,
+      avatar: image.toDataURL(),
       availableGames: this.defaultGames
     };
 
@@ -79,7 +74,7 @@ class UsersDB {
       userId: record.userId,
       user: {
         username: record.username,
-        avatarUrl: `${Config.API_URL}/files/${record.avatarUrl}`,
+        avatar: record.avatar,
         availableGames: record.availableGames,
       }
     };
@@ -99,7 +94,7 @@ class UsersDB {
       success: true,
       user: {
         username: record.username,
-        avatarUrl: `${Config.API_URL}/files/${record.avatarUrl}`,
+        avatar: record.avatar,
         availableGames: record.availableGames,
       }
     };

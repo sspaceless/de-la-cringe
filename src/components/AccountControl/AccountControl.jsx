@@ -7,7 +7,7 @@ import Config from '../../config';
 
 function AccountControl() {
   const { userState } = useContext(userContext);
-  const avatarUrl = userState.isAuthorized ? userState.user.avatarUrl : `${Config.API_URL}/files/avatars/avatar.png`;
+  const avatar = userState.isAuthorized ? userState.user.avatar : `${Config.API_URL}/files/avatar.png`;
 
   const [isShowButton, setIsShowButton] = useState(false);
   const [isAvatarClicked, setIsAvatarClicked] = useState(false);
@@ -30,7 +30,7 @@ function AccountControl() {
   return (
     <div className={styles.profileElement} onMouseLeave={onHoverOut}>
       <div className={styles.avatarWrapper}>
-        <input className={styles.avatar} type="image" aria-label="avatar" src={avatarUrl} onClick={avatarClick} onMouseEnter={onHover} />
+        <input className={styles.avatar} type="image" aria-label="avatar" src={avatar} onClick={avatarClick} onMouseEnter={onHover} />
       </div>
 
       {(userState.isAuthorized && isShowButton)

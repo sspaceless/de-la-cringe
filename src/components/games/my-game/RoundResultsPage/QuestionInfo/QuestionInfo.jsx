@@ -4,14 +4,14 @@ import { Textfit } from 'react-textfit';
 import styles from './QuestionInfo.module.css';
 import { Settings } from '../../MGConfig';
 
-function QuestionInfo({ text, theme, price, answer, avatarUrl }) {
+function QuestionInfo({ text, theme, price, answer, avatar }) {
   const wrapperRef = useRef();
 
   setTimeout(() => {
     wrapperRef.current.classList.add(styles.visible);
   }, 0);
 
-  const status = avatarUrl ? styles.green : styles.red;
+  const status = avatar ? styles.green : styles.red;
   const fuelWidth = price / Settings.MAX_PRICE * 200;
 
   return (
@@ -22,8 +22,8 @@ function QuestionInfo({ text, theme, price, answer, avatarUrl }) {
 
       <div className={styles.answerWrapper}>
         <p className={styles.answer}>Відповідь: {answer}</p>
-        {avatarUrl
-            && <img src={avatarUrl} alt="avatar" className={styles.avatar} />}
+        {avatar
+            && <img src={avatar} alt="avatar" className={styles.avatar} />}
       </div>
 
       <div className={styles.fuel} style={{ width: fuelWidth }}>
@@ -38,7 +38,7 @@ QuestionInfo.propTypes = {
   theme: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   answer: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
 };
 
 export default QuestionInfo;
