@@ -55,7 +55,7 @@ const Questions = {
         text: 'Як називається ця зброя?',
         answer: 'Dubstep Gun',
         file: {
-          name: 'dubstep_gun.jpeg',
+          name: 'dubstep_gun.webp',
           type: 'image',
           duration: 15
         }

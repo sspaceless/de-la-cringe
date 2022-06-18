@@ -1,12 +1,13 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const { Image } = require('image-js');
 const Config = require('./config').default;
 
 class UsersDB {
   defaultGames = [];
 
-  defaultAvatar = 'avatars/avatar.png';
+  defaultAvatar = 'public/files/avatar.png';
 
   constructor(uri) {
     const client = new MongoClient(uri, {
@@ -31,9 +32,19 @@ class UsersDB {
       return { success: false };
     }
 
+    let image = await Image.load(this.defaultAvatar);
+
+    for (let i = 0; i < 3; i++) {
+      image = image.add(Math.random() * 255, { channels: [i] });
+    }
+
+    const fileName = `${username}.png`;
+
+    image.save(`public/files/avatars/${fileName}`);
+
     const profile = {
       username,
-      avatarUrl: this.defaultAvatar,
+      avatarUrl: `avatars/${fileName}`,
       availableGames: this.defaultGames
     };
 

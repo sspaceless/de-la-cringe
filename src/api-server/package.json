@@ -13,6 +13,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.17.3",
     "express-rate-limit": "^6.4.0",
+    "image-js": "^0.34.1",
     "mongodb": "^4.5.0",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
