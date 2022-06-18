@@ -21,5 +21,12 @@
     "gameId": "crocodile",
     "type": "free",
     "color": "#80da5e"
+  },
+  {
+    "name": "Test",
+    "image": "logo.svg",
+    "description": "Test",
+    "gameId": "test",
+    "type": "payable"
   }
 ]

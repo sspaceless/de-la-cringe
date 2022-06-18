@@ -1,9 +1,11 @@
 .btn {
+  position: relative;
   transition: filter 0.5s;
   vertical-align: middle;
 }
 
 .gameBtn {
+  z-index: 1;
   width: 135px;
 }
 

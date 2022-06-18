@@ -99,6 +99,8 @@ class CrocodileRoom extends CringeRoom {
   }
 
   onJoin(client, options) {
+    if (!options.avatarUrl) throw new Error('Unauthorized user');
+
     const { username: name, avatarUrl, isVip } = options;
     const player = new PlayerState(client.sessionId, name, avatarUrl, isVip);
     this.state.addPlayer(player);

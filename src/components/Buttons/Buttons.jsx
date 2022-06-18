@@ -9,6 +9,7 @@ import MessageWindow from '../MessageWindow/MessageWindow';
 import ConfirmWindow from '../ConfirmWindow/ConfirmWindow';
 
 const PlayButton = (props) => {
+  const { userState } = useContext(userContext);
   const { gameId, filter = '' } = props;
 
   const [hovered, setHovered] = useState(false);
@@ -16,17 +17,40 @@ const PlayButton = (props) => {
   const shadow = !hovered ? 'drop-shadow(-5px 8px 5px rgba(0, 0, 0, .23))' : '';
   const style = { filter: `${filter} ${shadow}` };
 
+  const [isMsgShown, setIsMsgShown] = useState(false);
+
+  const showMsg = () => {
+    setIsMsgShown(true);
+  };
+  const onCloseMsg = () => {
+    setIsMsgShown(false);
+  };
+
+  const link = userState.isAuthorized ? `/games/${gameId}` : '';
+  const onClick = userState.isAuthorized ? '' : showMsg;
+
   return (
-    <Link to={`/games/${gameId}`}>
-      <img
-        style={style}
-        className={[styles.btn, styles.gameBtn].join(' ')}
-        alt="Play"
-        src={`${Config.API_URL}/files/buttons/PlayButton.svg`}
-        onMouseOver={() => setHovered(true)}
-        onMouseOut={() => setHovered(false)}
-      />
-    </Link>
+    <>
+      <Link to={link} onClick={onClick}>
+        <img
+          style={style}
+          className={[styles.btn, styles.gameBtn].join(' ')}
+          alt="Play"
+          src={`${Config.API_URL}/files/buttons/PlayButton.svg`}
+          onMouseOver={() => setHovered(true)}
+          onMouseOut={() => setHovered(false)}
+        />
+      </Link>
+
+      {isMsgShown
+        && (
+          <MessageWindow timeout={30000} onClose={onCloseMsg}>
+            Games are not available for unauthorized users <br /><br />
+            Please <span className={styles.greyText}>Login</span> or
+            <span className={styles.greyText}> Create a new account</span>
+          </MessageWindow>
+        )}
+    </>
   );
 };
 
@@ -44,6 +68,8 @@ const BuyButton = (props) => {
   const { reloadUserState } = useContext(userContext);
 
   const buyGame = async () => {
+    // just for example. you can't buy games
+
     await quickGet(new URL(`/api/games/buy?gameId=${encodeURIComponent(gameId)}`, Config.API_URL));
     await reloadUserState();
   };
