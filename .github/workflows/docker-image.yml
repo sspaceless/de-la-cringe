@@ -50,6 +50,6 @@ jobs:
             login-server: ${{ secrets.ACR_ENDPOINT }}
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
-        - run:
+        - run: |
             docker build ./src/api-server -t ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
             docker push ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
