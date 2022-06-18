@@ -26,4 +26,8 @@ yarn-error.log*
 /.vscode
 /.idea
 /.firebase
+<<<<<<< HEAD
 /.env
+=======
+
+>>>>>>> docker

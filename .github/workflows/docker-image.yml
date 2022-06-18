@@ -52,4 +52,8 @@ jobs:
             password: ${{ secrets.ACR_PASSWORD }}
         - run: |
             docker build ./src/api-server -t ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
+<<<<<<< HEAD
             docker push ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
+=======
+            docker push ${{ secrets.ACR_ENDPOINT }}/api-server:${{ github.sha }}
+>>>>>>> docker
