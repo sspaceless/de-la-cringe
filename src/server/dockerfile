@@ -4,8 +4,8 @@ WORKDIR /server
 
 EXPOSE 2567
 
-ENV REACT_APP_API_URL=https://de-la-cringe-api-server.azurewebsites.net/
-ENV REACT_APP_CLIENT_URL=http://de-la-cringe.azurewebsites.net/ 
+ENV REACT_APP_API_URL=https://de-la-cringe-api-server.azurewebsites.net
+ENV REACT_APP_CLIENT_URL=http://de-la-cringe.azurewebsites.net 
 
 COPY package*.json ./
 RUN npm i --force

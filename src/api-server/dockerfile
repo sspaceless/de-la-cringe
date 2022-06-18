@@ -4,8 +4,8 @@ WORKDIR /server
 
 EXPOSE 3002
 
-ENV REACT_APP_COLYSEUS_URL=https://game-server.azurewebsites.net/
-ENV REACT_APP_CLIENT_URL=http://localhost:3000 
+ENV REACT_APP_COLYSEUS_URL=ws://game-server.azurewebsites.net
+ENV REACT_APP_CLIENT_URL=https://de-la-cringe.azurewebsites.net
 
 COPY package*.json ./
 RUN npm i --force
