@@ -45,7 +45,7 @@
 }
 
 .fuelInner.negative::before {
-  background: var(--fuel-background-url) repeat 0/100px fixed, var(--orange);
+  background: var(--fuel-background-url) repeat 0/100px fixed, var(--dark-orange);
   transform: scale(-1, 1);
 }
 
@@ -62,7 +62,7 @@
 }
 
 .fuelInner.negative::after {
-  background: var(--fuel-background-url) repeat 0/100px fixed, var(--orange);
+  background: var(--fuel-background-url) repeat 0/100px fixed, var(--dark-orange);
 }
 
 @keyframes waving {

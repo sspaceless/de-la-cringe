@@ -19,7 +19,7 @@ function MyGame() {
     const url = `${Config.API_URL}/files/games/my-game`;
 
     document.documentElement.style.setProperty('--background-url', `url("${url}/background.svg")`);
-    document.documentElement.style.setProperty('--fuel-background-url', `url(${url}/fuelBack.svg")`);
+    document.documentElement.style.setProperty('--fuel-background-url', `url("${url}/fuelBack.svg")`);
   }, []);
 
   let page;

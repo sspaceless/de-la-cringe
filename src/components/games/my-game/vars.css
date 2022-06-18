@@ -10,5 +10,6 @@
   --fuel-wave-mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 104.07 263" xmlns="http://www.w3.org/2000/svg"><path d="M72.41,263H0V0H72.41S41,12.83,40.74,65.75C41,118.68,72.41,131.5,72.41,131.5s31.44,12.83,31.66,65.75C103.85,250.18,72.41,263,72.41,263Z"/></svg>');
   --grey: #a495b9;
   --orange: #fb9d26;
+  --dark-orange: #eb4823;
   --green: #37e440;
 } 
