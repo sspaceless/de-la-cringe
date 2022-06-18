@@ -33,7 +33,7 @@ env:
   NODE_VERSION: '16.x'
 
   REACT_APP_API_URL: 'https://de-la-cringe-api-server.azurewebsites.net'
-  REACT_APP_COLYSEUS_URL: 'ws://game-server.azurewebsites.net'
+  REACT_APP_COLYSEUS_URL: 'https://game-server.azurewebsites.net'
   REACT_APP_CLIENT_URL: 'https://de-la-cringe.azurewebsites.net'
 
 jobs:
