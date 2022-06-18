@@ -7,3 +7,5 @@
 *.svg binary
 *.ai binary
 *.ico binary
+*.mp3 binary
+*.webp binary

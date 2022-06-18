@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Textfit } from 'react-textfit';
 import styles from './PlayerMiniature.module.css';
 import FuelBar from '../FuelBar/FuelBar';
 
@@ -13,7 +14,7 @@ function PlayerMiniature({ avatar, points = 0, username, isVip = false, isAnswer
       <img className={styles.avatar} src={avatar} alt="Player's avatar" />
 
       <div className={styles.info}>
-        <h1 className={styles.name}>{username}</h1>
+        <Textfit className={styles.name}>{username}</Textfit>
 
         <div className={styles.fuel}>
           <FuelBar points={isVip ? undefined : points} />

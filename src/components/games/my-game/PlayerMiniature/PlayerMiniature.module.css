@@ -18,9 +18,8 @@
 
 .name {
   color: var(--grey);
-  font-size: 3rem;
-  line-height: 2.5rem;
-  margin-top: 10px;
+  line-height: 58px;
+  height: 58px;
 }
 
 .info {

@@ -105,9 +105,11 @@ header {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  flex-basis: 42.5%;
+  flex-basis: 42%;
   gap: 30px;
   height: 100%;
+  box-sizing: border-box;
+  padding: 0 5px;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-y: scroll;

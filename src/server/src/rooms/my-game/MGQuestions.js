@@ -48,6 +48,11 @@ const Questions = {
       {
         text: 'Як звуть цього персонажа?',
         answer: 'Маріо',
+        file: {
+          name: 'mario.png',
+          type: 'image',
+          duration: 10
+        }
       }
     ],
     500: [
