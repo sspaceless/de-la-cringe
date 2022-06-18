@@ -106,7 +106,8 @@ app.post('/api/users/signInAccount', async (req, res) => {
   if (result.success) {
     const options = {
       expires: new Date(Date.now() + 2592000000),
-      httpOnly: true
+      httpOnly: true,
+      sameSite: 'None'
     };
 
     res.cookie('userId', result.userId, options);
@@ -162,7 +163,7 @@ app.get('/api/users/logoutFromAccount', async (req, res) => {
     });
   }
 
-  const options = { httpOnly: true };
+  const options = { httpOnly: true, sameSite: 'None' };
 
   res.clearCookie('userId', options);
   return res.status(200).json({ success: true });
