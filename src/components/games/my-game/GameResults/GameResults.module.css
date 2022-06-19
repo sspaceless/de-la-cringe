@@ -104,6 +104,7 @@
 
 .playersCards {
   display: flex;
+  flex-direction: column;
   width: fit-content;
   height: fit-content;
   gap: 45px;
