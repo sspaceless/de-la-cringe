@@ -75,7 +75,7 @@ function MyGameMenu() {
     const target = event.currentTarget;
 
     if (target.checked) {
-      if (selectedTopicsRef.current.length === 6) {
+      if (selectedTopicsRef.current.length === Themes.length - 1) {
         target.checked = false;
         return;
       }
@@ -115,10 +115,20 @@ function MyGameMenu() {
   const cls = isVisibleList ? styles.visibleList : '';
   const clsInp = isVisibleList ? styles.hoveredInp : '';
 
+  const [themesHeight, setThemesHeight] = useState(0);
+
+  const themesWrapperStyle = {
+    height: themesHeight + 50
+  };
+
+  useEffect(() => {
+    setThemesHeight(document.getElementById('themes').offsetHeight);
+  }, []);
+
   const menu = (
     <div className={styles.wrapper}>
       <div className={styles.menu}>
-        <div id="themesWrapper" className={styles.themesListWrapper} onMouseLeave={() => setIsVisibleList(false)}>
+        <div id="themesWrapper" className={styles.themesListWrapper} style={themesWrapperStyle} onMouseLeave={() => setIsVisibleList(false)}>
           <ul id="themes" className={[styles.themesList, cls].join(' ')}>
             {Themes.map((topic, counter) => (
               <li key={topic}>

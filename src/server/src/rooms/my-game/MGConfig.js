@@ -1,7 +1,7 @@
 import { API_URL } from '../../config.js';
 
 const FILES_URL = `${API_URL}/files/games/my-game/questions`;
-const Themes = ['Аніме', 'Ігри', 'Логотипи', 'Музика', 'Кінематограф', 'Столиці', 'Загадкові речі'];
+const Themes = ['Ігри', 'Логотипи', 'Столиці', 'Загадкові речі'];
 
 const MessageTypes = {
   START: 'Start',
