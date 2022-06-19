@@ -44,9 +44,8 @@ const validate = (username, password) => {
 let usersDB;
 
 const initUsersDB = async () => {
-  const username = 'adminOfCringe';
-  const password = encodeURIComponent('idyMfHwxR:!642B');
-  const uri = `mongodb+srv://${username}:${password}@cringe.0wkju.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+  const DB = Config.DatabaseInfo;
+  const uri = `mongodb+srv://${DB.USERNAME}:${DB.PASSWORD}@${DB.URI}`;
 
   usersDB = new UsersDB(uri);
   await usersDB.connect();
