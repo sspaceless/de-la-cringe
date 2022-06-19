@@ -97,6 +97,15 @@ class MyGame extends CringeRoom {
     }
   }
 
+  onLeave(client) {
+    if (this.state.players.has(client.sessionId)) {
+      this.state.players.delete(client.sessionId);
+    }
+    if (this.state.host.id === client.sessionId) {
+      this.disconnect();
+    }
+  }
+
   updateState(stage, timeout) {
     if (this.timerState?.active) return;
 
@@ -272,6 +281,10 @@ class MyGame extends CringeRoom {
 
     this.timerA = this.clock.setTimeout(() => {
       this.broadcast(MessageTypes.ANSWER_DECISION, { accepted: false });
+
+      const player = this.state.players.get(this.state.answeringClientId);
+      const pointsChange = this.state.round.curQuestion.price * -1;
+      player.points += pointsChange;
 
       this.state.questionWaitUntil = Date.now() + this.timeLeft + Settings.TIME_FOR_ANSWER_DECISION;
       this.timerQ.resume();

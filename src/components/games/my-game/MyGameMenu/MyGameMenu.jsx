@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useRef, useState, useEffect, useContext, useMemo } from 'react';
 import { Client } from 'colyseus.js';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../../Input/Input';
 import MyGame from '../MyGame/MyGame';
 import { Themes } from '../MGConfig';
@@ -17,6 +18,7 @@ function useForceUpdate() {
 
 function MyGameMenu() {
   const forceUpdate = useForceUpdate();
+  const navigate = useNavigate();
 
   const clientRef = useRef(new Client(Config.COLYSEUS_URL));
   const client = clientRef.current;
@@ -33,8 +35,14 @@ function MyGameMenu() {
   const [value, setValue] = useState('');
   const [room, setRoom] = useState();
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (room) room.onStateChange(forceUpdate);
+    if (room) {
+      room.onStateChange(forceUpdate);
+      room.onLeave(() => navigate(0));
+    }
+
+    if (room) return () => room.leave();
   }, [room, forceUpdate]);
 
   const [isWrong, setIsWrong] = useState(false);
