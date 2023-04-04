@@ -2,15 +2,15 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-deploy-game-server:
-      runs-on: ubuntu-latest
-      steps:
-      - name: 'Checkout GitHub Action'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
         uses: actions/checkout@main
 
       - name: Log into registry
@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: 'Build and push image'
+      - name: "Build and push image"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.ACR_ENDPOINT }}
@@ -31,9 +31,9 @@ jobs:
           docker push ${{ secrets.ACR_ENDPOINT }}/game-server:latest
 
   build-and-deploy-api-server:
-      runs-on: ubuntu-latest
-      steps:
-      - name: 'Checkout GitHub Action'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
         uses: actions/checkout@main
 
       - name: Log into registry
@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: 'Build and push image'
+      - name: "Build and push image"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.ACR_ENDPOINT }}
@@ -53,10 +53,10 @@ jobs:
           docker build ./src/api-server -t ${{ secrets.ACR_ENDPOINT }}/api-server:latest
           docker push ${{ secrets.ACR_ENDPOINT }}/api-server:latest
 
-    build-and-deploy-client:
-      runs-on: ubuntu-latest
-      steps:
-      - name: 'Checkout GitHub Action'
+  build-and-deploy-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
         uses: actions/checkout@main
 
       - name: Log into registry
@@ -66,7 +66,7 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: 'Build and push image'
+      - name: "Build and push image"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.ACR_ENDPOINT }}
