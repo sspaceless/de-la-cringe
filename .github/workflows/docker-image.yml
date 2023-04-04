@@ -73,5 +73,5 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       - run: |
-          docker build / -t ${{ secrets.ACR_ENDPOINT }}/client:latest
+          docker build ./ -t ${{ secrets.ACR_ENDPOINT }}/client:latest
           docker push ${{ secrets.ACR_ENDPOINT }}/client:latest
