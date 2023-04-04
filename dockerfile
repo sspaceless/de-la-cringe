@@ -9,7 +9,10 @@ ENV APP_CLIENT_URL=https://de-la-cringe.azurewebsites.net
 ENV APP_COLYSEUS_URL=wss://game-server.azurewebsites.net
 
 COPY package*.json ./
-RUN npm ci --force
+
 COPY . .
+
+RUN npm ci --force
+RUN npm run build
 
 CMD ["npx", "serve", "build"]
