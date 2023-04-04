@@ -9,7 +9,7 @@ ENV CLIENT_URL=https://de-la-cringe.azurewebsites.net
 ENV COLYSEUS_URL=wss://game-server.azurewebsites.net
 
 COPY package*.json ./
-RUN npm i --force
-COPY . . 
+RUN npm ci --force
+COPY . .
 
 CMD ["npm", "start"]
