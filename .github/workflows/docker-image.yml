@@ -12,14 +12,14 @@ jobs:
         steps:
         - name: 'Checkout GitHub Action'
           uses: actions/checkout@main
-          
+
         - name: Log into registry
           uses: docker/login-action@v1
           with:
             registry: ${{ secrets.ACR_ENDPOINT }}
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
-        
+
         - name: 'Build and push image'
           uses: azure/docker-login@v1
           with:
@@ -29,21 +29,20 @@ jobs:
         - run: |
             docker build ./src/server -t ${{ secrets.ACR_ENDPOINT }}/game-server:latest
             docker push ${{ secrets.ACR_ENDPOINT }}/game-server:latest
-    
+
     build-and-deploy-api-server:
         runs-on: ubuntu-latest
         steps:
-        # checkout the repo
         - name: 'Checkout GitHub Action'
           uses: actions/checkout@main
-          
+
         - name: Log into registry
           uses: docker/login-action@v1
           with:
             registry: ${{ secrets.ACR_ENDPOINT }}
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
-        
+
         - name: 'Build and push image'
           uses: azure/docker-login@v1
           with:
@@ -53,3 +52,26 @@ jobs:
         - run: |
             docker build ./src/api-server -t ${{ secrets.ACR_ENDPOINT }}/api-server:latest
             docker push ${{ secrets.ACR_ENDPOINT }}/api-server:latest
+
+     build-and-deploy-client:
+        runs-on: ubuntu-latest
+        steps:
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@main
+
+        - name: Log into registry
+          uses: docker/login-action@v1
+          with:
+            registry: ${{ secrets.ACR_ENDPOINT }}
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
+
+        - name: 'Build and push image'
+          uses: azure/docker-login@v1
+          with:
+            login-server: ${{ secrets.ACR_ENDPOINT }}
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
+        - run: |
+            docker build ./src -t ${{ secrets.ACR_ENDPOINT }}/client:latest
+            docker push ${{ secrets.ACR_ENDPOINT }}/client:latest
